@@ -859,8 +859,7 @@ var MapMarker = /** @class */ (function () {
     MapMarker.prototype.ngOnInit = function () {
         var _this = this;
         if (this._googleMap._isBrowser) {
-            var combinedOptionsChanges = this._combineOptions();
-            combinedOptionsChanges.pipe(take(1)).subscribe(function (options) {
+            this._combineOptions().pipe(take(1)).subscribe(function (options) {
                 // Create the object outside the zone so its events don't trigger change detection.
                 // We'll bring it back in inside the `MapEventManager` only for the events that the
                 // user has subscribed to.
@@ -1140,25 +1139,28 @@ var MapPolygon = /** @class */ (function () {
     });
     MapPolygon.prototype.ngOnInit = function () {
         var _this = this;
-        var combinedOptionsChanges = this._combineOptions();
-        combinedOptionsChanges.pipe(take(1)).subscribe(function (options) {
-            // Create the object outside the zone so its events don't trigger change detection.
-            // We'll bring it back in inside the `MapEventManager` only for the events that the
-            // user has subscribed to.
-            _this._ngZone.runOutsideAngular(function () {
-                _this._polygon = new google.maps.Polygon(options);
+        if (this._map._isBrowser) {
+            this._combineOptions().pipe(take(1)).subscribe(function (options) {
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                _this._ngZone.runOutsideAngular(function () {
+                    _this._polygon = new google.maps.Polygon(options);
+                });
+                _this._polygon.setMap(_this._map._googleMap);
+                _this._eventManager.setTarget(_this._polygon);
             });
-            _this._polygon.setMap(_this._map._googleMap);
-            _this._eventManager.setTarget(_this._polygon);
-        });
-        this._watchForOptionsChanges();
-        this._watchForPathChanges();
+            this._watchForOptionsChanges();
+            this._watchForPathChanges();
+        }
     };
     MapPolygon.prototype.ngOnDestroy = function () {
         this._eventManager.destroy();
         this._destroyed.next();
         this._destroyed.complete();
-        this._polygon.setMap(null);
+        if (this._polygon) {
+            this._polygon.setMap(null);
+        }
     };
     /**
      * @see
@@ -1321,8 +1323,7 @@ var MapPolyline = /** @class */ (function () {
     MapPolyline.prototype.ngOnInit = function () {
         var _this = this;
         if (this._map._isBrowser) {
-            var combinedOptionsChanges = this._combineOptions();
-            combinedOptionsChanges.pipe(take(1)).subscribe(function (options) {
+            this._combineOptions().pipe(take(1)).subscribe(function (options) {
                 // Create the object outside the zone so its events don't trigger change detection.
                 // We'll bring it back in inside the `MapEventManager` only for the events that the
                 // user has subscribed to.
@@ -1515,25 +1516,28 @@ var MapRectangle = /** @class */ (function () {
     });
     MapRectangle.prototype.ngOnInit = function () {
         var _this = this;
-        var combinedOptionsChanges = this._combineOptions();
-        combinedOptionsChanges.pipe(take(1)).subscribe(function (options) {
-            // Create the object outside the zone so its events don't trigger change detection.
-            // We'll bring it back in inside the `MapEventManager` only for the events that the
-            // user has subscribed to.
-            _this._ngZone.runOutsideAngular(function () {
-                _this._rectangle = new google.maps.Rectangle(options);
+        if (this._map._isBrowser) {
+            this._combineOptions().pipe(take(1)).subscribe(function (options) {
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                _this._ngZone.runOutsideAngular(function () {
+                    _this._rectangle = new google.maps.Rectangle(options);
+                });
+                _this._rectangle.setMap(_this._map._googleMap);
+                _this._eventManager.setTarget(_this._rectangle);
             });
-            _this._rectangle.setMap(_this._map._googleMap);
-            _this._eventManager.setTarget(_this._rectangle);
-        });
-        this._watchForOptionsChanges();
-        this._watchForBoundsChanges();
+            this._watchForOptionsChanges();
+            this._watchForBoundsChanges();
+        }
     };
     MapRectangle.prototype.ngOnDestroy = function () {
         this._eventManager.destroy();
         this._destroyed.next();
         this._destroyed.complete();
-        this._rectangle.setMap(null);
+        if (this._rectangle) {
+            this._rectangle.setMap(null);
+        }
     };
     /**
      * @see
