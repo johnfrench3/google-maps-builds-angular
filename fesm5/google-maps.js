@@ -533,6 +533,239 @@ function coerceCssPixelValue(value) {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
+ * Angular component that renders a Google Maps Circle via the Google Maps JavaScript API.
+ * @see developers.google.com/maps/documentation/javascript/reference/polygon#Circle
+ */
+var MapCircle = /** @class */ (function () {
+    function MapCircle(_map, _ngZone) {
+        this._map = _map;
+        this._ngZone = _ngZone;
+        this._eventManager = new MapEventManager(this._ngZone);
+        this._options = new BehaviorSubject({});
+        this._center = new BehaviorSubject(undefined);
+        this._radius = new BehaviorSubject(undefined);
+        this._destroyed = new Subject();
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.center_changed
+         */
+        this.centerChanged = this._eventManager.getLazyEmitter('center_changed');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.click
+         */
+        this.circleClick = this._eventManager.getLazyEmitter('click');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.dblclick
+         */
+        this.circleDblclick = this._eventManager.getLazyEmitter('dblclick');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.drag
+         */
+        this.circleDrag = this._eventManager.getLazyEmitter('drag');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.dragend
+         */
+        this.circleDragend = this._eventManager.getLazyEmitter('dragend');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.dragstart
+         */
+        this.circleDragstart = this._eventManager.getLazyEmitter('dragstart');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mousedown
+         */
+        this.circleMousedown = this._eventManager.getLazyEmitter('mousedown');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mousemove
+         */
+        this.circleMousemove = this._eventManager.getLazyEmitter('mousemove');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mouseout
+         */
+        this.circleMouseout = this._eventManager.getLazyEmitter('mouseout');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mouseover
+         */
+        this.circleMouseover = this._eventManager.getLazyEmitter('mouseover');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mouseup
+         */
+        this.circleMouseup = this._eventManager.getLazyEmitter('mouseup');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.radius_changed
+         */
+        this.radiusChanged = this._eventManager.getLazyEmitter('radius_changed');
+        /**
+         * @see
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.rightclick
+         */
+        this.circleRightclick = this._eventManager.getLazyEmitter('rightclick');
+    }
+    Object.defineProperty(MapCircle.prototype, "options", {
+        set: function (options) {
+            this._options.next(options || {});
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MapCircle.prototype, "center", {
+        set: function (center) {
+            this._center.next(center);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MapCircle.prototype, "radius", {
+        set: function (radius) {
+            this._radius.next(radius);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MapCircle.prototype.ngOnInit = function () {
+        var _this = this;
+        var combinedOptionsChanges = this._combineOptions();
+        combinedOptionsChanges.pipe(take(1)).subscribe(function (options) {
+            // Create the object outside the zone so its events don't trigger change detection.
+            // We'll bring it back in inside the `MapEventManager` only for the events that the
+            // user has subscribed to.
+            _this._ngZone.runOutsideAngular(function () {
+                _this.circle = new google.maps.Circle(options);
+            });
+            _this.circle.setMap(_this._map._googleMap);
+            _this._eventManager.setTarget(_this.circle);
+        });
+        this._watchForOptionsChanges();
+        this._watchForCenterChanges();
+        this._watchForRadiusChanges();
+    };
+    MapCircle.prototype.ngOnDestroy = function () {
+        this._eventManager.destroy();
+        this._destroyed.next();
+        this._destroyed.complete();
+        this.circle.setMap(null);
+    };
+    /**
+     * @see
+     * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getBounds
+     */
+    MapCircle.prototype.getBounds = function () {
+        return this.circle.getBounds();
+    };
+    /**
+     * @see
+     * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getCenter
+     */
+    MapCircle.prototype.getCenter = function () {
+        return this.circle.getCenter();
+    };
+    /**
+     * @see
+     * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getDraggable
+     */
+    MapCircle.prototype.getDraggable = function () {
+        return this.circle.getDraggable();
+    };
+    /**
+     * @see
+     * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getEditable
+     */
+    MapCircle.prototype.getEditable = function () {
+        return this.circle.getEditable();
+    };
+    /**
+     * @see
+     * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getCenter
+     */
+    MapCircle.prototype.getRadius = function () {
+        return this.circle.getRadius();
+    };
+    /**
+     * @see
+     * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getVisible
+     */
+    MapCircle.prototype.getVisible = function () {
+        return this.circle.getVisible();
+    };
+    MapCircle.prototype._combineOptions = function () {
+        return combineLatest([this._options, this._center, this._radius])
+            .pipe(map(function (_a) {
+            var _b = __read(_a, 3), options = _b[0], center = _b[1], radius = _b[2];
+            var combinedOptions = __assign(__assign({}, options), { center: center || options.center, radius: radius !== undefined ? radius : options.radius });
+            return combinedOptions;
+        }));
+    };
+    MapCircle.prototype._watchForOptionsChanges = function () {
+        var _this = this;
+        this._options.pipe(takeUntil(this._destroyed)).subscribe(function (options) {
+            _this.circle.setOptions(options);
+        });
+    };
+    MapCircle.prototype._watchForCenterChanges = function () {
+        var _this = this;
+        this._center.pipe(takeUntil(this._destroyed)).subscribe(function (center) {
+            if (center) {
+                _this.circle.setCenter(center);
+            }
+        });
+    };
+    MapCircle.prototype._watchForRadiusChanges = function () {
+        var _this = this;
+        this._radius.pipe(takeUntil(this._destroyed)).subscribe(function (radius) {
+            if (radius !== undefined) {
+                _this.circle.setRadius(radius);
+            }
+        });
+    };
+    MapCircle.decorators = [
+        { type: Directive, args: [{
+                    selector: 'map-circle',
+                },] }
+    ];
+    /** @nocollapse */
+    MapCircle.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: NgZone }
+    ]; };
+    MapCircle.propDecorators = {
+        options: [{ type: Input }],
+        center: [{ type: Input }],
+        radius: [{ type: Input }],
+        centerChanged: [{ type: Output }],
+        circleClick: [{ type: Output }],
+        circleDblclick: [{ type: Output }],
+        circleDrag: [{ type: Output }],
+        circleDragend: [{ type: Output }],
+        circleDragstart: [{ type: Output }],
+        circleMousedown: [{ type: Output }],
+        circleMousemove: [{ type: Output }],
+        circleMouseout: [{ type: Output }],
+        circleMouseover: [{ type: Output }],
+        circleMouseup: [{ type: Output }],
+        radiusChanged: [{ type: Output }],
+        circleRightclick: [{ type: Output }]
+    };
+    return MapCircle;
+}());
+
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
  * Angular component that renders a Google Maps info window via the Google Maps JavaScript API.
  * @see developers.google.com/maps/documentation/javascript/reference/info-window
  */
@@ -1626,10 +1859,11 @@ var MapRectangle = /** @class */ (function () {
  */
 var COMPONENTS = [
     GoogleMap,
+    MapCircle,
     MapInfoWindow,
     MapMarker,
-    MapPolyline,
     MapPolygon,
+    MapPolyline,
     MapRectangle,
 ];
 var GoogleMapsModule = /** @class */ (function () {
@@ -1656,5 +1890,5 @@ var GoogleMapsModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker, MapPolygon, MapPolyline, MapRectangle };
+export { GoogleMap, GoogleMapsModule, MapCircle, MapInfoWindow, MapMarker, MapPolygon, MapPolyline, MapRectangle };
 //# sourceMappingURL=google-maps.js.map
