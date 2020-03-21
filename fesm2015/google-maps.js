@@ -158,6 +158,7 @@ if (false) {
 const DEFAULT_OPTIONS = {
     center: { lat: 37.421995, lng: -122.084092 },
     zoom: 17,
+    mapTypeId: undefined
 };
 /**
  * Arbitrary default height for the map element
@@ -193,7 +194,13 @@ class GoogleMap {
         this._center = new BehaviorSubject(undefined);
         this._zoom = new BehaviorSubject(undefined);
         this._destroy = new Subject();
+        /**
+         * Height of the map.
+         */
         this.height = DEFAULT_HEIGHT;
+        /**
+         * Width of the map.
+         */
         this.width = DEFAULT_WIDTH;
         /**
          * See
@@ -325,6 +332,9 @@ class GoogleMap {
      */
     ngOnChanges() {
         this._setSize();
+        if (this._googleMap && this.mapTypeId) {
+            this._googleMap.setMapTypeId(this.mapTypeId);
+        }
     }
     /**
      * @return {?}
@@ -541,7 +551,7 @@ class GoogleMap {
          */
         ([options, center, zoom]) => {
             /** @type {?} */
-            const combinedOptions = Object.assign(Object.assign({}, options), { center: center || options.center, zoom: zoom !== undefined ? zoom : options.zoom });
+            const combinedOptions = Object.assign(Object.assign({}, options), { center: center || options.center, zoom: zoom !== undefined ? zoom : options.zoom, mapTypeId: this.mapTypeId });
             return combinedOptions;
         })));
     }
@@ -643,6 +653,7 @@ GoogleMap.ctorParameters = () => [
 GoogleMap.propDecorators = {
     height: [{ type: Input }],
     width: [{ type: Input }],
+    mapTypeId: [{ type: Input }],
     center: [{ type: Input }],
     zoom: [{ type: Input }],
     options: [{ type: Input }],
@@ -708,10 +719,22 @@ if (false) {
      * @type {?}
      */
     GoogleMap.prototype._isBrowser;
-    /** @type {?} */
+    /**
+     * Height of the map.
+     * @type {?}
+     */
     GoogleMap.prototype.height;
-    /** @type {?} */
+    /**
+     * Width of the map.
+     * @type {?}
+     */
     GoogleMap.prototype.width;
+    /**
+     * Type of map that should be rendered. E.g. hybrid map, terrain map etc.
+     * See: https://developers.google.com/maps/documentation/javascript/reference/map#MapTypeId
+     * @type {?}
+     */
+    GoogleMap.prototype.mapTypeId;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.bounds_changed

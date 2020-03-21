@@ -286,6 +286,7 @@
     var DEFAULT_OPTIONS = {
         center: { lat: 37.421995, lng: -122.084092 },
         zoom: 17,
+        mapTypeId: undefined
     };
     /** Arbitrary default height for the map element */
     var DEFAULT_HEIGHT = '500px';
@@ -310,7 +311,9 @@
             this._center = new rxjs.BehaviorSubject(undefined);
             this._zoom = new rxjs.BehaviorSubject(undefined);
             this._destroy = new rxjs.Subject();
+            /** Height of the map. */
             this.height = DEFAULT_HEIGHT;
+            /** Width of the map. */
             this.width = DEFAULT_WIDTH;
             /**
              * See
@@ -438,6 +441,9 @@
         });
         GoogleMap.prototype.ngOnChanges = function () {
             this._setSize();
+            if (this._googleMap && this.mapTypeId) {
+                this._googleMap.setMapTypeId(this.mapTypeId);
+            }
         };
         GoogleMap.prototype.ngOnInit = function () {
             var _this = this;
@@ -621,10 +627,11 @@
         };
         /** Combines the center and zoom and the other map options into a single object */
         GoogleMap.prototype._combineOptions = function () {
+            var _this = this;
             return rxjs.combineLatest([this._options, this._center, this._zoom])
                 .pipe(operators.map(function (_a) {
                 var _b = __read(_a, 3), options = _b[0], center = _b[1], zoom = _b[2];
-                var combinedOptions = __assign(__assign({}, options), { center: center || options.center, zoom: zoom !== undefined ? zoom : options.zoom });
+                var combinedOptions = __assign(__assign({}, options), { center: center || options.center, zoom: zoom !== undefined ? zoom : options.zoom, mapTypeId: _this.mapTypeId });
                 return combinedOptions;
             }));
         };
@@ -689,6 +696,7 @@
         GoogleMap.propDecorators = {
             height: [{ type: core.Input }],
             width: [{ type: core.Input }],
+            mapTypeId: [{ type: core.Input }],
             center: [{ type: core.Input }],
             zoom: [{ type: core.Input }],
             options: [{ type: core.Input }],

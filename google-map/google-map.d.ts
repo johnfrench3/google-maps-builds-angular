@@ -39,8 +39,15 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
     _googleMap: UpdatedGoogleMap;
     /** Whether we're currently rendering inside a browser. */
     _isBrowser: boolean;
+    /** Height of the map. */
     height: string | number;
+    /** Width of the map. */
     width: string | number;
+    /**
+     * Type of map that should be rendered. E.g. hybrid map, terrain map etc.
+     * See: https://developers.google.com/maps/documentation/javascript/reference/map#MapTypeId
+     */
+    mapTypeId: google.maps.MapTypeId | undefined;
     set center(center: google.maps.LatLngLiteral | google.maps.LatLng);
     set zoom(zoom: number);
     set options(options: google.maps.MapOptions);
