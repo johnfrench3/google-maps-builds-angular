@@ -982,28 +982,28 @@ class MapCircle {
      * @return {?}
      */
     ngOnInit() {
-        /** @type {?} */
-        const combinedOptionsChanges = this._combineOptions();
-        combinedOptionsChanges.pipe(take(1)).subscribe((/**
-         * @param {?} options
-         * @return {?}
-         */
-        options => {
-            // Create the object outside the zone so its events don't trigger change detection.
-            // We'll bring it back in inside the `MapEventManager` only for the events that the
-            // user has subscribed to.
-            this._ngZone.runOutsideAngular((/**
+        if (this._map._isBrowser) {
+            this._combineOptions().pipe(take(1)).subscribe((/**
+             * @param {?} options
              * @return {?}
              */
-            () => {
-                this.circle = new google.maps.Circle(options);
+            options => {
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                this._ngZone.runOutsideAngular((/**
+                 * @return {?}
+                 */
+                () => {
+                    this.circle = new google.maps.Circle(options);
+                }));
+                this.circle.setMap(this._map._googleMap);
+                this._eventManager.setTarget(this.circle);
             }));
-            this.circle.setMap(this._map._googleMap);
-            this._eventManager.setTarget(this.circle);
-        }));
-        this._watchForOptionsChanges();
-        this._watchForCenterChanges();
-        this._watchForRadiusChanges();
+            this._watchForOptionsChanges();
+            this._watchForCenterChanges();
+            this._watchForRadiusChanges();
+        }
     }
     /**
      * @return {?}
@@ -1012,7 +1012,9 @@ class MapCircle {
         this._eventManager.destroy();
         this._destroyed.next();
         this._destroyed.complete();
-        this.circle.setMap(null);
+        if (this.circle) {
+            this.circle.setMap(null);
+        }
     }
     /**
      * @see

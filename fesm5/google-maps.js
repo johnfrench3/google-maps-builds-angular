@@ -642,26 +642,29 @@ var MapCircle = /** @class */ (function () {
     });
     MapCircle.prototype.ngOnInit = function () {
         var _this = this;
-        var combinedOptionsChanges = this._combineOptions();
-        combinedOptionsChanges.pipe(take(1)).subscribe(function (options) {
-            // Create the object outside the zone so its events don't trigger change detection.
-            // We'll bring it back in inside the `MapEventManager` only for the events that the
-            // user has subscribed to.
-            _this._ngZone.runOutsideAngular(function () {
-                _this.circle = new google.maps.Circle(options);
+        if (this._map._isBrowser) {
+            this._combineOptions().pipe(take(1)).subscribe(function (options) {
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                _this._ngZone.runOutsideAngular(function () {
+                    _this.circle = new google.maps.Circle(options);
+                });
+                _this.circle.setMap(_this._map._googleMap);
+                _this._eventManager.setTarget(_this.circle);
             });
-            _this.circle.setMap(_this._map._googleMap);
-            _this._eventManager.setTarget(_this.circle);
-        });
-        this._watchForOptionsChanges();
-        this._watchForCenterChanges();
-        this._watchForRadiusChanges();
+            this._watchForOptionsChanges();
+            this._watchForCenterChanges();
+            this._watchForRadiusChanges();
+        }
     };
     MapCircle.prototype.ngOnDestroy = function () {
         this._eventManager.destroy();
         this._destroyed.next();
         this._destroyed.complete();
-        this.circle.setMap(null);
+        if (this.circle) {
+            this.circle.setMap(null);
+        }
     };
     /**
      * @see
