@@ -285,8 +285,7 @@
     /** default options set to the Googleplex */
     var DEFAULT_OPTIONS = {
         center: { lat: 37.421995, lng: -122.084092 },
-        zoom: 17,
-        mapTypeId: undefined
+        zoom: 17
     };
     /** Arbitrary default height for the map element */
     var DEFAULT_HEIGHT = '500px';
