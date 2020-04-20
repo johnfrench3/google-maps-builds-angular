@@ -26,7 +26,7 @@ export declare class MapCircle implements OnInit, OnDestroy {
      *
      * @see developers.google.com/maps/documentation/javascript/reference/polygon#Circle
      */
-    circle: google.maps.Circle;
+    circle?: google.maps.Circle;
     set options(options: google.maps.CircleOptions);
     set center(center: google.maps.LatLng | google.maps.LatLngLiteral);
     set radius(radius: number);
@@ -132,4 +132,5 @@ export declare class MapCircle implements OnInit, OnDestroy {
     private _watchForOptionsChanges;
     private _watchForCenterChanges;
     private _watchForRadiusChanges;
+    private _assertInitialized;
 }

@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
 /**
  * Angular component that renders a Google Maps Rectangle via the Google Maps JavaScript API.
- * @see developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle
  */
 export declare class MapRectangle implements OnInit, OnDestroy {
     private readonly _map;
@@ -20,66 +21,71 @@ export declare class MapRectangle implements OnInit, OnDestroy {
     private readonly _options;
     private readonly _bounds;
     private readonly _destroyed;
-    _rectangle: google.maps.Rectangle;
+    /**
+     * The underlying google.maps.Rectangle object.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle
+     */
+    rectangle?: google.maps.Rectangle;
     set options(options: google.maps.RectangleOptions);
     set bounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral);
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.boundsChanged
      */
     boundsChanged: Observable<void>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.click
      */
     rectangleClick: Observable<google.maps.MouseEvent>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dblclick
      */
     rectangleDblclick: Observable<google.maps.MouseEvent>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.drag
      */
     rectangleDrag: Observable<google.maps.MouseEvent>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dragend
      */
     rectangleDragend: Observable<google.maps.MouseEvent>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dragstart
      */
     rectangleDragstart: Observable<google.maps.MouseEvent>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mousedown
      */
     rectangleMousedown: Observable<google.maps.MouseEvent>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mousemove
      */
     rectangleMousemove: Observable<google.maps.MouseEvent>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseout
      */
     rectangleMouseout: Observable<google.maps.MouseEvent>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseover
      */
     rectangleMouseover: Observable<google.maps.MouseEvent>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseup
      */
     rectangleMouseup: Observable<google.maps.MouseEvent>;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.rightclick
      */
     rectangleRightclick: Observable<google.maps.MouseEvent>;
@@ -87,26 +93,27 @@ export declare class MapRectangle implements OnInit, OnDestroy {
     ngOnInit(): void;
     ngOnDestroy(): void;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.getBounds
      */
     getBounds(): google.maps.LatLngBounds;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.getDraggable
      */
     getDraggable(): boolean;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.getEditable
      */
     getEditable(): boolean;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.getVisible
      */
     getVisible(): boolean;
     private _combineOptions;
     private _watchForOptionsChanges;
     private _watchForBoundsChanges;
+    private _assertInitialized;
 }

@@ -142,16 +142,6 @@ if (false) {
     GoogleMapsWindow.prototype.google;
 }
 /**
- * Extends the Google Map interface due to the Definitely Typed implementation
- * missing "getClickableIcons".
- * @record
- */
-function UpdatedGoogleMap() { }
-if (false) {
-    /** @type {?} */
-    UpdatedGoogleMap.prototype.getClickableIcons;
-}
-/**
  * default options set to the Googleplex
  * @type {?}
  */
@@ -331,8 +321,8 @@ class GoogleMap {
      */
     ngOnChanges() {
         this._setSize();
-        if (this._googleMap && this.mapTypeId) {
-            this._googleMap.setMapTypeId(this.mapTypeId);
+        if (this.googleMap && this.mapTypeId) {
+            this.googleMap.setMapTypeId(this.mapTypeId);
         }
     }
     /**
@@ -349,8 +339,8 @@ class GoogleMap {
              * @return {?}
              */
             (googleMap) => {
-                this._googleMap = (/** @type {?} */ (googleMap));
-                this._eventManager.setTarget(this._googleMap);
+                this.googleMap = googleMap;
+                this._eventManager.setTarget(this.googleMap);
             }));
             this._watchForOptionsChanges();
             this._watchForCenterChanges();
@@ -374,7 +364,7 @@ class GoogleMap {
      */
     fitBounds(bounds, padding) {
         this._assertInitialized();
-        this._googleMap.fitBounds(bounds, padding);
+        (/** @type {?} */ (this.googleMap)).fitBounds(bounds, padding);
     }
     /**
      * See
@@ -385,7 +375,7 @@ class GoogleMap {
      */
     panBy(x, y) {
         this._assertInitialized();
-        this._googleMap.panBy(x, y);
+        (/** @type {?} */ (this.googleMap)).panBy(x, y);
     }
     /**
      * See
@@ -395,7 +385,7 @@ class GoogleMap {
      */
     panTo(latLng) {
         this._assertInitialized();
-        this._googleMap.panTo(latLng);
+        (/** @type {?} */ (this.googleMap)).panTo(latLng);
     }
     /**
      * See
@@ -406,7 +396,7 @@ class GoogleMap {
      */
     panToBounds(latLngBounds, padding) {
         this._assertInitialized();
-        this._googleMap.panToBounds(latLngBounds, padding);
+        (/** @type {?} */ (this.googleMap)).panToBounds(latLngBounds, padding);
     }
     /**
      * See
@@ -415,7 +405,7 @@ class GoogleMap {
      */
     getBounds() {
         this._assertInitialized();
-        return this._googleMap.getBounds() || null;
+        return (/** @type {?} */ (this.googleMap)).getBounds() || null;
     }
     /**
      * See
@@ -424,7 +414,7 @@ class GoogleMap {
      */
     getCenter() {
         this._assertInitialized();
-        return this._googleMap.getCenter();
+        return (/** @type {?} */ (this.googleMap)).getCenter();
     }
     /**
      * See
@@ -433,7 +423,7 @@ class GoogleMap {
      */
     getClickableIcons() {
         this._assertInitialized();
-        return this._googleMap.getClickableIcons();
+        return (/** @type {?} */ (this.googleMap)).getClickableIcons();
     }
     /**
      * See
@@ -442,7 +432,7 @@ class GoogleMap {
      */
     getHeading() {
         this._assertInitialized();
-        return this._googleMap.getHeading();
+        return (/** @type {?} */ (this.googleMap)).getHeading();
     }
     /**
      * See
@@ -451,7 +441,7 @@ class GoogleMap {
      */
     getMapTypeId() {
         this._assertInitialized();
-        return this._googleMap.getMapTypeId();
+        return (/** @type {?} */ (this.googleMap)).getMapTypeId();
     }
     /**
      * See
@@ -460,7 +450,7 @@ class GoogleMap {
      */
     getProjection() {
         this._assertInitialized();
-        return this._googleMap.getProjection();
+        return (/** @type {?} */ (this.googleMap)).getProjection();
     }
     /**
      * See
@@ -469,7 +459,7 @@ class GoogleMap {
      */
     getStreetView() {
         this._assertInitialized();
-        return this._googleMap.getStreetView();
+        return (/** @type {?} */ (this.googleMap)).getStreetView();
     }
     /**
      * See
@@ -478,7 +468,7 @@ class GoogleMap {
      */
     getTilt() {
         this._assertInitialized();
-        return this._googleMap.getTilt();
+        return (/** @type {?} */ (this.googleMap)).getTilt();
     }
     /**
      * See
@@ -487,7 +477,7 @@ class GoogleMap {
      */
     getZoom() {
         this._assertInitialized();
-        return this._googleMap.getZoom();
+        return (/** @type {?} */ (this.googleMap)).getZoom();
     }
     /**
      * See
@@ -496,7 +486,7 @@ class GoogleMap {
      */
     get controls() {
         this._assertInitialized();
-        return this._googleMap.controls;
+        return (/** @type {?} */ (this.googleMap)).controls;
     }
     /**
      * See
@@ -505,7 +495,7 @@ class GoogleMap {
      */
     get data() {
         this._assertInitialized();
-        return this._googleMap.data;
+        return (/** @type {?} */ (this.googleMap)).data;
     }
     /**
      * See
@@ -514,7 +504,7 @@ class GoogleMap {
      */
     get mapTypes() {
         this._assertInitialized();
-        return this._googleMap.mapTypes;
+        return (/** @type {?} */ (this.googleMap)).mapTypes;
     }
     /**
      * See
@@ -523,7 +513,7 @@ class GoogleMap {
      */
     get overlayMapTypes() {
         this._assertInitialized();
-        return this._googleMap.overlayMapTypes;
+        return (/** @type {?} */ (this.googleMap)).overlayMapTypes;
     }
     /**
      * @private
@@ -629,7 +619,7 @@ class GoogleMap {
      * @return {?}
      */
     _assertInitialized() {
-        if (!this._googleMap) {
+        if (!this.googleMap) {
             throw Error('Cannot access Google Map information before the API has been initialized. ' +
                 'Please wait for the API to load before trying to interact with it.');
         }
@@ -711,8 +701,13 @@ if (false) {
      * @private
      */
     GoogleMap.prototype._mapEl;
-    /** @type {?} */
-    GoogleMap.prototype._googleMap;
+    /**
+     * The underlying google.maps.Map object
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/map#Map
+     * @type {?}
+     */
+    GoogleMap.prototype.googleMap;
     /**
      * Whether we're currently rendering inside a browser.
      * @type {?}
@@ -996,7 +991,8 @@ class MapCircle {
                 () => {
                     this.circle = new google.maps.Circle(options);
                 }));
-                this.circle.setMap(this._map._googleMap);
+                this._assertInitialized();
+                (/** @type {?} */ (this.circle)).setMap((/** @type {?} */ (this._map.googleMap)));
                 this._eventManager.setTarget(this.circle);
             }));
             this._watchForOptionsChanges();
@@ -1021,7 +1017,8 @@ class MapCircle {
      * @return {?}
      */
     getBounds() {
-        return this.circle.getBounds();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.circle)).getBounds();
     }
     /**
      * @see
@@ -1029,7 +1026,8 @@ class MapCircle {
      * @return {?}
      */
     getCenter() {
-        return this.circle.getCenter();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.circle)).getCenter();
     }
     /**
      * @see
@@ -1037,7 +1035,8 @@ class MapCircle {
      * @return {?}
      */
     getDraggable() {
-        return this.circle.getDraggable();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.circle)).getDraggable();
     }
     /**
      * @see
@@ -1045,7 +1044,8 @@ class MapCircle {
      * @return {?}
      */
     getEditable() {
-        return this.circle.getEditable();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.circle)).getEditable();
     }
     /**
      * @see
@@ -1053,7 +1053,8 @@ class MapCircle {
      * @return {?}
      */
     getRadius() {
-        return this.circle.getRadius();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.circle)).getRadius();
     }
     /**
      * @see
@@ -1061,7 +1062,8 @@ class MapCircle {
      * @return {?}
      */
     getVisible() {
-        return this.circle.getVisible();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.circle)).getVisible();
     }
     /**
      * @private
@@ -1089,7 +1091,8 @@ class MapCircle {
          * @return {?}
          */
         options => {
-            this.circle.setOptions(options);
+            this._assertInitialized();
+            (/** @type {?} */ (this.circle)).setOptions(options);
         }));
     }
     /**
@@ -1103,7 +1106,8 @@ class MapCircle {
          */
         center => {
             if (center) {
-                this.circle.setCenter(center);
+                this._assertInitialized();
+                (/** @type {?} */ (this.circle)).setCenter(center);
             }
         }));
     }
@@ -1118,9 +1122,24 @@ class MapCircle {
          */
         radius => {
             if (radius !== undefined) {
-                this.circle.setRadius(radius);
+                this._assertInitialized();
+                (/** @type {?} */ (this.circle)).setRadius(radius);
             }
         }));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _assertInitialized() {
+        if (!this._map.googleMap) {
+            throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                'Please wait for the API to load before trying to interact with it.');
+        }
+        if (!this.circle) {
+            throw Error('Cannot interact with a Google Map Circle before it has been ' +
+                'initialized. Please wait for the Circle to load before trying to interact with it.');
+        }
     }
 }
 MapCircle.decorators = [
@@ -1281,7 +1300,8 @@ if (false) {
  */
 /**
  * Angular component that renders a Google Maps info window via the Google Maps JavaScript API.
- * @see developers.google.com/maps/documentation/javascript/reference/info-window
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/info-window
  */
 class MapInfoWindow {
     /**
@@ -1345,27 +1365,26 @@ class MapInfoWindow {
      */
     ngOnInit() {
         if (this._googleMap._isBrowser) {
-            this._combineOptions().pipe(takeUntil(this._destroy)).subscribe((/**
+            /** @type {?} */
+            const combinedOptionsChanges = this._combineOptions();
+            combinedOptionsChanges.pipe(take(1)).subscribe((/**
              * @param {?} options
              * @return {?}
              */
             options => {
-                if (this._infoWindow) {
-                    this._infoWindow.setOptions(options);
-                }
-                else {
-                    // Create the object outside the zone so its events don't trigger change detection.
-                    // We'll bring it back in inside the `MapEventManager` only for the events that the
-                    // user has subscribed to.
-                    this._ngZone.runOutsideAngular((/**
-                     * @return {?}
-                     */
-                    () => {
-                        this._infoWindow = new google.maps.InfoWindow(options);
-                    }));
-                    this._eventManager.setTarget(this._infoWindow);
-                }
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                this._ngZone.runOutsideAngular((/**
+                 * @return {?}
+                 */
+                () => {
+                    this.infoWindow = new google.maps.InfoWindow(options);
+                }));
+                this._eventManager.setTarget(this.infoWindow);
             }));
+            this._watchForOptionsChanges();
+            this._watchForPositionChanges();
         }
     }
     /**
@@ -1382,9 +1401,8 @@ class MapInfoWindow {
      * @return {?}
      */
     close() {
-        if (this._infoWindow) {
-            this._infoWindow.close();
-        }
+        this._assertInitialized();
+        (/** @type {?} */ (this.infoWindow)).close();
     }
     /**
      * See
@@ -1392,7 +1410,8 @@ class MapInfoWindow {
      * @return {?}
      */
     getContent() {
-        return this._infoWindow ? this._infoWindow.getContent() : '';
+        this._assertInitialized();
+        return (/** @type {?} */ (this.infoWindow)).getContent();
     }
     /**
      * See
@@ -1401,7 +1420,8 @@ class MapInfoWindow {
      * @return {?}
      */
     getPosition() {
-        return this._infoWindow ? this._infoWindow.getPosition() : null;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.infoWindow)).getPosition();
     }
     /**
      * See
@@ -1409,7 +1429,8 @@ class MapInfoWindow {
      * @return {?}
      */
     getZIndex() {
-        return this._infoWindow ? this._infoWindow.getZIndex() : -1;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.infoWindow)).getZIndex();
     }
     /**
      * Opens the MapInfoWindow using the provided MapMarker as the anchor. If the anchor is not set,
@@ -1418,12 +1439,11 @@ class MapInfoWindow {
      * @return {?}
      */
     open(anchor) {
+        this._assertInitialized();
         /** @type {?} */
-        const marker = anchor ? anchor._marker : undefined;
-        if (this._googleMap._googleMap && this._infoWindow) {
-            this._elementRef.nativeElement.style.display = '';
-            (/** @type {?} */ (this._infoWindow)).open(this._googleMap._googleMap, marker);
-        }
+        const marker = anchor ? anchor.marker : undefined;
+        this._elementRef.nativeElement.style.display = '';
+        (/** @type {?} */ (this.infoWindow)).open(this._googleMap.googleMap, marker);
     }
     /**
      * @private
@@ -1439,6 +1459,51 @@ class MapInfoWindow {
             const combinedOptions = Object.assign(Object.assign({}, options), { position: position || options.position, content: this._elementRef.nativeElement });
             return combinedOptions;
         })));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _watchForOptionsChanges() {
+        this._options.pipe(takeUntil(this._destroy)).subscribe((/**
+         * @param {?} options
+         * @return {?}
+         */
+        options => {
+            this._assertInitialized();
+            (/** @type {?} */ (this.infoWindow)).setOptions(options);
+        }));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _watchForPositionChanges() {
+        this._position.pipe(takeUntil(this._destroy)).subscribe((/**
+         * @param {?} position
+         * @return {?}
+         */
+        position => {
+            if (position) {
+                this._assertInitialized();
+                (/** @type {?} */ (this.infoWindow)).setPosition(position);
+            }
+        }));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _assertInitialized() {
+        if (!this._googleMap.googleMap) {
+            throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                'Please wait for the API to load before trying to interact with it.');
+        }
+        if (!this.infoWindow) {
+            throw Error('Cannot interact with a Google Map Info Window before it has been ' +
+                'initialized. Please wait for the Info Window to load before trying to interact with ' +
+                'it.');
+        }
     }
 }
 MapInfoWindow.decorators = [
@@ -1484,10 +1549,12 @@ if (false) {
      */
     MapInfoWindow.prototype._destroy;
     /**
+     * Underlying google.maps.InfoWindow
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindow
      * @type {?}
-     * @private
      */
-    MapInfoWindow.prototype._infoWindow;
+    MapInfoWindow.prototype.infoWindow;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindow.closeclick
@@ -1553,7 +1620,8 @@ const DEFAULT_MARKER_OPTIONS = {
 };
 /**
  * Angular component that renders a Google Maps marker via the Google Maps JavaScript API.
- * @see developers.google.com/maps/documentation/javascript/reference/marker
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/marker
  */
 class MapMarker {
     /**
@@ -1727,9 +1795,10 @@ class MapMarker {
                 this._ngZone.runOutsideAngular((/**
                  * @return {?}
                  */
-                () => this._marker = new google.maps.Marker(options)));
-                (/** @type {?} */ (this._marker)).setMap(this._googleMap._googleMap);
-                this._eventManager.setTarget(this._marker);
+                () => this.marker = new google.maps.Marker(options)));
+                this._assertInitialized();
+                (/** @type {?} */ (this.marker)).setMap((/** @type {?} */ (this._googleMap.googleMap)));
+                this._eventManager.setTarget(this.marker);
             }));
             this._watchForOptionsChanges();
             this._watchForTitleChanges();
@@ -1745,8 +1814,8 @@ class MapMarker {
         this._destroy.next();
         this._destroy.complete();
         this._eventManager.destroy();
-        if (this._marker) {
-            this._marker.setMap(null);
+        if (this.marker) {
+            this.marker.setMap(null);
         }
     }
     /**
@@ -1755,7 +1824,8 @@ class MapMarker {
      * @return {?}
      */
     getAnimation() {
-        return (this._marker && this._marker.getAnimation()) || null;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getAnimation() || null;
     }
     /**
      * See
@@ -1763,7 +1833,8 @@ class MapMarker {
      * @return {?}
      */
     getClickable() {
-        return this._marker ? this._marker.getClickable() : false;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getClickable();
     }
     /**
      * See
@@ -1771,7 +1842,8 @@ class MapMarker {
      * @return {?}
      */
     getCursor() {
-        return (this._marker && this._marker.getCursor()) || null;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getCursor() || null;
     }
     /**
      * See
@@ -1779,7 +1851,8 @@ class MapMarker {
      * @return {?}
      */
     getDraggable() {
-        return this._marker ? !!this._marker.getDraggable() : false;
+        this._assertInitialized();
+        return !!(/** @type {?} */ (this.marker)).getDraggable();
     }
     /**
      * See
@@ -1787,7 +1860,8 @@ class MapMarker {
      * @return {?}
      */
     getIcon() {
-        return (this._marker && this._marker.getIcon()) || null;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getIcon() || null;
     }
     /**
      * See
@@ -1795,7 +1869,8 @@ class MapMarker {
      * @return {?}
      */
     getLabel() {
-        return (this._marker && this._marker.getLabel()) || null;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getLabel() || null;
     }
     /**
      * See
@@ -1803,7 +1878,8 @@ class MapMarker {
      * @return {?}
      */
     getOpacity() {
-        return (this._marker && this._marker.getOpacity()) || null;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getOpacity() || null;
     }
     /**
      * See
@@ -1811,7 +1887,8 @@ class MapMarker {
      * @return {?}
      */
     getPosition() {
-        return (this._marker && this._marker.getPosition()) || null;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getPosition() || null;
     }
     /**
      * See
@@ -1819,7 +1896,8 @@ class MapMarker {
      * @return {?}
      */
     getShape() {
-        return (this._marker && this._marker.getShape()) || null;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getShape() || null;
     }
     /**
      * See
@@ -1827,7 +1905,8 @@ class MapMarker {
      * @return {?}
      */
     getTitle() {
-        return (this._marker && this._marker.getTitle()) || null;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getTitle() || null;
     }
     /**
      * See
@@ -1835,7 +1914,8 @@ class MapMarker {
      * @return {?}
      */
     getVisible() {
-        return this._marker ? this._marker.getVisible() : false;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getVisible();
     }
     /**
      * See
@@ -1843,7 +1923,8 @@ class MapMarker {
      * @return {?}
      */
     getZIndex() {
-        return (this._marker && this._marker.getZIndex()) || null;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.marker)).getZIndex() || null;
     }
     /**
      * @private
@@ -1857,7 +1938,7 @@ class MapMarker {
          */
         ([options, title, position, label, clickable]) => {
             /** @type {?} */
-            const combinedOptions = Object.assign(Object.assign({}, options), { title: title || options.title, position: position || options.position, label: label || options.label, clickable: clickable !== undefined ? clickable : options.clickable, map: this._googleMap._googleMap || null });
+            const combinedOptions = Object.assign(Object.assign({}, options), { title: title || options.title, position: position || options.position, label: label || options.label, clickable: clickable !== undefined ? clickable : options.clickable, map: this._googleMap.googleMap });
             return combinedOptions;
         })));
     }
@@ -1871,8 +1952,9 @@ class MapMarker {
          * @return {?}
          */
         options => {
-            if (this._marker) {
-                this._marker.setOptions(options);
+            if (this.marker) {
+                this._assertInitialized();
+                this.marker.setOptions(options);
             }
         }));
     }
@@ -1886,8 +1968,9 @@ class MapMarker {
          * @return {?}
          */
         title => {
-            if (this._marker && title !== undefined) {
-                this._marker.setTitle(title);
+            if (this.marker && title !== undefined) {
+                this._assertInitialized();
+                this.marker.setTitle(title);
             }
         }));
     }
@@ -1901,8 +1984,9 @@ class MapMarker {
          * @return {?}
          */
         position => {
-            if (this._marker && position) {
-                this._marker.setPosition(position);
+            if (this.marker && position) {
+                this._assertInitialized();
+                this.marker.setPosition(position);
             }
         }));
     }
@@ -1916,8 +2000,9 @@ class MapMarker {
          * @return {?}
          */
         label => {
-            if (this._marker && label !== undefined) {
-                this._marker.setLabel(label);
+            if (this.marker && label !== undefined) {
+                this._assertInitialized();
+                this.marker.setLabel(label);
             }
         }));
     }
@@ -1931,10 +2016,25 @@ class MapMarker {
          * @return {?}
          */
         clickable => {
-            if (this._marker && clickable !== undefined) {
-                this._marker.setClickable(clickable);
+            if (this.marker && clickable !== undefined) {
+                this._assertInitialized();
+                this.marker.setClickable(clickable);
             }
         }));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _assertInitialized() {
+        if (!this._googleMap.googleMap) {
+            throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                'Please wait for the API to load before trying to interact with it.');
+        }
+        if (!this.marker) {
+            throw Error('Cannot interact with a Google Map Marker before it has been ' +
+                'initialized. Please wait for the Marker to load before trying to interact with it.');
+        }
     }
 }
 MapMarker.decorators = [
@@ -2140,8 +2240,13 @@ if (false) {
      * @type {?}
      */
     MapMarker.prototype.zindexChanged;
-    /** @type {?} */
-    MapMarker.prototype._marker;
+    /**
+     * The underlying google.maps.Marker object.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/marker#Marker
+     * @type {?}
+     */
+    MapMarker.prototype.marker;
     /**
      * @type {?}
      * @private
@@ -2161,7 +2266,8 @@ if (false) {
  */
 /**
  * Angular component that renders a Google Maps Polygon via the Google Maps JavaScript API.
- * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon
  */
 class MapPolygon {
     /**
@@ -2176,51 +2282,50 @@ class MapPolygon {
         this._paths = new BehaviorSubject(undefined);
         this._destroyed = new Subject();
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.click
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.click
          */
         this.polygonClick = this._eventManager.getLazyEmitter('click');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dblclick
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dblclick
          */
         this.polygonDblclick = this._eventManager.getLazyEmitter('dblclick');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.drag
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.drag
          */
         this.polygonDrag = this._eventManager.getLazyEmitter('drag');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragend
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragend
          */
         this.polygonDragend = this._eventManager.getLazyEmitter('dragend');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragstart
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragstart
          */
         this.polygonDragstart = this._eventManager.getLazyEmitter('dragstart');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousedown
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousedown
          */
         this.polygonMousedown = this._eventManager.getLazyEmitter('mousedown');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousemove
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousemove
          */
         this.polygonMousemove = this._eventManager.getLazyEmitter('mousemove');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseout
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseout
          */
         this.polygonMouseout = this._eventManager.getLazyEmitter('mouseout');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseover
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseover
          */
         this.polygonMouseover = this._eventManager.getLazyEmitter('mouseover');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseup
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseup
          */
         this.polygonMouseup = this._eventManager.getLazyEmitter('mouseup');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.rightclick
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.rightclick
          */
         this.polygonRightclick = this._eventManager.getLazyEmitter('rightclick');
     }
-    // initialized in ngOnInit
     /**
      * @param {?} options
      * @return {?}
@@ -2252,10 +2357,11 @@ class MapPolygon {
                  * @return {?}
                  */
                 () => {
-                    this._polygon = new google.maps.Polygon(options);
+                    this.polygon = new google.maps.Polygon(options);
                 }));
-                this._polygon.setMap(this._map._googleMap);
-                this._eventManager.setTarget(this._polygon);
+                this._assertInitialized();
+                (/** @type {?} */ (this.polygon)).setMap((/** @type {?} */ (this._map.googleMap)));
+                this._eventManager.setTarget(this.polygon);
             }));
             this._watchForOptionsChanges();
             this._watchForPathChanges();
@@ -2268,45 +2374,50 @@ class MapPolygon {
         this._eventManager.destroy();
         this._destroyed.next();
         this._destroyed.complete();
-        if (this._polygon) {
-            this._polygon.setMap(null);
+        if (this.polygon) {
+            this.polygon.setMap(null);
         }
     }
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getDraggable
      * @return {?}
      */
     getDraggable() {
-        return this._polygon.getDraggable();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.polygon)).getDraggable();
     }
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getEditable
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getEditable
      * @return {?}
      */
     getEditable() {
-        return this._polygon.getEditable();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.polygon)).getEditable();
     }
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getPath
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getPath
      * @return {?}
      */
     getPath() {
-        return this._polygon.getPath();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.polygon)).getPath();
     }
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getPaths
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getPaths
      * @return {?}
      */
     getPaths() {
-        return this._polygon.getPaths();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.polygon)).getPaths();
     }
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getVisible
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getVisible
      * @return {?}
      */
     getVisible() {
-        return this._polygon.getVisible();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.polygon)).getVisible();
     }
     /**
      * @private
@@ -2333,7 +2444,8 @@ class MapPolygon {
          * @return {?}
          */
         options => {
-            this._polygon.setOptions(options);
+            this._assertInitialized();
+            (/** @type {?} */ (this.polygon)).setOptions(options);
         }));
     }
     /**
@@ -2347,9 +2459,24 @@ class MapPolygon {
          */
         paths => {
             if (paths) {
-                this._polygon.setPaths(paths);
+                this._assertInitialized();
+                (/** @type {?} */ (this.polygon)).setPaths(paths);
             }
         }));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _assertInitialized() {
+        if (!this._map.googleMap) {
+            throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                'Please wait for the API to load before trying to interact with it.');
+        }
+        if (!this.polygon) {
+            throw Error('Cannot interact with a Google Map Polygon before it has been ' +
+                'initialized. Please wait for the Polygon to load before trying to interact with it.');
+        }
     }
 }
 MapPolygon.decorators = [
@@ -2398,60 +2525,65 @@ if (false) {
      * @private
      */
     MapPolygon.prototype._destroyed;
-    /** @type {?} */
-    MapPolygon.prototype._polygon;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.click
+     * The underlying google.maps.Polygon object.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon
+     * @type {?}
+     */
+    MapPolygon.prototype.polygon;
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.click
      * @type {?}
      */
     MapPolygon.prototype.polygonClick;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dblclick
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dblclick
      * @type {?}
      */
     MapPolygon.prototype.polygonDblclick;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.drag
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.drag
      * @type {?}
      */
     MapPolygon.prototype.polygonDrag;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragend
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragend
      * @type {?}
      */
     MapPolygon.prototype.polygonDragend;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragstart
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragstart
      * @type {?}
      */
     MapPolygon.prototype.polygonDragstart;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousedown
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousedown
      * @type {?}
      */
     MapPolygon.prototype.polygonMousedown;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousemove
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousemove
      * @type {?}
      */
     MapPolygon.prototype.polygonMousemove;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseout
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseout
      * @type {?}
      */
     MapPolygon.prototype.polygonMouseout;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseover
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseover
      * @type {?}
      */
     MapPolygon.prototype.polygonMouseover;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseup
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseup
      * @type {?}
      */
     MapPolygon.prototype.polygonMouseup;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.rightclick
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.rightclick
      * @type {?}
      */
     MapPolygon.prototype.polygonRightclick;
@@ -2474,7 +2606,8 @@ if (false) {
  */
 /**
  * Angular component that renders a Google Maps Polyline via the Google Maps JavaScript API.
- * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline
  */
 class MapPolyline {
     /**
@@ -2489,51 +2622,50 @@ class MapPolyline {
         this._path = new BehaviorSubject(undefined);
         this._destroyed = new Subject();
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.click
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.click
          */
         this.polylineClick = this._eventManager.getLazyEmitter('click');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dblclick
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dblclick
          */
         this.polylineDblclick = this._eventManager.getLazyEmitter('dblclick');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.drag
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.drag
          */
         this.polylineDrag = this._eventManager.getLazyEmitter('drag');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragend
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragend
          */
         this.polylineDragend = this._eventManager.getLazyEmitter('dragend');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragstart
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragstart
          */
         this.polylineDragstart = this._eventManager.getLazyEmitter('dragstart');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousedown
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousedown
          */
         this.polylineMousedown = this._eventManager.getLazyEmitter('mousedown');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousemove
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousemove
          */
         this.polylineMousemove = this._eventManager.getLazyEmitter('mousemove');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseout
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseout
          */
         this.polylineMouseout = this._eventManager.getLazyEmitter('mouseout');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseover
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseover
          */
         this.polylineMouseover = this._eventManager.getLazyEmitter('mouseover');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseup
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseup
          */
         this.polylineMouseup = this._eventManager.getLazyEmitter('mouseup');
         /**
-         * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.rightclick
+         * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.rightclick
          */
         this.polylineRightclick = this._eventManager.getLazyEmitter('rightclick');
     }
-    // initialized in ngOnInit
     /**
      * @param {?} options
      * @return {?}
@@ -2564,9 +2696,10 @@ class MapPolyline {
                 this._ngZone.runOutsideAngular((/**
                  * @return {?}
                  */
-                () => this._polyline = new google.maps.Polyline(options)));
-                (/** @type {?} */ (this._polyline)).setMap(this._map._googleMap);
-                this._eventManager.setTarget(this._polyline);
+                () => this.polyline = new google.maps.Polyline(options)));
+                this._assertInitialized();
+                (/** @type {?} */ (this.polyline)).setMap((/** @type {?} */ (this._map.googleMap)));
+                this._eventManager.setTarget(this.polyline);
             }));
             this._watchForOptionsChanges();
             this._watchForPathChanges();
@@ -2579,39 +2712,43 @@ class MapPolyline {
         this._eventManager.destroy();
         this._destroyed.next();
         this._destroyed.complete();
-        if (this._polyline) {
-            this._polyline.setMap(null);
+        if (this.polyline) {
+            this.polyline.setMap(null);
         }
     }
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getDraggable
      * @return {?}
      */
     getDraggable() {
-        return this._polyline ? this._polyline.getDraggable() : false;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.polyline)).getDraggable();
     }
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getEditable
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getEditable
      * @return {?}
      */
     getEditable() {
-        return this._polyline ? this._polyline.getEditable() : false;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.polyline)).getEditable();
     }
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getPath
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getPath
      * @return {?}
      */
     getPath() {
+        this._assertInitialized();
         // @breaking-change 11.0.0 Make the return value nullable.
-        return this._polyline ? this._polyline.getPath() : (/** @type {?} */ (null));
+        return (/** @type {?} */ (this.polyline)).getPath();
     }
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getVisible
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getVisible
      * @return {?}
      */
     getVisible() {
-        return this._polyline ? this._polyline.getVisible() : false;
+        this._assertInitialized();
+        return (/** @type {?} */ (this.polyline)).getVisible();
     }
     /**
      * @private
@@ -2638,8 +2775,9 @@ class MapPolyline {
          * @return {?}
          */
         options => {
-            if (this._polyline) {
-                this._polyline.setOptions(options);
+            if (this.polyline) {
+                this._assertInitialized();
+                this.polyline.setOptions(options);
             }
         }));
     }
@@ -2653,10 +2791,25 @@ class MapPolyline {
          * @return {?}
          */
         path => {
-            if (path && this._polyline) {
-                this._polyline.setPath(path);
+            if (path && this.polyline) {
+                this._assertInitialized();
+                this.polyline.setPath(path);
             }
         }));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _assertInitialized() {
+        if (!this._map.googleMap) {
+            throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                'Please wait for the API to load before trying to interact with it.');
+        }
+        if (!this.polyline) {
+            throw Error('Cannot interact with a Google Map Polyline before it has been ' +
+                'initialized. Please wait for the Polyline to load before trying to interact with it.');
+        }
     }
 }
 MapPolyline.decorators = [
@@ -2705,60 +2858,65 @@ if (false) {
      * @private
      */
     MapPolyline.prototype._destroyed;
-    /** @type {?} */
-    MapPolyline.prototype._polyline;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.click
+     * The underlying google.maps.Polyline object.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline
+     * @type {?}
+     */
+    MapPolyline.prototype.polyline;
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.click
      * @type {?}
      */
     MapPolyline.prototype.polylineClick;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dblclick
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dblclick
      * @type {?}
      */
     MapPolyline.prototype.polylineDblclick;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.drag
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.drag
      * @type {?}
      */
     MapPolyline.prototype.polylineDrag;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragend
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragend
      * @type {?}
      */
     MapPolyline.prototype.polylineDragend;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragstart
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragstart
      * @type {?}
      */
     MapPolyline.prototype.polylineDragstart;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousedown
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousedown
      * @type {?}
      */
     MapPolyline.prototype.polylineMousedown;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousemove
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousemove
      * @type {?}
      */
     MapPolyline.prototype.polylineMousemove;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseout
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseout
      * @type {?}
      */
     MapPolyline.prototype.polylineMouseout;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseover
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseover
      * @type {?}
      */
     MapPolyline.prototype.polylineMouseover;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseup
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseup
      * @type {?}
      */
     MapPolyline.prototype.polylineMouseup;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.rightclick
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.rightclick
      * @type {?}
      */
     MapPolyline.prototype.polylineRightclick;
@@ -2781,7 +2939,8 @@ if (false) {
  */
 /**
  * Angular component that renders a Google Maps Rectangle via the Google Maps JavaScript API.
- * @see developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle
  */
 class MapRectangle {
     /**
@@ -2796,67 +2955,66 @@ class MapRectangle {
         this._bounds = new BehaviorSubject(undefined);
         this._destroyed = new Subject();
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.boundsChanged
          */
         this.boundsChanged = this._eventManager.getLazyEmitter('bounds_changed');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.click
          */
         this.rectangleClick = this._eventManager.getLazyEmitter('click');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dblclick
          */
         this.rectangleDblclick = this._eventManager.getLazyEmitter('dblclick');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.drag
          */
         this.rectangleDrag = this._eventManager.getLazyEmitter('drag');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dragend
          */
         this.rectangleDragend = this._eventManager.getLazyEmitter('dragend');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dragstart
          */
         this.rectangleDragstart = this._eventManager.getLazyEmitter('dragstart');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mousedown
          */
         this.rectangleMousedown = this._eventManager.getLazyEmitter('mousedown');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mousemove
          */
         this.rectangleMousemove = this._eventManager.getLazyEmitter('mousemove');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseout
          */
         this.rectangleMouseout = this._eventManager.getLazyEmitter('mouseout');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseover
          */
         this.rectangleMouseover = this._eventManager.getLazyEmitter('mouseover');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseup
          */
         this.rectangleMouseup = this._eventManager.getLazyEmitter('mouseup');
         /**
-         * @see
+         * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.rightclick
          */
         this.rectangleRightclick = this._eventManager.getLazyEmitter('rightclick');
     }
-    // initialized in ngOnInit
     /**
      * @param {?} options
      * @return {?}
@@ -2888,10 +3046,11 @@ class MapRectangle {
                  * @return {?}
                  */
                 () => {
-                    this._rectangle = new google.maps.Rectangle(options);
+                    this.rectangle = new google.maps.Rectangle(options);
                 }));
-                this._rectangle.setMap(this._map._googleMap);
-                this._eventManager.setTarget(this._rectangle);
+                this._assertInitialized();
+                (/** @type {?} */ (this.rectangle)).setMap((/** @type {?} */ (this._map.googleMap)));
+                this._eventManager.setTarget(this.rectangle);
             }));
             this._watchForOptionsChanges();
             this._watchForBoundsChanges();
@@ -2904,41 +3063,45 @@ class MapRectangle {
         this._eventManager.destroy();
         this._destroyed.next();
         this._destroyed.complete();
-        if (this._rectangle) {
-            this._rectangle.setMap(null);
+        if (this.rectangle) {
+            this.rectangle.setMap(null);
         }
     }
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.getBounds
      * @return {?}
      */
     getBounds() {
-        return this._rectangle.getBounds();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.rectangle)).getBounds();
     }
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.getDraggable
      * @return {?}
      */
     getDraggable() {
-        return this._rectangle.getDraggable();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.rectangle)).getDraggable();
     }
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.getEditable
      * @return {?}
      */
     getEditable() {
-        return this._rectangle.getEditable();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.rectangle)).getEditable();
     }
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.getVisible
      * @return {?}
      */
     getVisible() {
-        return this._rectangle.getVisible();
+        this._assertInitialized();
+        return (/** @type {?} */ (this.rectangle)).getVisible();
     }
     /**
      * @private
@@ -2965,7 +3128,8 @@ class MapRectangle {
          * @return {?}
          */
         options => {
-            this._rectangle.setOptions(options);
+            this._assertInitialized();
+            (/** @type {?} */ (this.rectangle)).setOptions(options);
         }));
     }
     /**
@@ -2979,9 +3143,24 @@ class MapRectangle {
          */
         bounds => {
             if (bounds) {
-                this._rectangle.setBounds(bounds);
+                this._assertInitialized();
+                (/** @type {?} */ (this.rectangle)).setBounds(bounds);
             }
         }));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _assertInitialized() {
+        if (!this._map.googleMap) {
+            throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                'Please wait for the API to load before trying to interact with it.');
+        }
+        if (!this.rectangle) {
+            throw Error('Cannot interact with a Google Map Rectangle before it has been ' +
+                'initialized. Please wait for the Rectangle to load before trying to interact with it.');
+        }
     }
 }
 MapRectangle.decorators = [
@@ -3031,76 +3210,81 @@ if (false) {
      * @private
      */
     MapRectangle.prototype._destroyed;
-    /** @type {?} */
-    MapRectangle.prototype._rectangle;
     /**
-     * @see
+     * The underlying google.maps.Rectangle object.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle
+     * @type {?}
+     */
+    MapRectangle.prototype.rectangle;
+    /**
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.boundsChanged
      * @type {?}
      */
     MapRectangle.prototype.boundsChanged;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.click
      * @type {?}
      */
     MapRectangle.prototype.rectangleClick;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dblclick
      * @type {?}
      */
     MapRectangle.prototype.rectangleDblclick;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.drag
      * @type {?}
      */
     MapRectangle.prototype.rectangleDrag;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dragend
      * @type {?}
      */
     MapRectangle.prototype.rectangleDragend;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dragstart
      * @type {?}
      */
     MapRectangle.prototype.rectangleDragstart;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mousedown
      * @type {?}
      */
     MapRectangle.prototype.rectangleMousedown;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mousemove
      * @type {?}
      */
     MapRectangle.prototype.rectangleMousemove;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseout
      * @type {?}
      */
     MapRectangle.prototype.rectangleMouseout;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseover
      * @type {?}
      */
     MapRectangle.prototype.rectangleMouseover;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseup
      * @type {?}
      */
     MapRectangle.prototype.rectangleMouseup;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.rightclick
      * @type {?}
      */

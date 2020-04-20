@@ -8,13 +8,6 @@
 /// <reference types="googlemaps" />
 import { ElementRef, OnChanges, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
-/**
- * Extends the Google Map interface due to the Definitely Typed implementation
- * missing "getClickableIcons".
- */
-export interface UpdatedGoogleMap extends google.maps.Map {
-    getClickableIcons: () => boolean;
-}
 /** default options set to the Googleplex */
 export declare const DEFAULT_OPTIONS: google.maps.MapOptions;
 /** Arbitrary default height for the map element */
@@ -36,7 +29,12 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
     private readonly _zoom;
     private readonly _destroy;
     private _mapEl;
-    _googleMap: UpdatedGoogleMap;
+    /**
+     * The underlying google.maps.Map object
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/map#Map
+     */
+    googleMap?: google.maps.Map;
     /** Whether we're currently rendering inside a browser. */
     _isBrowser: boolean;
     /** Height of the map. */

@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
 /**
  * Angular component that renders a Google Maps Polygon via the Google Maps JavaScript API.
- * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon
  */
 export declare class MapPolygon implements OnInit, OnDestroy {
     private readonly _map;
@@ -20,78 +21,84 @@ export declare class MapPolygon implements OnInit, OnDestroy {
     private readonly _options;
     private readonly _paths;
     private readonly _destroyed;
-    _polygon: google.maps.Polygon;
+    /**
+     * The underlying google.maps.Polygon object.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon
+     */
+    polygon?: google.maps.Polygon;
     set options(options: google.maps.PolygonOptions);
     set paths(paths: google.maps.MVCArray<google.maps.MVCArray<google.maps.LatLng>> | google.maps.MVCArray<google.maps.LatLng> | google.maps.LatLng[] | google.maps.LatLngLiteral[]);
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.click
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.click
      */
     polygonClick: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dblclick
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dblclick
      */
     polygonDblclick: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.drag
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.drag
      */
     polygonDrag: Observable<google.maps.MouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragend
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragend
      */
     polygonDragend: Observable<google.maps.MouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragstart
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragstart
      */
     polygonDragstart: Observable<google.maps.MouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousedown
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousedown
      */
     polygonMousedown: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousemove
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousemove
      */
     polygonMousemove: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseout
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseout
      */
     polygonMouseout: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseover
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseover
      */
     polygonMouseover: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseup
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mouseup
      */
     polygonMouseup: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.rightclick
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.rightclick
      */
     polygonRightclick: Observable<google.maps.PolyMouseEvent>;
     constructor(_map: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getDraggable
      */
     getDraggable(): boolean;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getEditable
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getEditable
      */
     getEditable(): boolean;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getPath
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getPath
      */
     getPath(): google.maps.MVCArray<google.maps.LatLng>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getPaths
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getPaths
      */
     getPaths(): google.maps.MVCArray<google.maps.MVCArray<google.maps.LatLng>>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getVisible
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getVisible
      */
     getVisible(): boolean;
     private _combineOptions;
     private _watchForOptionsChanges;
     private _watchForPathChanges;
+    private _assertInitialized;
 }

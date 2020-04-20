@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
 /**
  * Angular component that renders a Google Maps Polyline via the Google Maps JavaScript API.
- * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline
  */
 export declare class MapPolyline implements OnInit, OnDestroy {
     private readonly _map;
@@ -20,74 +21,80 @@ export declare class MapPolyline implements OnInit, OnDestroy {
     private readonly _options;
     private readonly _path;
     private readonly _destroyed;
-    _polyline?: google.maps.Polyline;
+    /**
+     * The underlying google.maps.Polyline object.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline
+     */
+    polyline?: google.maps.Polyline;
     set options(options: google.maps.PolylineOptions);
     set path(path: google.maps.MVCArray<google.maps.LatLng> | google.maps.LatLng[] | google.maps.LatLngLiteral[]);
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.click
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.click
      */
     polylineClick: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dblclick
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dblclick
      */
     polylineDblclick: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.drag
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.drag
      */
     polylineDrag: Observable<google.maps.MouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragend
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragend
      */
     polylineDragend: Observable<google.maps.MouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragstart
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragstart
      */
     polylineDragstart: Observable<google.maps.MouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousedown
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousedown
      */
     polylineMousedown: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousemove
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousemove
      */
     polylineMousemove: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseout
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseout
      */
     polylineMouseout: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseover
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseover
      */
     polylineMouseover: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseup
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseup
      */
     polylineMouseup: Observable<google.maps.PolyMouseEvent>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.rightclick
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.rightclick
      */
     polylineRightclick: Observable<google.maps.PolyMouseEvent>;
     constructor(_map: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;
     /**
-     * @see
+     * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getDraggable
      */
     getDraggable(): boolean;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getEditable
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getEditable
      */
     getEditable(): boolean;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getPath
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getPath
      */
     getPath(): google.maps.MVCArray<google.maps.LatLng>;
     /**
-     * @see developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getVisible
+     * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getVisible
      */
     getVisible(): boolean;
     private _combineOptions;
     private _watchForOptionsChanges;
     private _watchForPathChanges;
+    private _assertInitialized;
 }

@@ -6,13 +6,14 @@
  * found in the LICENSE file at https://angular.io/license
  */
 /// <reference types="googlemaps" />
-import { ElementRef, OnDestroy, OnInit, NgZone } from '@angular/core';
+import { ElementRef, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
 import { MapMarker } from '../map-marker/map-marker';
 /**
  * Angular component that renders a Google Maps info window via the Google Maps JavaScript API.
- * @see developers.google.com/maps/documentation/javascript/reference/info-window
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/info-window
  */
 export declare class MapInfoWindow implements OnInit, OnDestroy {
     private readonly _googleMap;
@@ -22,7 +23,12 @@ export declare class MapInfoWindow implements OnInit, OnDestroy {
     private readonly _options;
     private readonly _position;
     private readonly _destroy;
-    private _infoWindow?;
+    /**
+     * Underlying google.maps.InfoWindow
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindow
+     */
+    infoWindow?: google.maps.InfoWindow;
     set options(options: google.maps.InfoWindowOptions);
     set position(position: google.maps.LatLngLiteral | google.maps.LatLng);
     /**
@@ -82,4 +88,7 @@ export declare class MapInfoWindow implements OnInit, OnDestroy {
      */
     open(anchor?: MapMarker): void;
     private _combineOptions;
+    private _watchForOptionsChanges;
+    private _watchForPositionChanges;
+    private _assertInitialized;
 }

@@ -21,7 +21,8 @@ export declare const DEFAULT_MARKER_OPTIONS: {
 };
 /**
  * Angular component that renders a Google Maps marker via the Google Maps JavaScript API.
- * @see developers.google.com/maps/documentation/javascript/reference/marker
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/marker
  */
 export declare class MapMarker implements OnInit, OnDestroy {
     private readonly _googleMap;
@@ -143,7 +144,12 @@ export declare class MapMarker implements OnInit, OnDestroy {
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.zindex_changed
      */
     zindexChanged: Observable<void>;
-    _marker?: google.maps.Marker;
+    /**
+     * The underlying google.maps.Marker object.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/marker#Marker
+     */
+    marker?: google.maps.Marker;
     constructor(_googleMap: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;
@@ -213,4 +219,5 @@ export declare class MapMarker implements OnInit, OnDestroy {
     private _watchForPositionChanges;
     private _watchForLabelChanges;
     private _watchForClickableChanges;
+    private _assertInitialized;
 }
