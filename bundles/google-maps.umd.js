@@ -993,6 +993,153 @@
      * found in the LICENSE file at https://angular.io/license
      */
     /**
+     * Angular component that renders a Google Maps Ground Overlay via the Google Maps JavaScript API.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/image-overlay#GroundOverlay
+     */
+    var MapGroundOverlay = /** @class */ (function () {
+        function MapGroundOverlay(_map, _ngZone) {
+            this._map = _map;
+            this._ngZone = _ngZone;
+            this._eventManager = new MapEventManager(this._ngZone);
+            this._opacity = new rxjs.BehaviorSubject(1);
+            this._destroyed = new rxjs.Subject();
+            this.clickable = false;
+            /**
+             * See
+             * developers.google.com/maps/documentation/javascript/reference/image-overlay#GroundOverlay.click
+             */
+            this.mapClick = this._eventManager.getLazyEmitter('click');
+            /**
+             * See
+             * developers.google.com/maps/documentation/javascript/reference/image-overlay
+             * #GroundOverlay.dblclick
+             */
+            this.mapDblclick = this._eventManager.getLazyEmitter('dblclick');
+        }
+        Object.defineProperty(MapGroundOverlay.prototype, "opacity", {
+            set: function (opacity) {
+                this._opacity.next(opacity);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        MapGroundOverlay.prototype.ngOnInit = function () {
+            var _this = this;
+            if (!this.url) {
+                throw Error('An image url is required');
+            }
+            if (!this.bounds) {
+                throw Error('Image bounds are required');
+            }
+            if (this._map._isBrowser) {
+                this._combineOptions().pipe(operators.take(1)).subscribe(function (options) {
+                    // Create the object outside the zone so its events don't trigger change detection.
+                    // We'll bring it back in inside the `MapEventManager` only for the events that the
+                    // user has subscribed to.
+                    _this._ngZone.runOutsideAngular(function () {
+                        _this.groundOverlay = new google.maps.GroundOverlay(_this.url, _this.bounds, options);
+                    });
+                    _this._assertInitialized();
+                    _this.groundOverlay.setMap(_this._map.googleMap);
+                    _this._eventManager.setTarget(_this.groundOverlay);
+                });
+                this._watchForOpacityChanges();
+            }
+        };
+        MapGroundOverlay.prototype.ngOnDestroy = function () {
+            this._eventManager.destroy();
+            this._destroyed.next();
+            this._destroyed.complete();
+            if (this.groundOverlay) {
+                this.groundOverlay.setMap(null);
+            }
+        };
+        /**
+         * See
+         * developers.google.com/maps/documentation/javascript/reference/image-overlay
+         * #GroundOverlay.getBounds
+         */
+        MapGroundOverlay.prototype.getBounds = function () {
+            this._assertInitialized();
+            return this.groundOverlay.getBounds();
+        };
+        /**
+         * See
+         * developers.google.com/maps/documentation/javascript/reference/image-overlay
+         * #GroundOverlay.getOpacity
+         */
+        MapGroundOverlay.prototype.getOpacity = function () {
+            this._assertInitialized();
+            return this.groundOverlay.getOpacity();
+        };
+        /**
+         * See
+         * developers.google.com/maps/documentation/javascript/reference/image-overlay
+         * #GroundOverlay.getUrl
+         */
+        MapGroundOverlay.prototype.getUrl = function () {
+            this._assertInitialized();
+            return this.groundOverlay.getUrl();
+        };
+        MapGroundOverlay.prototype._combineOptions = function () {
+            var _this = this;
+            return this._opacity.pipe(operators.map(function (opacity) {
+                var combinedOptions = {
+                    clickable: _this.clickable,
+                    opacity: opacity,
+                };
+                return combinedOptions;
+            }));
+        };
+        MapGroundOverlay.prototype._watchForOpacityChanges = function () {
+            var _this = this;
+            this._opacity.pipe(operators.takeUntil(this._destroyed)).subscribe(function (opacity) {
+                if (opacity) {
+                    _this._assertInitialized();
+                    _this.groundOverlay.setOpacity(opacity);
+                }
+            });
+        };
+        MapGroundOverlay.prototype._assertInitialized = function () {
+            if (!this._map.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.groundOverlay) {
+                throw Error('Cannot interact with a Google Map GroundOverlay before it has been initialized. ' +
+                    'Please wait for the GroundOverlay to load before trying to interact with it.');
+            }
+        };
+        MapGroundOverlay.decorators = [
+            { type: core.Directive, args: [{
+                        selector: 'map-ground-overlay',
+                    },] }
+        ];
+        /** @nocollapse */
+        MapGroundOverlay.ctorParameters = function () { return [
+            { type: GoogleMap },
+            { type: core.NgZone }
+        ]; };
+        MapGroundOverlay.propDecorators = {
+            url: [{ type: core.Input }],
+            bounds: [{ type: core.Input }],
+            clickable: [{ type: core.Input }],
+            opacity: [{ type: core.Input }],
+            mapClick: [{ type: core.Output }],
+            mapDblclick: [{ type: core.Output }]
+        };
+        return MapGroundOverlay;
+    }());
+
+    /**
+     * @license
+     * Copyright Google LLC All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
+    /**
      * Angular component that renders a Google Maps info window via the Google Maps JavaScript API.
      *
      * See developers.google.com/maps/documentation/javascript/reference/info-window
@@ -2202,6 +2349,7 @@
     var COMPONENTS = [
         GoogleMap,
         MapCircle,
+        MapGroundOverlay,
         MapInfoWindow,
         MapMarker,
         MapPolygon,
@@ -2235,6 +2383,7 @@
     exports.GoogleMap = GoogleMap;
     exports.GoogleMapsModule = GoogleMapsModule;
     exports.MapCircle = MapCircle;
+    exports.MapGroundOverlay = MapGroundOverlay;
     exports.MapInfoWindow = MapInfoWindow;
     exports.MapMarker = MapMarker;
     exports.MapPolygon = MapPolygon;

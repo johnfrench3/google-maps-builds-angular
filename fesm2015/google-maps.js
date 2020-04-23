@@ -1295,6 +1295,242 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: src/google-maps/map-ground-overlay/map-ground-overlay.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Angular component that renders a Google Maps Ground Overlay via the Google Maps JavaScript API.
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/image-overlay#GroundOverlay
+ */
+class MapGroundOverlay {
+    /**
+     * @param {?} _map
+     * @param {?} _ngZone
+     */
+    constructor(_map, _ngZone) {
+        this._map = _map;
+        this._ngZone = _ngZone;
+        this._eventManager = new MapEventManager(this._ngZone);
+        this._opacity = new BehaviorSubject(1);
+        this._destroyed = new Subject();
+        // Asserted in ngOnInit.
+        this.clickable = false;
+        /**
+         * See
+         * developers.google.com/maps/documentation/javascript/reference/image-overlay#GroundOverlay.click
+         */
+        this.mapClick = this._eventManager.getLazyEmitter('click');
+        /**
+         * See
+         * developers.google.com/maps/documentation/javascript/reference/image-overlay
+         * #GroundOverlay.dblclick
+         */
+        this.mapDblclick = this._eventManager.getLazyEmitter('dblclick');
+    }
+    /**
+     * @param {?} opacity
+     * @return {?}
+     */
+    set opacity(opacity) {
+        this._opacity.next(opacity);
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        if (!this.url) {
+            throw Error('An image url is required');
+        }
+        if (!this.bounds) {
+            throw Error('Image bounds are required');
+        }
+        if (this._map._isBrowser) {
+            this._combineOptions().pipe(take(1)).subscribe((/**
+             * @param {?} options
+             * @return {?}
+             */
+            options => {
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                this._ngZone.runOutsideAngular((/**
+                 * @return {?}
+                 */
+                () => {
+                    this.groundOverlay = new google.maps.GroundOverlay(this.url, this.bounds, options);
+                }));
+                this._assertInitialized();
+                (/** @type {?} */ (this.groundOverlay)).setMap((/** @type {?} */ (this._map.googleMap)));
+                this._eventManager.setTarget(this.groundOverlay);
+            }));
+            this._watchForOpacityChanges();
+        }
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this._eventManager.destroy();
+        this._destroyed.next();
+        this._destroyed.complete();
+        if (this.groundOverlay) {
+            this.groundOverlay.setMap(null);
+        }
+    }
+    /**
+     * See
+     * developers.google.com/maps/documentation/javascript/reference/image-overlay
+     * #GroundOverlay.getBounds
+     * @return {?}
+     */
+    getBounds() {
+        this._assertInitialized();
+        return (/** @type {?} */ (this.groundOverlay)).getBounds();
+    }
+    /**
+     * See
+     * developers.google.com/maps/documentation/javascript/reference/image-overlay
+     * #GroundOverlay.getOpacity
+     * @return {?}
+     */
+    getOpacity() {
+        this._assertInitialized();
+        return (/** @type {?} */ (this.groundOverlay)).getOpacity();
+    }
+    /**
+     * See
+     * developers.google.com/maps/documentation/javascript/reference/image-overlay
+     * #GroundOverlay.getUrl
+     * @return {?}
+     */
+    getUrl() {
+        this._assertInitialized();
+        return (/** @type {?} */ (this.groundOverlay)).getUrl();
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _combineOptions() {
+        return this._opacity.pipe(map((/**
+         * @param {?} opacity
+         * @return {?}
+         */
+        opacity => {
+            /** @type {?} */
+            const combinedOptions = {
+                clickable: this.clickable,
+                opacity,
+            };
+            return combinedOptions;
+        })));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _watchForOpacityChanges() {
+        this._opacity.pipe(takeUntil(this._destroyed)).subscribe((/**
+         * @param {?} opacity
+         * @return {?}
+         */
+        opacity => {
+            if (opacity) {
+                this._assertInitialized();
+                (/** @type {?} */ (this.groundOverlay)).setOpacity(opacity);
+            }
+        }));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _assertInitialized() {
+        if (!this._map.googleMap) {
+            throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                'Please wait for the API to load before trying to interact with it.');
+        }
+        if (!this.groundOverlay) {
+            throw Error('Cannot interact with a Google Map GroundOverlay before it has been initialized. ' +
+                'Please wait for the GroundOverlay to load before trying to interact with it.');
+        }
+    }
+}
+MapGroundOverlay.decorators = [
+    { type: Directive, args: [{
+                selector: 'map-ground-overlay',
+            },] }
+];
+/** @nocollapse */
+MapGroundOverlay.ctorParameters = () => [
+    { type: GoogleMap },
+    { type: NgZone }
+];
+MapGroundOverlay.propDecorators = {
+    url: [{ type: Input }],
+    bounds: [{ type: Input }],
+    clickable: [{ type: Input }],
+    opacity: [{ type: Input }],
+    mapClick: [{ type: Output }],
+    mapDblclick: [{ type: Output }]
+};
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    MapGroundOverlay.prototype._eventManager;
+    /**
+     * @type {?}
+     * @private
+     */
+    MapGroundOverlay.prototype._opacity;
+    /**
+     * @type {?}
+     * @private
+     */
+    MapGroundOverlay.prototype._destroyed;
+    /**
+     * The underlying google.maps.GroundOverlay object.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/image-overlay#GroundOverlay
+     * @type {?}
+     */
+    MapGroundOverlay.prototype.groundOverlay;
+    /** @type {?} */
+    MapGroundOverlay.prototype.url;
+    /** @type {?} */
+    MapGroundOverlay.prototype.bounds;
+    /** @type {?} */
+    MapGroundOverlay.prototype.clickable;
+    /**
+     * See
+     * developers.google.com/maps/documentation/javascript/reference/image-overlay#GroundOverlay.click
+     * @type {?}
+     */
+    MapGroundOverlay.prototype.mapClick;
+    /**
+     * See
+     * developers.google.com/maps/documentation/javascript/reference/image-overlay
+     * #GroundOverlay.dblclick
+     * @type {?}
+     */
+    MapGroundOverlay.prototype.mapDblclick;
+    /**
+     * @type {?}
+     * @private
+     */
+    MapGroundOverlay.prototype._map;
+    /**
+     * @type {?}
+     * @private
+     */
+    MapGroundOverlay.prototype._ngZone;
+}
+
+/**
+ * @fileoverview added by tsickle
  * Generated from: src/google-maps/map-info-window/map-info-window.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
@@ -3314,6 +3550,7 @@ if (false) {
 const COMPONENTS = [
     GoogleMap,
     MapCircle,
+    MapGroundOverlay,
     MapInfoWindow,
     MapMarker,
     MapPolygon,
@@ -3339,5 +3576,5 @@ GoogleMapsModule.decorators = [
  * Generated bundle index. Do not edit.
  */
 
-export { GoogleMap, GoogleMapsModule, MapCircle, MapInfoWindow, MapMarker, MapPolygon, MapPolyline, MapRectangle };
+export { GoogleMap, GoogleMapsModule, MapCircle, MapGroundOverlay, MapInfoWindow, MapMarker, MapPolygon, MapPolyline, MapRectangle };
 //# sourceMappingURL=google-maps.js.map
