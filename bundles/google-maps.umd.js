@@ -1070,7 +1070,11 @@
             this._eventManager.destroy();
             this._destroy.next();
             this._destroy.complete();
-            this.close();
+            // If no info window has been created on the server, we do not try closing it.
+            // On the server, an info window cannot be created and this would cause errors.
+            if (this.infoWindow) {
+                this.close();
+            }
         };
         /**
          * See developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindow.close
