@@ -364,7 +364,7 @@ class GoogleMap {
      */
     fitBounds(bounds, padding) {
         this._assertInitialized();
-        (/** @type {?} */ (this.googleMap)).fitBounds(bounds, padding);
+        this.googleMap.fitBounds(bounds, padding);
     }
     /**
      * See
@@ -375,7 +375,7 @@ class GoogleMap {
      */
     panBy(x, y) {
         this._assertInitialized();
-        (/** @type {?} */ (this.googleMap)).panBy(x, y);
+        this.googleMap.panBy(x, y);
     }
     /**
      * See
@@ -385,7 +385,7 @@ class GoogleMap {
      */
     panTo(latLng) {
         this._assertInitialized();
-        (/** @type {?} */ (this.googleMap)).panTo(latLng);
+        this.googleMap.panTo(latLng);
     }
     /**
      * See
@@ -396,7 +396,7 @@ class GoogleMap {
      */
     panToBounds(latLngBounds, padding) {
         this._assertInitialized();
-        (/** @type {?} */ (this.googleMap)).panToBounds(latLngBounds, padding);
+        this.googleMap.panToBounds(latLngBounds, padding);
     }
     /**
      * See
@@ -405,7 +405,7 @@ class GoogleMap {
      */
     getBounds() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).getBounds() || null;
+        return this.googleMap.getBounds() || null;
     }
     /**
      * See
@@ -414,7 +414,7 @@ class GoogleMap {
      */
     getCenter() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).getCenter();
+        return this.googleMap.getCenter();
     }
     /**
      * See
@@ -423,7 +423,7 @@ class GoogleMap {
      */
     getClickableIcons() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).getClickableIcons();
+        return this.googleMap.getClickableIcons();
     }
     /**
      * See
@@ -432,7 +432,7 @@ class GoogleMap {
      */
     getHeading() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).getHeading();
+        return this.googleMap.getHeading();
     }
     /**
      * See
@@ -441,7 +441,7 @@ class GoogleMap {
      */
     getMapTypeId() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).getMapTypeId();
+        return this.googleMap.getMapTypeId();
     }
     /**
      * See
@@ -450,7 +450,7 @@ class GoogleMap {
      */
     getProjection() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).getProjection();
+        return this.googleMap.getProjection();
     }
     /**
      * See
@@ -459,7 +459,7 @@ class GoogleMap {
      */
     getStreetView() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).getStreetView();
+        return this.googleMap.getStreetView();
     }
     /**
      * See
@@ -468,7 +468,7 @@ class GoogleMap {
      */
     getTilt() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).getTilt();
+        return this.googleMap.getTilt();
     }
     /**
      * See
@@ -477,7 +477,7 @@ class GoogleMap {
      */
     getZoom() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).getZoom();
+        return this.googleMap.getZoom();
     }
     /**
      * See
@@ -486,7 +486,7 @@ class GoogleMap {
      */
     get controls() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).controls;
+        return this.googleMap.controls;
     }
     /**
      * See
@@ -495,7 +495,7 @@ class GoogleMap {
      */
     get data() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).data;
+        return this.googleMap.data;
     }
     /**
      * See
@@ -504,7 +504,7 @@ class GoogleMap {
      */
     get mapTypes() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).mapTypes;
+        return this.googleMap.mapTypes;
     }
     /**
      * See
@@ -513,7 +513,7 @@ class GoogleMap {
      */
     get overlayMapTypes() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.googleMap)).overlayMapTypes;
+        return this.googleMap.overlayMapTypes;
     }
     /**
      * @private
@@ -992,7 +992,7 @@ class MapCircle {
                     this.circle = new google.maps.Circle(options);
                 }));
                 this._assertInitialized();
-                (/** @type {?} */ (this.circle)).setMap((/** @type {?} */ (this._map.googleMap)));
+                this.circle.setMap((/** @type {?} */ (this._map.googleMap)));
                 this._eventManager.setTarget(this.circle);
             }));
             this._watchForOptionsChanges();
@@ -1018,7 +1018,7 @@ class MapCircle {
      */
     getBounds() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.circle)).getBounds();
+        return this.circle.getBounds();
     }
     /**
      * @see
@@ -1027,7 +1027,7 @@ class MapCircle {
      */
     getCenter() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.circle)).getCenter();
+        return this.circle.getCenter();
     }
     /**
      * @see
@@ -1036,7 +1036,7 @@ class MapCircle {
      */
     getDraggable() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.circle)).getDraggable();
+        return this.circle.getDraggable();
     }
     /**
      * @see
@@ -1045,7 +1045,7 @@ class MapCircle {
      */
     getEditable() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.circle)).getEditable();
+        return this.circle.getEditable();
     }
     /**
      * @see
@@ -1054,7 +1054,7 @@ class MapCircle {
      */
     getRadius() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.circle)).getRadius();
+        return this.circle.getRadius();
     }
     /**
      * @see
@@ -1063,7 +1063,7 @@ class MapCircle {
      */
     getVisible() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.circle)).getVisible();
+        return this.circle.getVisible();
     }
     /**
      * @private
@@ -1092,7 +1092,7 @@ class MapCircle {
          */
         options => {
             this._assertInitialized();
-            (/** @type {?} */ (this.circle)).setOptions(options);
+            this.circle.setOptions(options);
         }));
     }
     /**
@@ -1107,7 +1107,7 @@ class MapCircle {
         center => {
             if (center) {
                 this._assertInitialized();
-                (/** @type {?} */ (this.circle)).setCenter(center);
+                this.circle.setCenter(center);
             }
         }));
     }
@@ -1123,7 +1123,7 @@ class MapCircle {
         radius => {
             if (radius !== undefined) {
                 this._assertInitialized();
-                (/** @type {?} */ (this.circle)).setRadius(radius);
+                this.circle.setRadius(radius);
             }
         }));
     }
@@ -1361,7 +1361,7 @@ class MapGroundOverlay {
                     this.groundOverlay = new google.maps.GroundOverlay(this.url, this.bounds, options);
                 }));
                 this._assertInitialized();
-                (/** @type {?} */ (this.groundOverlay)).setMap((/** @type {?} */ (this._map.googleMap)));
+                this.groundOverlay.setMap((/** @type {?} */ (this._map.googleMap)));
                 this._eventManager.setTarget(this.groundOverlay);
             }));
             this._watchForOpacityChanges();
@@ -1386,7 +1386,7 @@ class MapGroundOverlay {
      */
     getBounds() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.groundOverlay)).getBounds();
+        return this.groundOverlay.getBounds();
     }
     /**
      * See
@@ -1396,7 +1396,7 @@ class MapGroundOverlay {
      */
     getOpacity() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.groundOverlay)).getOpacity();
+        return this.groundOverlay.getOpacity();
     }
     /**
      * See
@@ -1406,7 +1406,7 @@ class MapGroundOverlay {
      */
     getUrl() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.groundOverlay)).getUrl();
+        return this.groundOverlay.getUrl();
     }
     /**
      * @private
@@ -1438,7 +1438,7 @@ class MapGroundOverlay {
         opacity => {
             if (opacity) {
                 this._assertInitialized();
-                (/** @type {?} */ (this.groundOverlay)).setOpacity(opacity);
+                this.groundOverlay.setOpacity(opacity);
             }
         }));
     }
@@ -1642,7 +1642,7 @@ class MapInfoWindow {
      */
     close() {
         this._assertInitialized();
-        (/** @type {?} */ (this.infoWindow)).close();
+        this.infoWindow.close();
     }
     /**
      * See
@@ -1651,7 +1651,7 @@ class MapInfoWindow {
      */
     getContent() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.infoWindow)).getContent();
+        return this.infoWindow.getContent();
     }
     /**
      * See
@@ -1661,7 +1661,7 @@ class MapInfoWindow {
      */
     getPosition() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.infoWindow)).getPosition();
+        return this.infoWindow.getPosition();
     }
     /**
      * See
@@ -1670,7 +1670,7 @@ class MapInfoWindow {
      */
     getZIndex() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.infoWindow)).getZIndex();
+        return this.infoWindow.getZIndex();
     }
     /**
      * Opens the MapInfoWindow using the provided MapMarker as the anchor. If the anchor is not set,
@@ -1683,7 +1683,7 @@ class MapInfoWindow {
         /** @type {?} */
         const marker = anchor ? anchor.marker : undefined;
         this._elementRef.nativeElement.style.display = '';
-        (/** @type {?} */ (this.infoWindow)).open(this._googleMap.googleMap, marker);
+        this.infoWindow.open(this._googleMap.googleMap, marker);
     }
     /**
      * @private
@@ -1711,7 +1711,7 @@ class MapInfoWindow {
          */
         options => {
             this._assertInitialized();
-            (/** @type {?} */ (this.infoWindow)).setOptions(options);
+            this.infoWindow.setOptions(options);
         }));
     }
     /**
@@ -1726,7 +1726,7 @@ class MapInfoWindow {
         position => {
             if (position) {
                 this._assertInitialized();
-                (/** @type {?} */ (this.infoWindow)).setPosition(position);
+                this.infoWindow.setPosition(position);
             }
         }));
     }
@@ -2037,7 +2037,7 @@ class MapMarker {
                  */
                 () => this.marker = new google.maps.Marker(options)));
                 this._assertInitialized();
-                (/** @type {?} */ (this.marker)).setMap((/** @type {?} */ (this._googleMap.googleMap)));
+                this.marker.setMap((/** @type {?} */ (this._googleMap.googleMap)));
                 this._eventManager.setTarget(this.marker);
             }));
             this._watchForOptionsChanges();
@@ -2065,7 +2065,7 @@ class MapMarker {
      */
     getAnimation() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getAnimation() || null;
+        return this.marker.getAnimation() || null;
     }
     /**
      * See
@@ -2074,7 +2074,7 @@ class MapMarker {
      */
     getClickable() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getClickable();
+        return this.marker.getClickable();
     }
     /**
      * See
@@ -2083,7 +2083,7 @@ class MapMarker {
      */
     getCursor() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getCursor() || null;
+        return this.marker.getCursor() || null;
     }
     /**
      * See
@@ -2092,7 +2092,7 @@ class MapMarker {
      */
     getDraggable() {
         this._assertInitialized();
-        return !!(/** @type {?} */ (this.marker)).getDraggable();
+        return !!this.marker.getDraggable();
     }
     /**
      * See
@@ -2101,7 +2101,7 @@ class MapMarker {
      */
     getIcon() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getIcon() || null;
+        return this.marker.getIcon() || null;
     }
     /**
      * See
@@ -2110,7 +2110,7 @@ class MapMarker {
      */
     getLabel() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getLabel() || null;
+        return this.marker.getLabel() || null;
     }
     /**
      * See
@@ -2119,7 +2119,7 @@ class MapMarker {
      */
     getOpacity() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getOpacity() || null;
+        return this.marker.getOpacity() || null;
     }
     /**
      * See
@@ -2128,7 +2128,7 @@ class MapMarker {
      */
     getPosition() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getPosition() || null;
+        return this.marker.getPosition() || null;
     }
     /**
      * See
@@ -2137,7 +2137,7 @@ class MapMarker {
      */
     getShape() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getShape() || null;
+        return this.marker.getShape() || null;
     }
     /**
      * See
@@ -2146,7 +2146,7 @@ class MapMarker {
      */
     getTitle() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getTitle() || null;
+        return this.marker.getTitle() || null;
     }
     /**
      * See
@@ -2155,7 +2155,7 @@ class MapMarker {
      */
     getVisible() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getVisible();
+        return this.marker.getVisible();
     }
     /**
      * See
@@ -2164,7 +2164,7 @@ class MapMarker {
      */
     getZIndex() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.marker)).getZIndex() || null;
+        return this.marker.getZIndex() || null;
     }
     /**
      * @private
@@ -2600,7 +2600,7 @@ class MapPolygon {
                     this.polygon = new google.maps.Polygon(options);
                 }));
                 this._assertInitialized();
-                (/** @type {?} */ (this.polygon)).setMap((/** @type {?} */ (this._map.googleMap)));
+                this.polygon.setMap((/** @type {?} */ (this._map.googleMap)));
                 this._eventManager.setTarget(this.polygon);
             }));
             this._watchForOptionsChanges();
@@ -2625,7 +2625,7 @@ class MapPolygon {
      */
     getDraggable() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.polygon)).getDraggable();
+        return this.polygon.getDraggable();
     }
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getEditable
@@ -2633,7 +2633,7 @@ class MapPolygon {
      */
     getEditable() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.polygon)).getEditable();
+        return this.polygon.getEditable();
     }
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getPath
@@ -2641,7 +2641,7 @@ class MapPolygon {
      */
     getPath() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.polygon)).getPath();
+        return this.polygon.getPath();
     }
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getPaths
@@ -2649,7 +2649,7 @@ class MapPolygon {
      */
     getPaths() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.polygon)).getPaths();
+        return this.polygon.getPaths();
     }
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.getVisible
@@ -2657,7 +2657,7 @@ class MapPolygon {
      */
     getVisible() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.polygon)).getVisible();
+        return this.polygon.getVisible();
     }
     /**
      * @private
@@ -2685,7 +2685,7 @@ class MapPolygon {
          */
         options => {
             this._assertInitialized();
-            (/** @type {?} */ (this.polygon)).setOptions(options);
+            this.polygon.setOptions(options);
         }));
     }
     /**
@@ -2700,7 +2700,7 @@ class MapPolygon {
         paths => {
             if (paths) {
                 this._assertInitialized();
-                (/** @type {?} */ (this.polygon)).setPaths(paths);
+                this.polygon.setPaths(paths);
             }
         }));
     }
@@ -2938,7 +2938,7 @@ class MapPolyline {
                  */
                 () => this.polyline = new google.maps.Polyline(options)));
                 this._assertInitialized();
-                (/** @type {?} */ (this.polyline)).setMap((/** @type {?} */ (this._map.googleMap)));
+                this.polyline.setMap((/** @type {?} */ (this._map.googleMap)));
                 this._eventManager.setTarget(this.polyline);
             }));
             this._watchForOptionsChanges();
@@ -2963,7 +2963,7 @@ class MapPolyline {
      */
     getDraggable() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.polyline)).getDraggable();
+        return this.polyline.getDraggable();
     }
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getEditable
@@ -2971,7 +2971,7 @@ class MapPolyline {
      */
     getEditable() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.polyline)).getEditable();
+        return this.polyline.getEditable();
     }
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getPath
@@ -2980,7 +2980,7 @@ class MapPolyline {
     getPath() {
         this._assertInitialized();
         // @breaking-change 11.0.0 Make the return value nullable.
-        return (/** @type {?} */ (this.polyline)).getPath();
+        return this.polyline.getPath();
     }
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.getVisible
@@ -2988,7 +2988,7 @@ class MapPolyline {
      */
     getVisible() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.polyline)).getVisible();
+        return this.polyline.getVisible();
     }
     /**
      * @private
@@ -3015,10 +3015,8 @@ class MapPolyline {
          * @return {?}
          */
         options => {
-            if (this.polyline) {
-                this._assertInitialized();
-                this.polyline.setOptions(options);
-            }
+            this._assertInitialized();
+            this.polyline.setOptions(options);
         }));
     }
     /**
@@ -3031,7 +3029,7 @@ class MapPolyline {
          * @return {?}
          */
         path => {
-            if (path && this.polyline) {
+            if (path) {
                 this._assertInitialized();
                 this.polyline.setPath(path);
             }
@@ -3289,7 +3287,7 @@ class MapRectangle {
                     this.rectangle = new google.maps.Rectangle(options);
                 }));
                 this._assertInitialized();
-                (/** @type {?} */ (this.rectangle)).setMap((/** @type {?} */ (this._map.googleMap)));
+                this.rectangle.setMap((/** @type {?} */ (this._map.googleMap)));
                 this._eventManager.setTarget(this.rectangle);
             }));
             this._watchForOptionsChanges();
@@ -3314,7 +3312,7 @@ class MapRectangle {
      */
     getBounds() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.rectangle)).getBounds();
+        return this.rectangle.getBounds();
     }
     /**
      * See
@@ -3323,7 +3321,7 @@ class MapRectangle {
      */
     getDraggable() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.rectangle)).getDraggable();
+        return this.rectangle.getDraggable();
     }
     /**
      * See
@@ -3332,7 +3330,7 @@ class MapRectangle {
      */
     getEditable() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.rectangle)).getEditable();
+        return this.rectangle.getEditable();
     }
     /**
      * See
@@ -3341,7 +3339,7 @@ class MapRectangle {
      */
     getVisible() {
         this._assertInitialized();
-        return (/** @type {?} */ (this.rectangle)).getVisible();
+        return this.rectangle.getVisible();
     }
     /**
      * @private
@@ -3369,7 +3367,7 @@ class MapRectangle {
          */
         options => {
             this._assertInitialized();
-            (/** @type {?} */ (this.rectangle)).setOptions(options);
+            this.rectangle.setOptions(options);
         }));
     }
     /**
@@ -3384,7 +3382,7 @@ class MapRectangle {
         bounds => {
             if (bounds) {
                 this._assertInitialized();
-                (/** @type {?} */ (this.rectangle)).setBounds(bounds);
+                this.rectangle.setBounds(bounds);
             }
         }));
     }

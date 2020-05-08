@@ -1874,16 +1874,14 @@ var MapPolyline = /** @class */ (function () {
     MapPolyline.prototype._watchForOptionsChanges = function () {
         var _this = this;
         this._options.pipe(takeUntil(this._destroyed)).subscribe(function (options) {
-            if (_this.polyline) {
-                _this._assertInitialized();
-                _this.polyline.setOptions(options);
-            }
+            _this._assertInitialized();
+            _this.polyline.setOptions(options);
         });
     };
     MapPolyline.prototype._watchForPathChanges = function () {
         var _this = this;
         this._path.pipe(takeUntil(this._destroyed)).subscribe(function (path) {
-            if (path && _this.polyline) {
+            if (path) {
                 _this._assertInitialized();
                 _this.polyline.setPath(path);
             }
