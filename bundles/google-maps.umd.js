@@ -1003,7 +1003,9 @@
             this._ngZone = _ngZone;
             this._eventManager = new MapEventManager(this._ngZone);
             this._opacity = new rxjs.BehaviorSubject(1);
+            this._url = new rxjs.BehaviorSubject('');
             this._destroyed = new rxjs.Subject();
+            /** Whether the overlay is clickable */
             this.clickable = false;
             /**
              * See
@@ -1017,7 +1019,16 @@
              */
             this.mapDblclick = this._eventManager.getLazyEmitter('dblclick');
         }
+        Object.defineProperty(MapGroundOverlay.prototype, "url", {
+            /** URL of the image that will be shown in the overlay. */
+            set: function (url) {
+                this._url.next(url);
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(MapGroundOverlay.prototype, "opacity", {
+            /** Opacity of the overlay. */
             set: function (opacity) {
                 this._opacity.next(opacity);
             },
@@ -1026,9 +1037,6 @@
         });
         MapGroundOverlay.prototype.ngOnInit = function () {
             var _this = this;
-            if (!this.url) {
-                throw Error('An image url is required');
-            }
             if (!this.bounds) {
                 throw Error('Image bounds are required');
             }
@@ -1038,13 +1046,15 @@
                     // We'll bring it back in inside the `MapEventManager` only for the events that the
                     // user has subscribed to.
                     _this._ngZone.runOutsideAngular(function () {
-                        _this.groundOverlay = new google.maps.GroundOverlay(_this.url, _this.bounds, options);
+                        _this.groundOverlay =
+                            new google.maps.GroundOverlay(_this._url.getValue(), _this.bounds, options);
                     });
                     _this._assertInitialized();
                     _this.groundOverlay.setMap(_this._map.googleMap);
                     _this._eventManager.setTarget(_this.groundOverlay);
                 });
                 this._watchForOpacityChanges();
+                this._watchForUrlChanges();
             }
         };
         MapGroundOverlay.prototype.ngOnDestroy = function () {
@@ -1099,6 +1109,17 @@
                     _this._assertInitialized();
                     _this.groundOverlay.setOpacity(opacity);
                 }
+            });
+        };
+        MapGroundOverlay.prototype._watchForUrlChanges = function () {
+            var _this = this;
+            this._url.pipe(operators.takeUntil(this._destroyed)).subscribe(function (url) {
+                _this._assertInitialized();
+                var overlay = _this.groundOverlay;
+                overlay.set('url', url);
+                // Google Maps only redraws the overlay if we re-set the map.
+                overlay.setMap(null);
+                overlay.setMap(_this._map.googleMap);
             });
         };
         MapGroundOverlay.prototype._assertInitialized = function () {

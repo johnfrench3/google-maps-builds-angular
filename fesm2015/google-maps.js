@@ -1313,8 +1313,11 @@ class MapGroundOverlay {
         this._ngZone = _ngZone;
         this._eventManager = new MapEventManager(this._ngZone);
         this._opacity = new BehaviorSubject(1);
+        this._url = new BehaviorSubject('');
         this._destroyed = new Subject();
-        // Asserted in ngOnInit.
+        /**
+         * Whether the overlay is clickable
+         */
         this.clickable = false;
         /**
          * See
@@ -1329,6 +1332,15 @@ class MapGroundOverlay {
         this.mapDblclick = this._eventManager.getLazyEmitter('dblclick');
     }
     /**
+     * URL of the image that will be shown in the overlay.
+     * @param {?} url
+     * @return {?}
+     */
+    set url(url) {
+        this._url.next(url);
+    }
+    /**
+     * Opacity of the overlay.
      * @param {?} opacity
      * @return {?}
      */
@@ -1339,9 +1351,6 @@ class MapGroundOverlay {
      * @return {?}
      */
     ngOnInit() {
-        if (!this.url) {
-            throw Error('An image url is required');
-        }
         if (!this.bounds) {
             throw Error('Image bounds are required');
         }
@@ -1358,13 +1367,15 @@ class MapGroundOverlay {
                  * @return {?}
                  */
                 () => {
-                    this.groundOverlay = new google.maps.GroundOverlay(this.url, this.bounds, options);
+                    this.groundOverlay =
+                        new google.maps.GroundOverlay(this._url.getValue(), this.bounds, options);
                 }));
                 this._assertInitialized();
                 this.groundOverlay.setMap((/** @type {?} */ (this._map.googleMap)));
                 this._eventManager.setTarget(this.groundOverlay);
             }));
             this._watchForOpacityChanges();
+            this._watchForUrlChanges();
         }
     }
     /**
@@ -1446,6 +1457,25 @@ class MapGroundOverlay {
      * @private
      * @return {?}
      */
+    _watchForUrlChanges() {
+        this._url.pipe(takeUntil(this._destroyed)).subscribe((/**
+         * @param {?} url
+         * @return {?}
+         */
+        url => {
+            this._assertInitialized();
+            /** @type {?} */
+            const overlay = this.groundOverlay;
+            overlay.set('url', url);
+            // Google Maps only redraws the overlay if we re-set the map.
+            overlay.setMap(null);
+            overlay.setMap((/** @type {?} */ (this._map.googleMap)));
+        }));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
     _assertInitialized() {
         if (!this._map.googleMap) {
             throw Error('Cannot access Google Map information before the API has been initialized. ' +
@@ -1490,6 +1520,11 @@ if (false) {
      * @type {?}
      * @private
      */
+    MapGroundOverlay.prototype._url;
+    /**
+     * @type {?}
+     * @private
+     */
     MapGroundOverlay.prototype._destroyed;
     /**
      * The underlying google.maps.GroundOverlay object.
@@ -1498,11 +1533,15 @@ if (false) {
      * @type {?}
      */
     MapGroundOverlay.prototype.groundOverlay;
-    /** @type {?} */
-    MapGroundOverlay.prototype.url;
-    /** @type {?} */
+    /**
+     * Bounds for the overlay.
+     * @type {?}
+     */
     MapGroundOverlay.prototype.bounds;
-    /** @type {?} */
+    /**
+     * Whether the overlay is clickable
+     * @type {?}
+     */
     MapGroundOverlay.prototype.clickable;
     /**
      * See
