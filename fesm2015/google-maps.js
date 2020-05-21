@@ -1741,17 +1741,15 @@ let MapInfoWindow = /** @class */ (() => {
             return this.infoWindow.getZIndex();
         }
         /**
-         * Opens the MapInfoWindow using the provided MapMarker as the anchor. If the anchor is not set,
+         * Opens the MapInfoWindow using the provided anchor. If the anchor is not set,
          * then the position property of the options input is used instead.
          * @param {?=} anchor
          * @return {?}
          */
         open(anchor) {
             this._assertInitialized();
-            /** @type {?} */
-            const marker = anchor ? anchor.marker : undefined;
             this._elementRef.nativeElement.style.display = '';
-            this.infoWindow.open(this._googleMap.googleMap, marker);
+            this.infoWindow.open(this._googleMap.googleMap, anchor ? anchor.getAnchor() : undefined);
         }
         /**
          * @private
@@ -2241,6 +2239,14 @@ let MapMarker = /** @class */ (() => {
         getZIndex() {
             this._assertInitialized();
             return this.marker.getZIndex() || null;
+        }
+        /**
+         * Gets the anchor point that can be used to attach other Google Maps objects.
+         * @return {?}
+         */
+        getAnchor() {
+            this._assertInitialized();
+            return this.marker;
         }
         /**
          * @private

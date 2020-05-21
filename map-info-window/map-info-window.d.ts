@@ -9,7 +9,7 @@
 import { ElementRef, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
-import { MapMarker } from '../map-marker/map-marker';
+import { MapAnchorPoint } from '../map-anchor-point';
 /**
  * Angular component that renders a Google Maps info window via the Google Maps JavaScript API.
  *
@@ -83,10 +83,10 @@ export declare class MapInfoWindow implements OnInit, OnDestroy {
      */
     getZIndex(): number;
     /**
-     * Opens the MapInfoWindow using the provided MapMarker as the anchor. If the anchor is not set,
+     * Opens the MapInfoWindow using the provided anchor. If the anchor is not set,
      * then the position property of the options input is used instead.
      */
-    open(anchor?: MapMarker): void;
+    open(anchor?: MapAnchorPoint): void;
     private _combineOptions;
     private _watchForOptionsChanges;
     private _watchForPositionChanges;

@@ -1438,14 +1438,13 @@
             return this.infoWindow.getZIndex();
         };
         /**
-         * Opens the MapInfoWindow using the provided MapMarker as the anchor. If the anchor is not set,
+         * Opens the MapInfoWindow using the provided anchor. If the anchor is not set,
          * then the position property of the options input is used instead.
          */
         MapInfoWindow.prototype.open = function (anchor) {
             this._assertInitialized();
-            var marker = anchor ? anchor.marker : undefined;
             this._elementRef.nativeElement.style.display = '';
-            this.infoWindow.open(this._googleMap.googleMap, marker);
+            this.infoWindow.open(this._googleMap.googleMap, anchor ? anchor.getAnchor() : undefined);
         };
         MapInfoWindow.prototype._combineOptions = function () {
             var _this = this;
@@ -1817,6 +1816,11 @@
         MapMarker.prototype.getZIndex = function () {
             this._assertInitialized();
             return this.marker.getZIndex() || null;
+        };
+        /** Gets the anchor point that can be used to attach other Google Maps objects. */
+        MapMarker.prototype.getAnchor = function () {
+            this._assertInitialized();
+            return this.marker;
         };
         MapMarker.prototype._combineOptions = function () {
             var _this = this;

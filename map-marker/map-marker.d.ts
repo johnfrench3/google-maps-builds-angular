@@ -9,6 +9,7 @@
 import { OnDestroy, OnInit, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
+import { MapAnchorPoint } from '../map-anchor-point';
 /**
  * Default options for the Google Maps marker component. Displays a marker
  * at the Googleplex.
@@ -24,7 +25,7 @@ export declare const DEFAULT_MARKER_OPTIONS: {
  *
  * See developers.google.com/maps/documentation/javascript/reference/marker
  */
-export declare class MapMarker implements OnInit, OnDestroy {
+export declare class MapMarker implements OnInit, OnDestroy, MapAnchorPoint {
     private readonly _googleMap;
     private _ngZone;
     private _eventManager;
@@ -213,6 +214,8 @@ export declare class MapMarker implements OnInit, OnDestroy {
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.getZIndex
      */
     getZIndex(): number | null;
+    /** Gets the anchor point that can be used to attach other Google Maps objects. */
+    getAnchor(): google.maps.MVCObject;
     private _combineOptions;
     private _watchForOptionsChanges;
     private _watchForTitleChanges;
