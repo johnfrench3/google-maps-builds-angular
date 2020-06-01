@@ -709,117 +709,46 @@
                     'Please wait for the API to load before trying to interact with it.');
             }
         };
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
-        ], GoogleMap.prototype, "height", void 0);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
-        ], GoogleMap.prototype, "width", void 0);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
-        ], GoogleMap.prototype, "mapTypeId", void 0);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], GoogleMap.prototype, "center", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Number),
-            __metadata("design:paramtypes", [Number])
-        ], GoogleMap.prototype, "zoom", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], GoogleMap.prototype, "options", null);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "boundsChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "centerChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "mapClick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "mapDblclick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "mapDrag", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "mapDragend", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "mapDragstart", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "headingChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "idle", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "maptypeidChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "mapMousemove", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "mapMouseout", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "mapMouseover", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "projectionChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "mapRightclick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "tilesloaded", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "tiltChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], GoogleMap.prototype, "zoomChanged", void 0);
-        GoogleMap = __decorate([
-            core.Component({
-                selector: 'google-map',
-                changeDetection: core.ChangeDetectionStrategy.OnPush,
-                template: '<div class="map-container"></div><ng-content></ng-content>',
-                encapsulation: core.ViewEncapsulation.None
-            }),
-            __param(2, core.Optional()), __param(2, core.Inject(core.PLATFORM_ID)),
-            __metadata("design:paramtypes", [core.ElementRef,
-                core.NgZone,
-                Object])
-        ], GoogleMap);
+        GoogleMap.decorators = [
+            { type: core.Component, args: [{
+                        selector: 'google-map',
+                        changeDetection: core.ChangeDetectionStrategy.OnPush,
+                        template: '<div class="map-container"></div><ng-content></ng-content>',
+                        encapsulation: core.ViewEncapsulation.None
+                    }] }
+        ];
+        /** @nocollapse */
+        GoogleMap.ctorParameters = function () { return [
+            { type: core.ElementRef },
+            { type: core.NgZone },
+            { type: Object, decorators: [{ type: core.Optional }, { type: core.Inject, args: [core.PLATFORM_ID,] }] }
+        ]; };
+        GoogleMap.propDecorators = {
+            height: [{ type: core.Input }],
+            width: [{ type: core.Input }],
+            mapTypeId: [{ type: core.Input }],
+            center: [{ type: core.Input }],
+            zoom: [{ type: core.Input }],
+            options: [{ type: core.Input }],
+            boundsChanged: [{ type: core.Output }],
+            centerChanged: [{ type: core.Output }],
+            mapClick: [{ type: core.Output }],
+            mapDblclick: [{ type: core.Output }],
+            mapDrag: [{ type: core.Output }],
+            mapDragend: [{ type: core.Output }],
+            mapDragstart: [{ type: core.Output }],
+            headingChanged: [{ type: core.Output }],
+            idle: [{ type: core.Output }],
+            maptypeidChanged: [{ type: core.Output }],
+            mapMousemove: [{ type: core.Output }],
+            mapMouseout: [{ type: core.Output }],
+            mapMouseover: [{ type: core.Output }],
+            projectionChanged: [{ type: core.Output }],
+            mapRightclick: [{ type: core.Output }],
+            tilesloaded: [{ type: core.Output }],
+            tiltChanged: [{ type: core.Output }],
+            zoomChanged: [{ type: core.Output }]
+        };
         return GoogleMap;
     }());
     var cssUnitsPattern = /([A-Za-z%]+)$/;
@@ -1056,79 +985,34 @@
                     'initialized. Please wait for the Circle to load before trying to interact with it.');
             }
         };
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapCircle.prototype, "options", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapCircle.prototype, "center", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Number),
-            __metadata("design:paramtypes", [Number])
-        ], MapCircle.prototype, "radius", null);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "centerChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleClick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleDblclick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleDrag", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleDragend", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleDragstart", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleMousedown", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleMousemove", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleMouseout", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleMouseover", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleMouseup", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "radiusChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapCircle.prototype, "circleRightclick", void 0);
-        MapCircle = __decorate([
-            core.Directive({
-                selector: 'map-circle',
-            }),
-            __metadata("design:paramtypes", [GoogleMap, core.NgZone])
-        ], MapCircle);
+        MapCircle.decorators = [
+            { type: core.Directive, args: [{
+                        selector: 'map-circle',
+                    },] }
+        ];
+        /** @nocollapse */
+        MapCircle.ctorParameters = function () { return [
+            { type: GoogleMap },
+            { type: core.NgZone }
+        ]; };
+        MapCircle.propDecorators = {
+            options: [{ type: core.Input }],
+            center: [{ type: core.Input }],
+            radius: [{ type: core.Input }],
+            centerChanged: [{ type: core.Output }],
+            circleClick: [{ type: core.Output }],
+            circleDblclick: [{ type: core.Output }],
+            circleDrag: [{ type: core.Output }],
+            circleDragend: [{ type: core.Output }],
+            circleDragstart: [{ type: core.Output }],
+            circleMousedown: [{ type: core.Output }],
+            circleMousemove: [{ type: core.Output }],
+            circleMouseout: [{ type: core.Output }],
+            circleMouseover: [{ type: core.Output }],
+            circleMouseup: [{ type: core.Output }],
+            radiusChanged: [{ type: core.Output }],
+            circleRightclick: [{ type: core.Output }]
+        };
         return MapCircle;
     }());
 
@@ -1279,38 +1163,24 @@
                     'Please wait for the GroundOverlay to load before trying to interact with it.');
             }
         };
-        __decorate([
-            core.Input(),
-            __metadata("design:type", String),
-            __metadata("design:paramtypes", [String])
-        ], MapGroundOverlay.prototype, "url", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
-        ], MapGroundOverlay.prototype, "bounds", void 0);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean)
-        ], MapGroundOverlay.prototype, "clickable", void 0);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Number),
-            __metadata("design:paramtypes", [Number])
-        ], MapGroundOverlay.prototype, "opacity", null);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapGroundOverlay.prototype, "mapClick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapGroundOverlay.prototype, "mapDblclick", void 0);
-        MapGroundOverlay = __decorate([
-            core.Directive({
-                selector: 'map-ground-overlay',
-            }),
-            __metadata("design:paramtypes", [GoogleMap, core.NgZone])
-        ], MapGroundOverlay);
+        MapGroundOverlay.decorators = [
+            { type: core.Directive, args: [{
+                        selector: 'map-ground-overlay',
+                    },] }
+        ];
+        /** @nocollapse */
+        MapGroundOverlay.ctorParameters = function () { return [
+            { type: GoogleMap },
+            { type: core.NgZone }
+        ]; };
+        MapGroundOverlay.propDecorators = {
+            url: [{ type: core.Input }],
+            bounds: [{ type: core.Input }],
+            clickable: [{ type: core.Input }],
+            opacity: [{ type: core.Input }],
+            mapClick: [{ type: core.Output }],
+            mapDblclick: [{ type: core.Output }]
+        };
         return MapGroundOverlay;
     }());
 
@@ -1481,45 +1351,27 @@
                     'it.');
             }
         };
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapInfoWindow.prototype, "options", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapInfoWindow.prototype, "position", null);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapInfoWindow.prototype, "closeclick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapInfoWindow.prototype, "contentChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapInfoWindow.prototype, "domready", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapInfoWindow.prototype, "positionChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapInfoWindow.prototype, "zindexChanged", void 0);
-        MapInfoWindow = __decorate([
-            core.Directive({
-                selector: 'map-info-window',
-                host: { 'style': 'display: none' },
-            }),
-            __metadata("design:paramtypes", [GoogleMap,
-                core.ElementRef,
-                core.NgZone])
-        ], MapInfoWindow);
+        MapInfoWindow.decorators = [
+            { type: core.Directive, args: [{
+                        selector: 'map-info-window',
+                        host: { 'style': 'display: none' },
+                    },] }
+        ];
+        /** @nocollapse */
+        MapInfoWindow.ctorParameters = function () { return [
+            { type: GoogleMap },
+            { type: core.ElementRef },
+            { type: core.NgZone }
+        ]; };
+        MapInfoWindow.propDecorators = {
+            options: [{ type: core.Input }],
+            position: [{ type: core.Input }],
+            closeclick: [{ type: core.Output }],
+            contentChanged: [{ type: core.Output }],
+            domready: [{ type: core.Output }],
+            positionChanged: [{ type: core.Output }],
+            zindexChanged: [{ type: core.Output }]
+        };
         return MapInfoWindow;
     }());
 
@@ -1886,125 +1738,47 @@
                     'initialized. Please wait for the Marker to load before trying to interact with it.');
             }
         };
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapMarker.prototype, "options", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", String),
-            __metadata("design:paramtypes", [String])
-        ], MapMarker.prototype, "title", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapMarker.prototype, "position", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapMarker.prototype, "label", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
-        ], MapMarker.prototype, "clickable", null);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "animationChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "mapClick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "clickableChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "cursorChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "mapDblclick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "mapDrag", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "mapDragend", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "draggableChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "mapDragstart", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "flatChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "iconChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "mapMousedown", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "mapMouseout", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "mapMouseover", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "mapMouseup", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "positionChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "mapRightclick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "shapeChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "titleChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "visibleChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapMarker.prototype, "zindexChanged", void 0);
-        MapMarker = __decorate([
-            core.Component({
-                selector: 'map-marker',
-                template: '<ng-content></ng-content>',
-                changeDetection: core.ChangeDetectionStrategy.OnPush,
-                encapsulation: core.ViewEncapsulation.None
-            }),
-            __metadata("design:paramtypes", [GoogleMap,
-                core.NgZone])
-        ], MapMarker);
+        MapMarker.decorators = [
+            { type: core.Component, args: [{
+                        selector: 'map-marker',
+                        template: '<ng-content></ng-content>',
+                        changeDetection: core.ChangeDetectionStrategy.OnPush,
+                        encapsulation: core.ViewEncapsulation.None
+                    }] }
+        ];
+        /** @nocollapse */
+        MapMarker.ctorParameters = function () { return [
+            { type: GoogleMap },
+            { type: core.NgZone }
+        ]; };
+        MapMarker.propDecorators = {
+            options: [{ type: core.Input }],
+            title: [{ type: core.Input }],
+            position: [{ type: core.Input }],
+            label: [{ type: core.Input }],
+            clickable: [{ type: core.Input }],
+            animationChanged: [{ type: core.Output }],
+            mapClick: [{ type: core.Output }],
+            clickableChanged: [{ type: core.Output }],
+            cursorChanged: [{ type: core.Output }],
+            mapDblclick: [{ type: core.Output }],
+            mapDrag: [{ type: core.Output }],
+            mapDragend: [{ type: core.Output }],
+            draggableChanged: [{ type: core.Output }],
+            mapDragstart: [{ type: core.Output }],
+            flatChanged: [{ type: core.Output }],
+            iconChanged: [{ type: core.Output }],
+            mapMousedown: [{ type: core.Output }],
+            mapMouseout: [{ type: core.Output }],
+            mapMouseover: [{ type: core.Output }],
+            mapMouseup: [{ type: core.Output }],
+            positionChanged: [{ type: core.Output }],
+            mapRightclick: [{ type: core.Output }],
+            shapeChanged: [{ type: core.Output }],
+            titleChanged: [{ type: core.Output }],
+            visibleChanged: [{ type: core.Output }],
+            zindexChanged: [{ type: core.Output }]
+        };
         return MapMarker;
     }());
 
@@ -2182,66 +1956,31 @@
                     'initialized. Please wait for the Polygon to load before trying to interact with it.');
             }
         };
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapPolygon.prototype, "options", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapPolygon.prototype, "paths", null);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonClick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonDblclick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonDrag", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonDragend", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonDragstart", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonMousedown", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonMousemove", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonMouseout", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonMouseover", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonMouseup", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolygon.prototype, "polygonRightclick", void 0);
-        MapPolygon = __decorate([
-            core.Directive({
-                selector: 'map-polygon',
-            }),
-            __metadata("design:paramtypes", [GoogleMap, core.NgZone])
-        ], MapPolygon);
+        MapPolygon.decorators = [
+            { type: core.Directive, args: [{
+                        selector: 'map-polygon',
+                    },] }
+        ];
+        /** @nocollapse */
+        MapPolygon.ctorParameters = function () { return [
+            { type: GoogleMap },
+            { type: core.NgZone }
+        ]; };
+        MapPolygon.propDecorators = {
+            options: [{ type: core.Input }],
+            paths: [{ type: core.Input }],
+            polygonClick: [{ type: core.Output }],
+            polygonDblclick: [{ type: core.Output }],
+            polygonDrag: [{ type: core.Output }],
+            polygonDragend: [{ type: core.Output }],
+            polygonDragstart: [{ type: core.Output }],
+            polygonMousedown: [{ type: core.Output }],
+            polygonMousemove: [{ type: core.Output }],
+            polygonMouseout: [{ type: core.Output }],
+            polygonMouseover: [{ type: core.Output }],
+            polygonMouseup: [{ type: core.Output }],
+            polygonRightclick: [{ type: core.Output }]
+        };
         return MapPolygon;
     }());
 
@@ -2411,67 +2150,31 @@
                     'initialized. Please wait for the Polyline to load before trying to interact with it.');
             }
         };
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapPolyline.prototype, "options", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapPolyline.prototype, "path", null);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineClick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineDblclick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineDrag", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineDragend", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineDragstart", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineMousedown", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineMousemove", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineMouseout", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineMouseover", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineMouseup", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapPolyline.prototype, "polylineRightclick", void 0);
-        MapPolyline = __decorate([
-            core.Directive({
-                selector: 'map-polyline',
-            }),
-            __metadata("design:paramtypes", [GoogleMap,
-                core.NgZone])
-        ], MapPolyline);
+        MapPolyline.decorators = [
+            { type: core.Directive, args: [{
+                        selector: 'map-polyline',
+                    },] }
+        ];
+        /** @nocollapse */
+        MapPolyline.ctorParameters = function () { return [
+            { type: GoogleMap },
+            { type: core.NgZone }
+        ]; };
+        MapPolyline.propDecorators = {
+            options: [{ type: core.Input }],
+            path: [{ type: core.Input }],
+            polylineClick: [{ type: core.Output }],
+            polylineDblclick: [{ type: core.Output }],
+            polylineDrag: [{ type: core.Output }],
+            polylineDragend: [{ type: core.Output }],
+            polylineDragstart: [{ type: core.Output }],
+            polylineMousedown: [{ type: core.Output }],
+            polylineMousemove: [{ type: core.Output }],
+            polylineMouseout: [{ type: core.Output }],
+            polylineMouseover: [{ type: core.Output }],
+            polylineMouseup: [{ type: core.Output }],
+            polylineRightclick: [{ type: core.Output }]
+        };
         return MapPolyline;
     }());
 
@@ -2661,70 +2364,32 @@
                     'initialized. Please wait for the Rectangle to load before trying to interact with it.');
             }
         };
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapRectangle.prototype, "options", null);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
-        ], MapRectangle.prototype, "bounds", null);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "boundsChanged", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleClick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleDblclick", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleDrag", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleDragend", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleDragstart", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleMousedown", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleMousemove", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleMouseout", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleMouseover", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleMouseup", void 0);
-        __decorate([
-            core.Output(),
-            __metadata("design:type", rxjs.Observable)
-        ], MapRectangle.prototype, "rectangleRightclick", void 0);
-        MapRectangle = __decorate([
-            core.Directive({
-                selector: 'map-rectangle',
-            }),
-            __metadata("design:paramtypes", [GoogleMap, core.NgZone])
-        ], MapRectangle);
+        MapRectangle.decorators = [
+            { type: core.Directive, args: [{
+                        selector: 'map-rectangle',
+                    },] }
+        ];
+        /** @nocollapse */
+        MapRectangle.ctorParameters = function () { return [
+            { type: GoogleMap },
+            { type: core.NgZone }
+        ]; };
+        MapRectangle.propDecorators = {
+            options: [{ type: core.Input }],
+            bounds: [{ type: core.Input }],
+            boundsChanged: [{ type: core.Output }],
+            rectangleClick: [{ type: core.Output }],
+            rectangleDblclick: [{ type: core.Output }],
+            rectangleDrag: [{ type: core.Output }],
+            rectangleDragend: [{ type: core.Output }],
+            rectangleDragstart: [{ type: core.Output }],
+            rectangleMousedown: [{ type: core.Output }],
+            rectangleMousemove: [{ type: core.Output }],
+            rectangleMouseout: [{ type: core.Output }],
+            rectangleMouseover: [{ type: core.Output }],
+            rectangleMouseup: [{ type: core.Output }],
+            rectangleRightclick: [{ type: core.Output }]
+        };
         return MapRectangle;
     }());
 
@@ -2748,12 +2413,12 @@
     var GoogleMapsModule = /** @class */ (function () {
         function GoogleMapsModule() {
         }
-        GoogleMapsModule = __decorate([
-            core.NgModule({
-                declarations: COMPONENTS,
-                exports: COMPONENTS,
-            })
-        ], GoogleMapsModule);
+        GoogleMapsModule.decorators = [
+            { type: core.NgModule, args: [{
+                        declarations: COMPONENTS,
+                        exports: COMPONENTS,
+                    },] }
+        ];
         return GoogleMapsModule;
     }());
 

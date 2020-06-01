@@ -1,5 +1,4 @@
-import { __decorate, __metadata, __param } from 'tslib';
-import { Input, Output, Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, Inject, PLATFORM_ID, ElementRef, NgZone, Directive, NgModule } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Optional, Inject, PLATFORM_ID, Input, Output, Directive, NgModule } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, BehaviorSubject, Subject, combineLatest } from 'rxjs';
 import { map, take, shareReplay, takeUntil } from 'rxjs/operators';
@@ -87,7 +86,7 @@ const DEFAULT_WIDTH = '500px';
  * @see https://developers.google.com/maps/documentation/javascript/reference/
  */
 let GoogleMap = /** @class */ (() => {
-    let GoogleMap = class GoogleMap {
+    class GoogleMap {
         constructor(_elementRef, _ngZone, 
         /**
          * @deprecated `platformId` parameter to become required.
@@ -434,118 +433,47 @@ let GoogleMap = /** @class */ (() => {
                     'Please wait for the API to load before trying to interact with it.');
             }
         }
+    }
+    GoogleMap.decorators = [
+        { type: Component, args: [{
+                    selector: 'google-map',
+                    changeDetection: ChangeDetectionStrategy.OnPush,
+                    template: '<div class="map-container"></div><ng-content></ng-content>',
+                    encapsulation: ViewEncapsulation.None
+                }] }
+    ];
+    /** @nocollapse */
+    GoogleMap.ctorParameters = () => [
+        { type: ElementRef },
+        { type: NgZone },
+        { type: Object, decorators: [{ type: Optional }, { type: Inject, args: [PLATFORM_ID,] }] }
+    ];
+    GoogleMap.propDecorators = {
+        height: [{ type: Input }],
+        width: [{ type: Input }],
+        mapTypeId: [{ type: Input }],
+        center: [{ type: Input }],
+        zoom: [{ type: Input }],
+        options: [{ type: Input }],
+        boundsChanged: [{ type: Output }],
+        centerChanged: [{ type: Output }],
+        mapClick: [{ type: Output }],
+        mapDblclick: [{ type: Output }],
+        mapDrag: [{ type: Output }],
+        mapDragend: [{ type: Output }],
+        mapDragstart: [{ type: Output }],
+        headingChanged: [{ type: Output }],
+        idle: [{ type: Output }],
+        maptypeidChanged: [{ type: Output }],
+        mapMousemove: [{ type: Output }],
+        mapMouseout: [{ type: Output }],
+        mapMouseover: [{ type: Output }],
+        projectionChanged: [{ type: Output }],
+        mapRightclick: [{ type: Output }],
+        tilesloaded: [{ type: Output }],
+        tiltChanged: [{ type: Output }],
+        zoomChanged: [{ type: Output }]
     };
-    __decorate([
-        Input(),
-        __metadata("design:type", Object)
-    ], GoogleMap.prototype, "height", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object)
-    ], GoogleMap.prototype, "width", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object)
-    ], GoogleMap.prototype, "mapTypeId", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], GoogleMap.prototype, "center", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Number),
-        __metadata("design:paramtypes", [Number])
-    ], GoogleMap.prototype, "zoom", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], GoogleMap.prototype, "options", null);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "boundsChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "centerChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "mapClick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "mapDblclick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "mapDrag", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "mapDragend", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "mapDragstart", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "headingChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "idle", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "maptypeidChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "mapMousemove", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "mapMouseout", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "mapMouseover", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "projectionChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "mapRightclick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "tilesloaded", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "tiltChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], GoogleMap.prototype, "zoomChanged", void 0);
-    GoogleMap = __decorate([
-        Component({
-            selector: 'google-map',
-            changeDetection: ChangeDetectionStrategy.OnPush,
-            template: '<div class="map-container"></div><ng-content></ng-content>',
-            encapsulation: ViewEncapsulation.None
-        }),
-        __param(2, Optional()), __param(2, Inject(PLATFORM_ID)),
-        __metadata("design:paramtypes", [ElementRef,
-            NgZone,
-            Object])
-    ], GoogleMap);
     return GoogleMap;
 })();
 const cssUnitsPattern = /([A-Za-z%]+)$/;
@@ -569,7 +497,7 @@ function coerceCssPixelValue(value) {
  * @see developers.google.com/maps/documentation/javascript/reference/polygon#Circle
  */
 let MapCircle = /** @class */ (() => {
-    let MapCircle = class MapCircle {
+    class MapCircle {
         constructor(_map, _ngZone) {
             this._map = _map;
             this._ngZone = _ngZone;
@@ -766,80 +694,35 @@ let MapCircle = /** @class */ (() => {
                     'initialized. Please wait for the Circle to load before trying to interact with it.');
             }
         }
+    }
+    MapCircle.decorators = [
+        { type: Directive, args: [{
+                    selector: 'map-circle',
+                },] }
+    ];
+    /** @nocollapse */
+    MapCircle.ctorParameters = () => [
+        { type: GoogleMap },
+        { type: NgZone }
+    ];
+    MapCircle.propDecorators = {
+        options: [{ type: Input }],
+        center: [{ type: Input }],
+        radius: [{ type: Input }],
+        centerChanged: [{ type: Output }],
+        circleClick: [{ type: Output }],
+        circleDblclick: [{ type: Output }],
+        circleDrag: [{ type: Output }],
+        circleDragend: [{ type: Output }],
+        circleDragstart: [{ type: Output }],
+        circleMousedown: [{ type: Output }],
+        circleMousemove: [{ type: Output }],
+        circleMouseout: [{ type: Output }],
+        circleMouseover: [{ type: Output }],
+        circleMouseup: [{ type: Output }],
+        radiusChanged: [{ type: Output }],
+        circleRightclick: [{ type: Output }]
     };
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapCircle.prototype, "options", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapCircle.prototype, "center", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Number),
-        __metadata("design:paramtypes", [Number])
-    ], MapCircle.prototype, "radius", null);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "centerChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleClick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleDblclick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleDrag", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleDragend", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleDragstart", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleMousedown", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleMousemove", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleMouseout", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleMouseover", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleMouseup", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "radiusChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapCircle.prototype, "circleRightclick", void 0);
-    MapCircle = __decorate([
-        Directive({
-            selector: 'map-circle',
-        }),
-        __metadata("design:paramtypes", [GoogleMap, NgZone])
-    ], MapCircle);
     return MapCircle;
 })();
 
@@ -856,7 +739,7 @@ let MapCircle = /** @class */ (() => {
  * See developers.google.com/maps/documentation/javascript/reference/image-overlay#GroundOverlay
  */
 let MapGroundOverlay = /** @class */ (() => {
-    let MapGroundOverlay = class MapGroundOverlay {
+    class MapGroundOverlay {
         constructor(_map, _ngZone) {
             this._map = _map;
             this._ngZone = _ngZone;
@@ -979,39 +862,25 @@ let MapGroundOverlay = /** @class */ (() => {
                     'Please wait for the GroundOverlay to load before trying to interact with it.');
             }
         }
+    }
+    MapGroundOverlay.decorators = [
+        { type: Directive, args: [{
+                    selector: 'map-ground-overlay',
+                },] }
+    ];
+    /** @nocollapse */
+    MapGroundOverlay.ctorParameters = () => [
+        { type: GoogleMap },
+        { type: NgZone }
+    ];
+    MapGroundOverlay.propDecorators = {
+        url: [{ type: Input }],
+        bounds: [{ type: Input }],
+        clickable: [{ type: Input }],
+        opacity: [{ type: Input }],
+        mapClick: [{ type: Output }],
+        mapDblclick: [{ type: Output }]
     };
-    __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
-    ], MapGroundOverlay.prototype, "url", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object)
-    ], MapGroundOverlay.prototype, "bounds", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Boolean)
-    ], MapGroundOverlay.prototype, "clickable", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Number),
-        __metadata("design:paramtypes", [Number])
-    ], MapGroundOverlay.prototype, "opacity", null);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapGroundOverlay.prototype, "mapClick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapGroundOverlay.prototype, "mapDblclick", void 0);
-    MapGroundOverlay = __decorate([
-        Directive({
-            selector: 'map-ground-overlay',
-        }),
-        __metadata("design:paramtypes", [GoogleMap, NgZone])
-    ], MapGroundOverlay);
     return MapGroundOverlay;
 })();
 
@@ -1028,7 +897,7 @@ let MapGroundOverlay = /** @class */ (() => {
  * See developers.google.com/maps/documentation/javascript/reference/info-window
  */
 let MapInfoWindow = /** @class */ (() => {
-    let MapInfoWindow = class MapInfoWindow {
+    class MapInfoWindow {
         constructor(_googleMap, _elementRef, _ngZone) {
             this._googleMap = _googleMap;
             this._elementRef = _elementRef;
@@ -1170,46 +1039,28 @@ let MapInfoWindow = /** @class */ (() => {
                     'it.');
             }
         }
+    }
+    MapInfoWindow.decorators = [
+        { type: Directive, args: [{
+                    selector: 'map-info-window',
+                    host: { 'style': 'display: none' },
+                },] }
+    ];
+    /** @nocollapse */
+    MapInfoWindow.ctorParameters = () => [
+        { type: GoogleMap },
+        { type: ElementRef },
+        { type: NgZone }
+    ];
+    MapInfoWindow.propDecorators = {
+        options: [{ type: Input }],
+        position: [{ type: Input }],
+        closeclick: [{ type: Output }],
+        contentChanged: [{ type: Output }],
+        domready: [{ type: Output }],
+        positionChanged: [{ type: Output }],
+        zindexChanged: [{ type: Output }]
     };
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapInfoWindow.prototype, "options", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapInfoWindow.prototype, "position", null);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapInfoWindow.prototype, "closeclick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapInfoWindow.prototype, "contentChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapInfoWindow.prototype, "domready", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapInfoWindow.prototype, "positionChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapInfoWindow.prototype, "zindexChanged", void 0);
-    MapInfoWindow = __decorate([
-        Directive({
-            selector: 'map-info-window',
-            host: { 'style': 'display: none' },
-        }),
-        __metadata("design:paramtypes", [GoogleMap,
-            ElementRef,
-            NgZone])
-    ], MapInfoWindow);
     return MapInfoWindow;
 })();
 
@@ -1233,7 +1084,7 @@ const DEFAULT_MARKER_OPTIONS = {
  * See developers.google.com/maps/documentation/javascript/reference/marker
  */
 let MapMarker = /** @class */ (() => {
-    let MapMarker = class MapMarker {
+    class MapMarker {
         constructor(_googleMap, _ngZone) {
             this._googleMap = _googleMap;
             this._ngZone = _ngZone;
@@ -1549,126 +1400,48 @@ let MapMarker = /** @class */ (() => {
                     'initialized. Please wait for the Marker to load before trying to interact with it.');
             }
         }
+    }
+    MapMarker.decorators = [
+        { type: Component, args: [{
+                    selector: 'map-marker',
+                    template: '<ng-content></ng-content>',
+                    changeDetection: ChangeDetectionStrategy.OnPush,
+                    encapsulation: ViewEncapsulation.None
+                }] }
+    ];
+    /** @nocollapse */
+    MapMarker.ctorParameters = () => [
+        { type: GoogleMap },
+        { type: NgZone }
+    ];
+    MapMarker.propDecorators = {
+        options: [{ type: Input }],
+        title: [{ type: Input }],
+        position: [{ type: Input }],
+        label: [{ type: Input }],
+        clickable: [{ type: Input }],
+        animationChanged: [{ type: Output }],
+        mapClick: [{ type: Output }],
+        clickableChanged: [{ type: Output }],
+        cursorChanged: [{ type: Output }],
+        mapDblclick: [{ type: Output }],
+        mapDrag: [{ type: Output }],
+        mapDragend: [{ type: Output }],
+        draggableChanged: [{ type: Output }],
+        mapDragstart: [{ type: Output }],
+        flatChanged: [{ type: Output }],
+        iconChanged: [{ type: Output }],
+        mapMousedown: [{ type: Output }],
+        mapMouseout: [{ type: Output }],
+        mapMouseover: [{ type: Output }],
+        mapMouseup: [{ type: Output }],
+        positionChanged: [{ type: Output }],
+        mapRightclick: [{ type: Output }],
+        shapeChanged: [{ type: Output }],
+        titleChanged: [{ type: Output }],
+        visibleChanged: [{ type: Output }],
+        zindexChanged: [{ type: Output }]
     };
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapMarker.prototype, "options", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
-    ], MapMarker.prototype, "title", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapMarker.prototype, "position", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapMarker.prototype, "label", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
-    ], MapMarker.prototype, "clickable", null);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "animationChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "mapClick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "clickableChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "cursorChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "mapDblclick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "mapDrag", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "mapDragend", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "draggableChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "mapDragstart", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "flatChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "iconChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "mapMousedown", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "mapMouseout", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "mapMouseover", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "mapMouseup", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "positionChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "mapRightclick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "shapeChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "titleChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "visibleChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapMarker.prototype, "zindexChanged", void 0);
-    MapMarker = __decorate([
-        Component({
-            selector: 'map-marker',
-            template: '<ng-content></ng-content>',
-            changeDetection: ChangeDetectionStrategy.OnPush,
-            encapsulation: ViewEncapsulation.None
-        }),
-        __metadata("design:paramtypes", [GoogleMap,
-            NgZone])
-    ], MapMarker);
     return MapMarker;
 })();
 
@@ -1685,7 +1458,7 @@ let MapMarker = /** @class */ (() => {
  * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon
  */
 let MapPolygon = /** @class */ (() => {
-    let MapPolygon = class MapPolygon {
+    class MapPolygon {
         constructor(_map, _ngZone) {
             this._map = _map;
             this._ngZone = _ngZone;
@@ -1835,67 +1608,32 @@ let MapPolygon = /** @class */ (() => {
                     'initialized. Please wait for the Polygon to load before trying to interact with it.');
             }
         }
+    }
+    MapPolygon.decorators = [
+        { type: Directive, args: [{
+                    selector: 'map-polygon',
+                },] }
+    ];
+    /** @nocollapse */
+    MapPolygon.ctorParameters = () => [
+        { type: GoogleMap },
+        { type: NgZone }
+    ];
+    MapPolygon.propDecorators = {
+        options: [{ type: Input }],
+        paths: [{ type: Input }],
+        polygonClick: [{ type: Output }],
+        polygonDblclick: [{ type: Output }],
+        polygonDrag: [{ type: Output }],
+        polygonDragend: [{ type: Output }],
+        polygonDragstart: [{ type: Output }],
+        polygonMousedown: [{ type: Output }],
+        polygonMousemove: [{ type: Output }],
+        polygonMouseout: [{ type: Output }],
+        polygonMouseover: [{ type: Output }],
+        polygonMouseup: [{ type: Output }],
+        polygonRightclick: [{ type: Output }]
     };
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapPolygon.prototype, "options", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapPolygon.prototype, "paths", null);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonClick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonDblclick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonDrag", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonDragend", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonDragstart", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonMousedown", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonMousemove", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonMouseout", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonMouseover", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonMouseup", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolygon.prototype, "polygonRightclick", void 0);
-    MapPolygon = __decorate([
-        Directive({
-            selector: 'map-polygon',
-        }),
-        __metadata("design:paramtypes", [GoogleMap, NgZone])
-    ], MapPolygon);
     return MapPolygon;
 })();
 
@@ -1912,7 +1650,7 @@ let MapPolygon = /** @class */ (() => {
  * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline
  */
 let MapPolyline = /** @class */ (() => {
-    let MapPolyline = class MapPolyline {
+    class MapPolyline {
         constructor(_map, _ngZone) {
             this._map = _map;
             this._ngZone = _ngZone;
@@ -2054,68 +1792,32 @@ let MapPolyline = /** @class */ (() => {
                     'initialized. Please wait for the Polyline to load before trying to interact with it.');
             }
         }
+    }
+    MapPolyline.decorators = [
+        { type: Directive, args: [{
+                    selector: 'map-polyline',
+                },] }
+    ];
+    /** @nocollapse */
+    MapPolyline.ctorParameters = () => [
+        { type: GoogleMap },
+        { type: NgZone }
+    ];
+    MapPolyline.propDecorators = {
+        options: [{ type: Input }],
+        path: [{ type: Input }],
+        polylineClick: [{ type: Output }],
+        polylineDblclick: [{ type: Output }],
+        polylineDrag: [{ type: Output }],
+        polylineDragend: [{ type: Output }],
+        polylineDragstart: [{ type: Output }],
+        polylineMousedown: [{ type: Output }],
+        polylineMousemove: [{ type: Output }],
+        polylineMouseout: [{ type: Output }],
+        polylineMouseover: [{ type: Output }],
+        polylineMouseup: [{ type: Output }],
+        polylineRightclick: [{ type: Output }]
     };
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapPolyline.prototype, "options", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapPolyline.prototype, "path", null);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineClick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineDblclick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineDrag", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineDragend", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineDragstart", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineMousedown", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineMousemove", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineMouseout", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineMouseover", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineMouseup", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapPolyline.prototype, "polylineRightclick", void 0);
-    MapPolyline = __decorate([
-        Directive({
-            selector: 'map-polyline',
-        }),
-        __metadata("design:paramtypes", [GoogleMap,
-            NgZone])
-    ], MapPolyline);
     return MapPolyline;
 })();
 
@@ -2132,7 +1834,7 @@ let MapPolyline = /** @class */ (() => {
  * See developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle
  */
 let MapRectangle = /** @class */ (() => {
-    let MapRectangle = class MapRectangle {
+    class MapRectangle {
         constructor(_map, _ngZone) {
             this._map = _map;
             this._ngZone = _ngZone;
@@ -2294,71 +1996,33 @@ let MapRectangle = /** @class */ (() => {
                     'initialized. Please wait for the Rectangle to load before trying to interact with it.');
             }
         }
+    }
+    MapRectangle.decorators = [
+        { type: Directive, args: [{
+                    selector: 'map-rectangle',
+                },] }
+    ];
+    /** @nocollapse */
+    MapRectangle.ctorParameters = () => [
+        { type: GoogleMap },
+        { type: NgZone }
+    ];
+    MapRectangle.propDecorators = {
+        options: [{ type: Input }],
+        bounds: [{ type: Input }],
+        boundsChanged: [{ type: Output }],
+        rectangleClick: [{ type: Output }],
+        rectangleDblclick: [{ type: Output }],
+        rectangleDrag: [{ type: Output }],
+        rectangleDragend: [{ type: Output }],
+        rectangleDragstart: [{ type: Output }],
+        rectangleMousedown: [{ type: Output }],
+        rectangleMousemove: [{ type: Output }],
+        rectangleMouseout: [{ type: Output }],
+        rectangleMouseover: [{ type: Output }],
+        rectangleMouseup: [{ type: Output }],
+        rectangleRightclick: [{ type: Output }]
     };
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapRectangle.prototype, "options", null);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], MapRectangle.prototype, "bounds", null);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "boundsChanged", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleClick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleDblclick", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleDrag", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleDragend", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleDragstart", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleMousedown", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleMousemove", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleMouseout", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleMouseover", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleMouseup", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", Observable)
-    ], MapRectangle.prototype, "rectangleRightclick", void 0);
-    MapRectangle = __decorate([
-        Directive({
-            selector: 'map-rectangle',
-        }),
-        __metadata("design:paramtypes", [GoogleMap, NgZone])
-    ], MapRectangle);
     return MapRectangle;
 })();
 
@@ -2380,14 +2044,14 @@ const COMPONENTS = [
     MapRectangle,
 ];
 let GoogleMapsModule = /** @class */ (() => {
-    let GoogleMapsModule = class GoogleMapsModule {
-    };
-    GoogleMapsModule = __decorate([
-        NgModule({
-            declarations: COMPONENTS,
-            exports: COMPONENTS,
-        })
-    ], GoogleMapsModule);
+    class GoogleMapsModule {
+    }
+    GoogleMapsModule.decorators = [
+        { type: NgModule, args: [{
+                    declarations: COMPONENTS,
+                    exports: COMPONENTS,
+                },] }
+    ];
     return GoogleMapsModule;
 })();
 
