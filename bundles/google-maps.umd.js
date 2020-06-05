@@ -712,6 +712,7 @@
         GoogleMap.decorators = [
             { type: core.Component, args: [{
                         selector: 'google-map',
+                        exportAs: 'googleMap',
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         template: '<div class="map-container"></div><ng-content></ng-content>',
                         encapsulation: core.ViewEncapsulation.None
@@ -988,6 +989,7 @@
         MapCircle.decorators = [
             { type: core.Directive, args: [{
                         selector: 'map-circle',
+                        exportAs: 'mapCircle',
                     },] }
         ];
         /** @nocollapse */
@@ -1166,6 +1168,7 @@
         MapGroundOverlay.decorators = [
             { type: core.Directive, args: [{
                         selector: 'map-ground-overlay',
+                        exportAs: 'mapGroundOverlay',
                     },] }
         ];
         /** @nocollapse */
@@ -1354,6 +1357,7 @@
         MapInfoWindow.decorators = [
             { type: core.Directive, args: [{
                         selector: 'map-info-window',
+                        exportAs: 'mapInfoWindow',
                         host: { 'style': 'display: none' },
                     },] }
         ];
@@ -1741,6 +1745,7 @@
         MapMarker.decorators = [
             { type: core.Component, args: [{
                         selector: 'map-marker',
+                        exportAs: 'mapMarker',
                         template: '<ng-content></ng-content>',
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         encapsulation: core.ViewEncapsulation.None
@@ -1959,6 +1964,7 @@
         MapPolygon.decorators = [
             { type: core.Directive, args: [{
                         selector: 'map-polygon',
+                        exportAs: 'mapPolygon',
                     },] }
         ];
         /** @nocollapse */
@@ -2153,6 +2159,7 @@
         MapPolyline.decorators = [
             { type: core.Directive, args: [{
                         selector: 'map-polyline',
+                        exportAs: 'mapPolyline',
                     },] }
         ];
         /** @nocollapse */
@@ -2367,6 +2374,7 @@
         MapRectangle.decorators = [
             { type: core.Directive, args: [{
                         selector: 'map-rectangle',
+                        exportAs: 'mapRectangle',
                     },] }
         ];
         /** @nocollapse */

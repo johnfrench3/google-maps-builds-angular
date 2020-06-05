@@ -437,6 +437,7 @@ let GoogleMap = /** @class */ (() => {
     GoogleMap.decorators = [
         { type: Component, args: [{
                     selector: 'google-map',
+                    exportAs: 'googleMap',
                     changeDetection: ChangeDetectionStrategy.OnPush,
                     template: '<div class="map-container"></div><ng-content></ng-content>',
                     encapsulation: ViewEncapsulation.None
@@ -698,6 +699,7 @@ let MapCircle = /** @class */ (() => {
     MapCircle.decorators = [
         { type: Directive, args: [{
                     selector: 'map-circle',
+                    exportAs: 'mapCircle',
                 },] }
     ];
     /** @nocollapse */
@@ -866,6 +868,7 @@ let MapGroundOverlay = /** @class */ (() => {
     MapGroundOverlay.decorators = [
         { type: Directive, args: [{
                     selector: 'map-ground-overlay',
+                    exportAs: 'mapGroundOverlay',
                 },] }
     ];
     /** @nocollapse */
@@ -1043,6 +1046,7 @@ let MapInfoWindow = /** @class */ (() => {
     MapInfoWindow.decorators = [
         { type: Directive, args: [{
                     selector: 'map-info-window',
+                    exportAs: 'mapInfoWindow',
                     host: { 'style': 'display: none' },
                 },] }
     ];
@@ -1404,6 +1408,7 @@ let MapMarker = /** @class */ (() => {
     MapMarker.decorators = [
         { type: Component, args: [{
                     selector: 'map-marker',
+                    exportAs: 'mapMarker',
                     template: '<ng-content></ng-content>',
                     changeDetection: ChangeDetectionStrategy.OnPush,
                     encapsulation: ViewEncapsulation.None
@@ -1612,6 +1617,7 @@ let MapPolygon = /** @class */ (() => {
     MapPolygon.decorators = [
         { type: Directive, args: [{
                     selector: 'map-polygon',
+                    exportAs: 'mapPolygon',
                 },] }
     ];
     /** @nocollapse */
@@ -1796,6 +1802,7 @@ let MapPolyline = /** @class */ (() => {
     MapPolyline.decorators = [
         { type: Directive, args: [{
                     selector: 'map-polyline',
+                    exportAs: 'mapPolyline',
                 },] }
     ];
     /** @nocollapse */
@@ -2000,6 +2007,7 @@ let MapRectangle = /** @class */ (() => {
     MapRectangle.decorators = [
         { type: Directive, args: [{
                     selector: 'map-rectangle',
+                    exportAs: 'mapRectangle',
                 },] }
     ];
     /** @nocollapse */
