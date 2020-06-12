@@ -441,9 +441,8 @@ let GoogleMap = /** @class */ (() => {
                     changeDetection: ChangeDetectionStrategy.OnPush,
                     template: '<div class="map-container"></div><ng-content></ng-content>',
                     encapsulation: ViewEncapsulation.None
-                }] }
+                },] }
     ];
-    /** @nocollapse */
     GoogleMap.ctorParameters = () => [
         { type: ElementRef },
         { type: NgZone },
@@ -702,7 +701,6 @@ let MapCircle = /** @class */ (() => {
                     exportAs: 'mapCircle',
                 },] }
     ];
-    /** @nocollapse */
     MapCircle.ctorParameters = () => [
         { type: GoogleMap },
         { type: NgZone }
@@ -871,7 +869,6 @@ let MapGroundOverlay = /** @class */ (() => {
                     exportAs: 'mapGroundOverlay',
                 },] }
     ];
-    /** @nocollapse */
     MapGroundOverlay.ctorParameters = () => [
         { type: GoogleMap },
         { type: NgZone }
@@ -1050,7 +1047,6 @@ let MapInfoWindow = /** @class */ (() => {
                     host: { 'style': 'display: none' },
                 },] }
     ];
-    /** @nocollapse */
     MapInfoWindow.ctorParameters = () => [
         { type: GoogleMap },
         { type: ElementRef },
@@ -1412,9 +1408,8 @@ let MapMarker = /** @class */ (() => {
                     template: '<ng-content></ng-content>',
                     changeDetection: ChangeDetectionStrategy.OnPush,
                     encapsulation: ViewEncapsulation.None
-                }] }
+                },] }
     ];
-    /** @nocollapse */
     MapMarker.ctorParameters = () => [
         { type: GoogleMap },
         { type: NgZone }
@@ -1620,7 +1615,6 @@ let MapPolygon = /** @class */ (() => {
                     exportAs: 'mapPolygon',
                 },] }
     ];
-    /** @nocollapse */
     MapPolygon.ctorParameters = () => [
         { type: GoogleMap },
         { type: NgZone }
@@ -1805,7 +1799,6 @@ let MapPolyline = /** @class */ (() => {
                     exportAs: 'mapPolyline',
                 },] }
     ];
-    /** @nocollapse */
     MapPolyline.ctorParameters = () => [
         { type: GoogleMap },
         { type: NgZone }
@@ -2010,7 +2003,6 @@ let MapRectangle = /** @class */ (() => {
                     exportAs: 'mapRectangle',
                 },] }
     ];
-    /** @nocollapse */
     MapRectangle.ctorParameters = () => [
         { type: GoogleMap },
         { type: NgZone }

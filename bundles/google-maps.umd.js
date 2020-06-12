@@ -716,9 +716,8 @@
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         template: '<div class="map-container"></div><ng-content></ng-content>',
                         encapsulation: core.ViewEncapsulation.None
-                    }] }
+                    },] }
         ];
-        /** @nocollapse */
         GoogleMap.ctorParameters = function () { return [
             { type: core.ElementRef },
             { type: core.NgZone },
@@ -992,7 +991,6 @@
                         exportAs: 'mapCircle',
                     },] }
         ];
-        /** @nocollapse */
         MapCircle.ctorParameters = function () { return [
             { type: GoogleMap },
             { type: core.NgZone }
@@ -1171,7 +1169,6 @@
                         exportAs: 'mapGroundOverlay',
                     },] }
         ];
-        /** @nocollapse */
         MapGroundOverlay.ctorParameters = function () { return [
             { type: GoogleMap },
             { type: core.NgZone }
@@ -1361,7 +1358,6 @@
                         host: { 'style': 'display: none' },
                     },] }
         ];
-        /** @nocollapse */
         MapInfoWindow.ctorParameters = function () { return [
             { type: GoogleMap },
             { type: core.ElementRef },
@@ -1749,9 +1745,8 @@
                         template: '<ng-content></ng-content>',
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         encapsulation: core.ViewEncapsulation.None
-                    }] }
+                    },] }
         ];
-        /** @nocollapse */
         MapMarker.ctorParameters = function () { return [
             { type: GoogleMap },
             { type: core.NgZone }
@@ -1967,7 +1962,6 @@
                         exportAs: 'mapPolygon',
                     },] }
         ];
-        /** @nocollapse */
         MapPolygon.ctorParameters = function () { return [
             { type: GoogleMap },
             { type: core.NgZone }
@@ -2162,7 +2156,6 @@
                         exportAs: 'mapPolyline',
                     },] }
         ];
-        /** @nocollapse */
         MapPolyline.ctorParameters = function () { return [
             { type: GoogleMap },
             { type: core.NgZone }
@@ -2377,7 +2370,6 @@
                         exportAs: 'mapRectangle',
                     },] }
         ];
-        /** @nocollapse */
         MapRectangle.ctorParameters = function () { return [
             { type: GoogleMap },
             { type: core.NgZone }
