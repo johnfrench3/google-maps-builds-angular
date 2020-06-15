@@ -217,7 +217,7 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.controls
      */
-    get controls(): Array<google.maps.MVCArray<Node>>;
+    get controls(): google.maps.MVCArray<Node>[];
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.data
