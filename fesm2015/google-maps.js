@@ -1402,9 +1402,12 @@ let MapMarker = /** @class */ (() => {
         }
     }
     MapMarker.decorators = [
-        { type: Directive, args: [{
+        { type: Component, args: [{
                     selector: 'map-marker',
                     exportAs: 'mapMarker',
+                    template: '<ng-content></ng-content>',
+                    changeDetection: ChangeDetectionStrategy.OnPush,
+                    encapsulation: ViewEncapsulation.None
                 },] }
     ];
     MapMarker.ctorParameters = () => [
