@@ -1739,12 +1739,9 @@
             }
         };
         MapMarker.decorators = [
-            { type: core.Component, args: [{
+            { type: core.Directive, args: [{
                         selector: 'map-marker',
                         exportAs: 'mapMarker',
-                        template: '<ng-content></ng-content>',
-                        changeDetection: core.ChangeDetectionStrategy.OnPush,
-                        encapsulation: core.ViewEncapsulation.None
                     },] }
         ];
         MapMarker.ctorParameters = function () { return [
