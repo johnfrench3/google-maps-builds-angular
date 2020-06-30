@@ -99,9 +99,9 @@ class GoogleMap {
         this._center = new BehaviorSubject(undefined);
         this._zoom = new BehaviorSubject(undefined);
         this._destroy = new Subject();
-        /** Height of the map. */
+        /** Height of the map. Set this to `null` if you'd like to control the height through CSS. */
         this.height = DEFAULT_HEIGHT;
-        /** Width of the map. */
+        /** Width of the map. Set this to `null` if you'd like to control the width through CSS. */
         this.width = DEFAULT_WIDTH;
         /**
          * See
@@ -380,8 +380,9 @@ class GoogleMap {
     _setSize() {
         if (this._mapEl) {
             const styles = this._mapEl.style;
-            styles.height = coerceCssPixelValue(this.height) || DEFAULT_HEIGHT;
-            styles.width = coerceCssPixelValue(this.width) || DEFAULT_WIDTH;
+            styles.height =
+                this.height === null ? '' : (coerceCssPixelValue(this.height) || DEFAULT_HEIGHT);
+            styles.width = this.width === null ? '' : (coerceCssPixelValue(this.width) || DEFAULT_WIDTH);
         }
     }
     /** Combines the center and zoom and the other map options into a single object */

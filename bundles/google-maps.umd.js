@@ -341,9 +341,9 @@
             this._center = new rxjs.BehaviorSubject(undefined);
             this._zoom = new rxjs.BehaviorSubject(undefined);
             this._destroy = new rxjs.Subject();
-            /** Height of the map. */
+            /** Height of the map. Set this to `null` if you'd like to control the height through CSS. */
             this.height = DEFAULT_HEIGHT;
-            /** Width of the map. */
+            /** Width of the map. Set this to `null` if you'd like to control the width through CSS. */
             this.width = DEFAULT_WIDTH;
             /**
              * See
@@ -651,8 +651,9 @@
         GoogleMap.prototype._setSize = function () {
             if (this._mapEl) {
                 var styles = this._mapEl.style;
-                styles.height = coerceCssPixelValue(this.height) || DEFAULT_HEIGHT;
-                styles.width = coerceCssPixelValue(this.width) || DEFAULT_WIDTH;
+                styles.height =
+                    this.height === null ? '' : (coerceCssPixelValue(this.height) || DEFAULT_HEIGHT);
+                styles.width = this.width === null ? '' : (coerceCssPixelValue(this.width) || DEFAULT_WIDTH);
             }
         };
         /** Combines the center and zoom and the other map options into a single object */
