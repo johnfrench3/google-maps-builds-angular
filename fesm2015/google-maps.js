@@ -389,7 +389,10 @@ class GoogleMap {
     _combineOptions() {
         return combineLatest([this._options, this._center, this._zoom])
             .pipe(map(([options, center, zoom]) => {
-            const combinedOptions = Object.assign(Object.assign({}, options), { center: center || options.center, zoom: zoom !== undefined ? zoom : options.zoom, mapTypeId: this.mapTypeId });
+            const combinedOptions = Object.assign(Object.assign({}, options), { 
+                // It's important that we set **some** kind of `center`, otherwise
+                // Google Maps will render a blank rectangle which looks broken.
+                center: center || options.center || DEFAULT_OPTIONS.center, zoom: zoom !== undefined ? zoom : options.zoom, mapTypeId: this.mapTypeId });
             return combinedOptions;
         }));
     }

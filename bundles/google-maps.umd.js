@@ -662,7 +662,10 @@
             return rxjs.combineLatest([this._options, this._center, this._zoom])
                 .pipe(operators.map(function (_a) {
                 var _b = __read(_a, 3), options = _b[0], center = _b[1], zoom = _b[2];
-                var combinedOptions = __assign(__assign({}, options), { center: center || options.center, zoom: zoom !== undefined ? zoom : options.zoom, mapTypeId: _this.mapTypeId });
+                var combinedOptions = __assign(__assign({}, options), { 
+                    // It's important that we set **some** kind of `center`, otherwise
+                    // Google Maps will render a blank rectangle which looks broken.
+                    center: center || options.center || DEFAULT_OPTIONS.center, zoom: zoom !== undefined ? zoom : options.zoom, mapTypeId: _this.mapTypeId });
                 return combinedOptions;
             }));
         };
