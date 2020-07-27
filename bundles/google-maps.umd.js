@@ -1317,8 +1317,12 @@
          */
         MapInfoWindow.prototype.open = function (anchor) {
             this._assertInitialized();
-            this._elementRef.nativeElement.style.display = '';
-            this.infoWindow.open(this._googleMap.googleMap, anchor ? anchor.getAnchor() : undefined);
+            var anchorObject = anchor ? anchor.getAnchor() : undefined;
+            // Prevent the info window from initializing if trying to reopen on the same anchor.
+            if (this.infoWindow.get('anchor') !== anchorObject) {
+                this._elementRef.nativeElement.style.display = '';
+                this.infoWindow.open(this._googleMap.googleMap, anchorObject);
+            }
         };
         MapInfoWindow.prototype._combineOptions = function () {
             var _this = this;

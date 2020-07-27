@@ -999,8 +999,12 @@ class MapInfoWindow {
      */
     open(anchor) {
         this._assertInitialized();
-        this._elementRef.nativeElement.style.display = '';
-        this.infoWindow.open(this._googleMap.googleMap, anchor ? anchor.getAnchor() : undefined);
+        const anchorObject = anchor ? anchor.getAnchor() : undefined;
+        // Prevent the info window from initializing if trying to reopen on the same anchor.
+        if (this.infoWindow.get('anchor') !== anchorObject) {
+            this._elementRef.nativeElement.style.display = '';
+            this.infoWindow.open(this._googleMap.googleMap, anchorObject);
+        }
     }
     _combineOptions() {
         return combineLatest([this._options, this._position]).pipe(map(([options, position]) => {
