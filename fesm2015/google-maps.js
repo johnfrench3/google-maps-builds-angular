@@ -1064,6 +1064,157 @@ MapInfoWindow.propDecorators = {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
+ * Angular component that renders a Google Maps KML Layer via the Google Maps JavaScript API.
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer
+ */
+class MapKmlLayer {
+    constructor(_map, _ngZone) {
+        this._map = _map;
+        this._ngZone = _ngZone;
+        this._eventManager = new MapEventManager(this._ngZone);
+        this._options = new BehaviorSubject({});
+        this._url = new BehaviorSubject('');
+        this._destroyed = new Subject();
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.click
+         */
+        this.kmlClick = this._eventManager.getLazyEmitter('click');
+        /**
+         * See
+         * developers.google.com/maps/documentation/javascript/reference/kml
+         * #KmlLayer.defaultviewport_changed
+         */
+        this.defaultviewportChanged = this._eventManager.getLazyEmitter('defaultviewport_changed');
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.status_changed
+         */
+        this.statusChanged = this._eventManager.getLazyEmitter('status_changed');
+    }
+    set options(options) {
+        this._options.next(options || {});
+    }
+    set url(url) {
+        this._url.next(url);
+    }
+    ngOnInit() {
+        if (this._map._isBrowser) {
+            this._combineOptions().pipe(take(1)).subscribe(options => {
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                this._ngZone.runOutsideAngular(() => this.kmlLayer = new google.maps.KmlLayer(options));
+                this._assertInitialized();
+                this.kmlLayer.setMap(this._map.googleMap);
+                this._eventManager.setTarget(this.kmlLayer);
+            });
+            this._watchForOptionsChanges();
+            this._watchForUrlChanges();
+        }
+    }
+    ngOnDestroy() {
+        this._eventManager.destroy();
+        this._destroyed.next();
+        this._destroyed.complete();
+        if (this.kmlLayer) {
+            this.kmlLayer.setMap(null);
+        }
+    }
+    /**
+     * See
+     * developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getDefaultViewport
+     */
+    getDefaultViewport() {
+        this._assertInitialized();
+        return this.kmlLayer.getDefaultViewport();
+    }
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getMetadata
+     */
+    getMetadata() {
+        this._assertInitialized();
+        return this.kmlLayer.getMetadata();
+    }
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getStatus
+     */
+    getStatus() {
+        this._assertInitialized();
+        return this.kmlLayer.getStatus();
+    }
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getUrl
+     */
+    getUrl() {
+        this._assertInitialized();
+        return this.kmlLayer.getUrl();
+    }
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getZIndex
+     */
+    getZIndex() {
+        this._assertInitialized();
+        return this.kmlLayer.getZIndex();
+    }
+    _combineOptions() {
+        return combineLatest([this._options, this._url]).pipe(map(([options, url]) => {
+            const combinedOptions = Object.assign(Object.assign({}, options), { url: url || options.url });
+            return combinedOptions;
+        }));
+    }
+    _watchForOptionsChanges() {
+        this._options.pipe(takeUntil(this._destroyed)).subscribe(options => {
+            if (this.kmlLayer) {
+                this._assertInitialized();
+                this.kmlLayer.setOptions(options);
+            }
+        });
+    }
+    _watchForUrlChanges() {
+        this._url.pipe(takeUntil(this._destroyed)).subscribe(url => {
+            if (url && this.kmlLayer) {
+                this._assertInitialized();
+                this.kmlLayer.setUrl(url);
+            }
+        });
+    }
+    _assertInitialized() {
+        if (!this._map.googleMap) {
+            throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                'Please wait for the API to load before trying to interact with it.');
+        }
+        if (!this.kmlLayer) {
+            throw Error('Cannot interact with a Google Map KmlLayer before it has been ' +
+                'initialized. Please wait for the KmlLayer to load before trying to interact with it.');
+        }
+    }
+}
+MapKmlLayer.decorators = [
+    { type: Directive, args: [{
+                selector: 'map-kml-layer',
+                exportAs: 'mapKmlLayer',
+            },] }
+];
+MapKmlLayer.ctorParameters = () => [
+    { type: GoogleMap },
+    { type: NgZone }
+];
+MapKmlLayer.propDecorators = {
+    options: [{ type: Input }],
+    url: [{ type: Input }],
+    kmlClick: [{ type: Output }],
+    defaultviewportChanged: [{ type: Output }],
+    statusChanged: [{ type: Output }]
+};
+
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
  * Default options for the Google Maps marker component. Displays a marker
  * at the Googleplex.
  */
@@ -2015,6 +2166,7 @@ const COMPONENTS = [
     MapCircle,
     MapGroundOverlay,
     MapInfoWindow,
+    MapKmlLayer,
     MapMarker,
     MapPolygon,
     MapPolyline,
@@ -2041,5 +2193,5 @@ GoogleMapsModule.decorators = [
  * Generated bundle index. Do not edit.
  */
 
-export { GoogleMap, GoogleMapsModule, MapCircle, MapGroundOverlay, MapInfoWindow, MapMarker, MapPolygon, MapPolyline, MapRectangle };
+export { GoogleMap, GoogleMapsModule, MapCircle, MapGroundOverlay, MapInfoWindow, MapKmlLayer, MapMarker, MapPolygon, MapPolyline, MapRectangle };
 //# sourceMappingURL=google-maps.js.map

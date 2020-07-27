@@ -1387,6 +1387,170 @@
      * found in the LICENSE file at https://angular.io/license
      */
     /**
+     * Angular component that renders a Google Maps KML Layer via the Google Maps JavaScript API.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer
+     */
+    var MapKmlLayer = /** @class */ (function () {
+        function MapKmlLayer(_map, _ngZone) {
+            this._map = _map;
+            this._ngZone = _ngZone;
+            this._eventManager = new MapEventManager(this._ngZone);
+            this._options = new rxjs.BehaviorSubject({});
+            this._url = new rxjs.BehaviorSubject('');
+            this._destroyed = new rxjs.Subject();
+            /**
+             * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.click
+             */
+            this.kmlClick = this._eventManager.getLazyEmitter('click');
+            /**
+             * See
+             * developers.google.com/maps/documentation/javascript/reference/kml
+             * #KmlLayer.defaultviewport_changed
+             */
+            this.defaultviewportChanged = this._eventManager.getLazyEmitter('defaultviewport_changed');
+            /**
+             * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.status_changed
+             */
+            this.statusChanged = this._eventManager.getLazyEmitter('status_changed');
+        }
+        Object.defineProperty(MapKmlLayer.prototype, "options", {
+            set: function (options) {
+                this._options.next(options || {});
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapKmlLayer.prototype, "url", {
+            set: function (url) {
+                this._url.next(url);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        MapKmlLayer.prototype.ngOnInit = function () {
+            var _this = this;
+            if (this._map._isBrowser) {
+                this._combineOptions().pipe(operators.take(1)).subscribe(function (options) {
+                    // Create the object outside the zone so its events don't trigger change detection.
+                    // We'll bring it back in inside the `MapEventManager` only for the events that the
+                    // user has subscribed to.
+                    _this._ngZone.runOutsideAngular(function () { return _this.kmlLayer = new google.maps.KmlLayer(options); });
+                    _this._assertInitialized();
+                    _this.kmlLayer.setMap(_this._map.googleMap);
+                    _this._eventManager.setTarget(_this.kmlLayer);
+                });
+                this._watchForOptionsChanges();
+                this._watchForUrlChanges();
+            }
+        };
+        MapKmlLayer.prototype.ngOnDestroy = function () {
+            this._eventManager.destroy();
+            this._destroyed.next();
+            this._destroyed.complete();
+            if (this.kmlLayer) {
+                this.kmlLayer.setMap(null);
+            }
+        };
+        /**
+         * See
+         * developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getDefaultViewport
+         */
+        MapKmlLayer.prototype.getDefaultViewport = function () {
+            this._assertInitialized();
+            return this.kmlLayer.getDefaultViewport();
+        };
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getMetadata
+         */
+        MapKmlLayer.prototype.getMetadata = function () {
+            this._assertInitialized();
+            return this.kmlLayer.getMetadata();
+        };
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getStatus
+         */
+        MapKmlLayer.prototype.getStatus = function () {
+            this._assertInitialized();
+            return this.kmlLayer.getStatus();
+        };
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getUrl
+         */
+        MapKmlLayer.prototype.getUrl = function () {
+            this._assertInitialized();
+            return this.kmlLayer.getUrl();
+        };
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getZIndex
+         */
+        MapKmlLayer.prototype.getZIndex = function () {
+            this._assertInitialized();
+            return this.kmlLayer.getZIndex();
+        };
+        MapKmlLayer.prototype._combineOptions = function () {
+            return rxjs.combineLatest([this._options, this._url]).pipe(operators.map(function (_a) {
+                var _b = __read(_a, 2), options = _b[0], url = _b[1];
+                var combinedOptions = __assign(__assign({}, options), { url: url || options.url });
+                return combinedOptions;
+            }));
+        };
+        MapKmlLayer.prototype._watchForOptionsChanges = function () {
+            var _this = this;
+            this._options.pipe(operators.takeUntil(this._destroyed)).subscribe(function (options) {
+                if (_this.kmlLayer) {
+                    _this._assertInitialized();
+                    _this.kmlLayer.setOptions(options);
+                }
+            });
+        };
+        MapKmlLayer.prototype._watchForUrlChanges = function () {
+            var _this = this;
+            this._url.pipe(operators.takeUntil(this._destroyed)).subscribe(function (url) {
+                if (url && _this.kmlLayer) {
+                    _this._assertInitialized();
+                    _this.kmlLayer.setUrl(url);
+                }
+            });
+        };
+        MapKmlLayer.prototype._assertInitialized = function () {
+            if (!this._map.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.kmlLayer) {
+                throw Error('Cannot interact with a Google Map KmlLayer before it has been ' +
+                    'initialized. Please wait for the KmlLayer to load before trying to interact with it.');
+            }
+        };
+        MapKmlLayer.decorators = [
+            { type: core.Directive, args: [{
+                        selector: 'map-kml-layer',
+                        exportAs: 'mapKmlLayer',
+                    },] }
+        ];
+        MapKmlLayer.ctorParameters = function () { return [
+            { type: GoogleMap },
+            { type: core.NgZone }
+        ]; };
+        MapKmlLayer.propDecorators = {
+            options: [{ type: core.Input }],
+            url: [{ type: core.Input }],
+            kmlClick: [{ type: core.Output }],
+            defaultviewportChanged: [{ type: core.Output }],
+            statusChanged: [{ type: core.Output }]
+        };
+        return MapKmlLayer;
+    }());
+
+    /**
+     * @license
+     * Copyright Google LLC All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
+    /**
      * Default options for the Google Maps marker component. Displays a marker
      * at the Googleplex.
      */
@@ -2406,6 +2570,7 @@
         MapCircle,
         MapGroundOverlay,
         MapInfoWindow,
+        MapKmlLayer,
         MapMarker,
         MapPolygon,
         MapPolyline,
@@ -2440,6 +2605,7 @@
     exports.MapCircle = MapCircle;
     exports.MapGroundOverlay = MapGroundOverlay;
     exports.MapInfoWindow = MapInfoWindow;
+    exports.MapKmlLayer = MapKmlLayer;
     exports.MapMarker = MapMarker;
     exports.MapPolygon = MapPolygon;
     exports.MapPolyline = MapPolyline;
