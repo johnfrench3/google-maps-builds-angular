@@ -19,35 +19,36 @@
     PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
     /* global Reflect, Promise */
-
-    var extendStatics = function(d, b) {
+    var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b)
+                if (b.hasOwnProperty(p))
+                    d[p] = b[p]; };
         return extendStatics(d, b);
     };
-
     function __extends(d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
-
-    var __assign = function() {
+    var __assign = function () {
         __assign = Object.assign || function __assign(t) {
             for (var s, i = 1, n = arguments.length; i < n; i++) {
                 s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+                for (var p in s)
+                    if (Object.prototype.hasOwnProperty.call(s, p))
+                        t[p] = s[p];
             }
             return t;
         };
         return __assign.apply(this, arguments);
     };
-
     function __rest(s, e) {
         var t = {};
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-            t[p] = s[p];
+        for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+                t[p] = s[p];
         if (s != null && typeof Object.getOwnPropertySymbols === "function")
             for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
                 if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
@@ -55,175 +56,247 @@
             }
         return t;
     }
-
     function __decorate(decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+            r = Reflect.decorate(decorators, target, key, desc);
+        else
+            for (var i = decorators.length - 1; i >= 0; i--)
+                if (d = decorators[i])
+                    r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     }
-
     function __param(paramIndex, decorator) {
-        return function (target, key) { decorator(target, key, paramIndex); }
+        return function (target, key) { decorator(target, key, paramIndex); };
     }
-
     function __metadata(metadataKey, metadataValue) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+            return Reflect.metadata(metadataKey, metadataValue);
     }
-
     function __awaiter(thisArg, _arguments, P, generator) {
         function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
         return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function fulfilled(value) { try {
+                step(generator.next(value));
+            }
+            catch (e) {
+                reject(e);
+            } }
+            function rejected(value) { try {
+                step(generator["throw"](value));
+            }
+            catch (e) {
+                reject(e);
+            } }
             function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     }
-
     function __generator(thisArg, body) {
-        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+        var _ = { label: 0, sent: function () { if (t[0] & 1)
+                throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
         function verb(n) { return function (v) { return step([n, v]); }; }
         function step(op) {
-            if (f) throw new TypeError("Generator is already executing.");
-            while (_) try {
-                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [op[0] & 2, t.value];
-                switch (op[0]) {
-                    case 0: case 1: t = op; break;
-                    case 4: _.label++; return { value: op[1], done: false };
-                    case 5: _.label++; y = op[1]; op = [0]; continue;
-                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                    default:
-                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                        if (t[2]) _.ops.pop();
-                        _.trys.pop(); continue;
+            if (f)
+                throw new TypeError("Generator is already executing.");
+            while (_)
+                try {
+                    if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
+                        return t;
+                    if (y = 0, t)
+                        op = [op[0] & 2, t.value];
+                    switch (op[0]) {
+                        case 0:
+                        case 1:
+                            t = op;
+                            break;
+                        case 4:
+                            _.label++;
+                            return { value: op[1], done: false };
+                        case 5:
+                            _.label++;
+                            y = op[1];
+                            op = [0];
+                            continue;
+                        case 7:
+                            op = _.ops.pop();
+                            _.trys.pop();
+                            continue;
+                        default:
+                            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                                _ = 0;
+                                continue;
+                            }
+                            if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) {
+                                _.label = op[1];
+                                break;
+                            }
+                            if (op[0] === 6 && _.label < t[1]) {
+                                _.label = t[1];
+                                t = op;
+                                break;
+                            }
+                            if (t && _.label < t[2]) {
+                                _.label = t[2];
+                                _.ops.push(op);
+                                break;
+                            }
+                            if (t[2])
+                                _.ops.pop();
+                            _.trys.pop();
+                            continue;
+                    }
+                    op = body.call(thisArg, _);
                 }
-                op = body.call(thisArg, _);
-            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+                catch (e) {
+                    op = [6, e];
+                    y = 0;
+                }
+                finally {
+                    f = t = 0;
+                }
+            if (op[0] & 5)
+                throw op[1];
+            return { value: op[0] ? op[1] : void 0, done: true };
         }
     }
-
-    var __createBinding = Object.create ? (function(o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-    }) : (function(o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
+    var __createBinding = Object.create ? (function (o, m, k, k2) {
+        if (k2 === undefined)
+            k2 = k;
+        Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
+    }) : (function (o, m, k, k2) {
+        if (k2 === undefined)
+            k2 = k;
         o[k2] = m[k];
     });
-
     function __exportStar(m, exports) {
-        for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+        for (var p in m)
+            if (p !== "default" && !exports.hasOwnProperty(p))
+                __createBinding(exports, m, p);
     }
-
     function __values(o) {
         var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-        if (m) return m.call(o);
-        if (o && typeof o.length === "number") return {
-            next: function () {
-                if (o && i >= o.length) o = void 0;
-                return { value: o && o[i++], done: !o };
-            }
-        };
+        if (m)
+            return m.call(o);
+        if (o && typeof o.length === "number")
+            return {
+                next: function () {
+                    if (o && i >= o.length)
+                        o = void 0;
+                    return { value: o && o[i++], done: !o };
+                }
+            };
         throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
     }
-
     function __read(o, n) {
         var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
+        if (!m)
+            return o;
         var i = m.call(o), r, ar = [], e;
         try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
+                ar.push(r.value);
         }
-        catch (error) { e = { error: error }; }
+        catch (error) {
+            e = { error: error };
+        }
         finally {
             try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
+                if (r && !r.done && (m = i["return"]))
+                    m.call(i);
             }
-            finally { if (e) throw e.error; }
+            finally {
+                if (e)
+                    throw e.error;
+            }
         }
         return ar;
     }
-
     function __spread() {
         for (var ar = [], i = 0; i < arguments.length; i++)
             ar = ar.concat(__read(arguments[i]));
         return ar;
     }
-
     function __spreadArrays() {
-        for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+        for (var s = 0, i = 0, il = arguments.length; i < il; i++)
+            s += arguments[i].length;
         for (var r = Array(s), k = 0, i = 0; i < il; i++)
             for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
                 r[k] = a[j];
         return r;
-    };
-
+    }
+    ;
     function __await(v) {
         return this instanceof __await ? (this.v = v, this) : new __await(v);
     }
-
     function __asyncGenerator(thisArg, _arguments, generator) {
-        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        if (!Symbol.asyncIterator)
+            throw new TypeError("Symbol.asyncIterator is not defined.");
         var g = generator.apply(thisArg, _arguments || []), i, q = [];
         return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
-        function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
-        function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+        function verb(n) { if (g[n])
+            i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+        function resume(n, v) { try {
+            step(g[n](v));
+        }
+        catch (e) {
+            settle(q[0][3], e);
+        } }
         function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
         function fulfill(value) { resume("next", value); }
         function reject(value) { resume("throw", value); }
-        function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+        function settle(f, v) { if (f(v), q.shift(), q.length)
+            resume(q[0][0], q[0][1]); }
     }
-
     function __asyncDelegator(o) {
         var i, p;
         return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
         function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
     }
-
     function __asyncValues(o) {
-        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        if (!Symbol.asyncIterator)
+            throw new TypeError("Symbol.asyncIterator is not defined.");
         var m = o[Symbol.asyncIterator], i;
         return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
         function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function (v) { resolve({ value: v, done: d }); }, reject); }
     }
-
     function __makeTemplateObject(cooked, raw) {
-        if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+        if (Object.defineProperty) {
+            Object.defineProperty(cooked, "raw", { value: raw });
+        }
+        else {
+            cooked.raw = raw;
+        }
         return cooked;
-    };
-
-    var __setModuleDefault = Object.create ? (function(o, v) {
+    }
+    ;
+    var __setModuleDefault = Object.create ? (function (o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
-    }) : function(o, v) {
+    }) : function (o, v) {
         o["default"] = v;
     };
-
     function __importStar(mod) {
-        if (mod && mod.__esModule) return mod;
+        if (mod && mod.__esModule)
+            return mod;
         var result = {};
-        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+        if (mod != null)
+            for (var k in mod)
+                if (Object.hasOwnProperty.call(mod, k))
+                    __createBinding(result, mod, k);
         __setModuleDefault(result, mod);
         return result;
     }
-
     function __importDefault(mod) {
         return (mod && mod.__esModule) ? mod : { default: mod };
     }
-
     function __classPrivateFieldGet(receiver, privateMap) {
         if (!privateMap.has(receiver)) {
             throw new TypeError("attempted to get private field on non-instance");
         }
         return privateMap.get(receiver);
     }
-
     function __classPrivateFieldSet(receiver, privateMap, value) {
         if (!privateMap.has(receiver)) {
             throw new TypeError("attempted to set private field on non-instance");
@@ -232,13 +305,6 @@
         return value;
     }
 
-    /**
-     * @license
-     * Copyright Google LLC All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     /** Manages event on a Google Maps object, ensuring that events are added only when necessary. */
     var MapEventManager = /** @class */ (function () {
         function MapEventManager(_ngZone) {
@@ -306,13 +372,6 @@
         return MapEventManager;
     }());
 
-    /**
-     * @license
-     * Copyright Google LLC All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     /** default options set to the Googleplex */
     var DEFAULT_OPTIONS = {
         center: { lat: 37.421995, lng: -122.084092 },
@@ -662,10 +721,11 @@
             return rxjs.combineLatest([this._options, this._center, this._zoom])
                 .pipe(operators.map(function (_a) {
                 var _b = __read(_a, 3), options = _b[0], center = _b[1], zoom = _b[2];
-                var combinedOptions = __assign(__assign({}, options), { 
+                var combinedOptions = Object.assign(Object.assign({}, options), {
                     // It's important that we set **some** kind of `center`, otherwise
                     // Google Maps will render a blank rectangle which looks broken.
-                    center: center || options.center || DEFAULT_OPTIONS.center, zoom: zoom !== undefined ? zoom : options.zoom, mapTypeId: _this.mapTypeId });
+                    center: center || options.center || DEFAULT_OPTIONS.center, zoom: zoom !== undefined ? zoom : options.zoom, mapTypeId: _this.mapTypeId
+                });
                 return combinedOptions;
             }));
         };
@@ -713,48 +773,48 @@
                     'Please wait for the API to load before trying to interact with it.');
             }
         };
-        GoogleMap.decorators = [
-            { type: core.Component, args: [{
-                        selector: 'google-map',
-                        exportAs: 'googleMap',
-                        changeDetection: core.ChangeDetectionStrategy.OnPush,
-                        template: '<div class="map-container"></div><ng-content></ng-content>',
-                        encapsulation: core.ViewEncapsulation.None
-                    },] }
-        ];
-        GoogleMap.ctorParameters = function () { return [
-            { type: core.ElementRef },
-            { type: core.NgZone },
-            { type: Object, decorators: [{ type: core.Optional }, { type: core.Inject, args: [core.PLATFORM_ID,] }] }
-        ]; };
-        GoogleMap.propDecorators = {
-            height: [{ type: core.Input }],
-            width: [{ type: core.Input }],
-            mapTypeId: [{ type: core.Input }],
-            center: [{ type: core.Input }],
-            zoom: [{ type: core.Input }],
-            options: [{ type: core.Input }],
-            boundsChanged: [{ type: core.Output }],
-            centerChanged: [{ type: core.Output }],
-            mapClick: [{ type: core.Output }],
-            mapDblclick: [{ type: core.Output }],
-            mapDrag: [{ type: core.Output }],
-            mapDragend: [{ type: core.Output }],
-            mapDragstart: [{ type: core.Output }],
-            headingChanged: [{ type: core.Output }],
-            idle: [{ type: core.Output }],
-            maptypeidChanged: [{ type: core.Output }],
-            mapMousemove: [{ type: core.Output }],
-            mapMouseout: [{ type: core.Output }],
-            mapMouseover: [{ type: core.Output }],
-            projectionChanged: [{ type: core.Output }],
-            mapRightclick: [{ type: core.Output }],
-            tilesloaded: [{ type: core.Output }],
-            tiltChanged: [{ type: core.Output }],
-            zoomChanged: [{ type: core.Output }]
-        };
         return GoogleMap;
     }());
+    GoogleMap.decorators = [
+        { type: core.Component, args: [{
+                    selector: 'google-map',
+                    exportAs: 'googleMap',
+                    changeDetection: core.ChangeDetectionStrategy.OnPush,
+                    template: '<div class="map-container"></div><ng-content></ng-content>',
+                    encapsulation: core.ViewEncapsulation.None
+                },] }
+    ];
+    GoogleMap.ctorParameters = function () { return [
+        { type: core.ElementRef },
+        { type: core.NgZone },
+        { type: Object, decorators: [{ type: core.Optional }, { type: core.Inject, args: [core.PLATFORM_ID,] }] }
+    ]; };
+    GoogleMap.propDecorators = {
+        height: [{ type: core.Input }],
+        width: [{ type: core.Input }],
+        mapTypeId: [{ type: core.Input }],
+        center: [{ type: core.Input }],
+        zoom: [{ type: core.Input }],
+        options: [{ type: core.Input }],
+        boundsChanged: [{ type: core.Output }],
+        centerChanged: [{ type: core.Output }],
+        mapClick: [{ type: core.Output }],
+        mapDblclick: [{ type: core.Output }],
+        mapDrag: [{ type: core.Output }],
+        mapDragend: [{ type: core.Output }],
+        mapDragstart: [{ type: core.Output }],
+        headingChanged: [{ type: core.Output }],
+        idle: [{ type: core.Output }],
+        maptypeidChanged: [{ type: core.Output }],
+        mapMousemove: [{ type: core.Output }],
+        mapMouseout: [{ type: core.Output }],
+        mapMouseover: [{ type: core.Output }],
+        projectionChanged: [{ type: core.Output }],
+        mapRightclick: [{ type: core.Output }],
+        tilesloaded: [{ type: core.Output }],
+        tiltChanged: [{ type: core.Output }],
+        zoomChanged: [{ type: core.Output }]
+    };
     var cssUnitsPattern = /([A-Za-z%]+)$/;
     /** Coerces a value to a CSS pixel value. */
     function coerceCssPixelValue(value) {
@@ -764,13 +824,6 @@
         return cssUnitsPattern.test(value) ? value : value + "px";
     }
 
-    /**
-     * @license
-     * Copyright Google LLC All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     /**
      * Angular component that renders a Google Maps Circle via the Google Maps JavaScript API.
      * @see developers.google.com/maps/documentation/javascript/reference/polygon#Circle
@@ -950,7 +1003,7 @@
             return rxjs.combineLatest([this._options, this._center, this._radius])
                 .pipe(operators.map(function (_a) {
                 var _b = __read(_a, 3), options = _b[0], center = _b[1], radius = _b[2];
-                var combinedOptions = __assign(__assign({}, options), { center: center || options.center, radius: radius !== undefined ? radius : options.radius });
+                var combinedOptions = Object.assign(Object.assign({}, options), { center: center || options.center, radius: radius !== undefined ? radius : options.radius });
                 return combinedOptions;
             }));
         };
@@ -989,36 +1042,36 @@
                     'initialized. Please wait for the Circle to load before trying to interact with it.');
             }
         };
-        MapCircle.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'map-circle',
-                        exportAs: 'mapCircle',
-                    },] }
-        ];
-        MapCircle.ctorParameters = function () { return [
-            { type: GoogleMap },
-            { type: core.NgZone }
-        ]; };
-        MapCircle.propDecorators = {
-            options: [{ type: core.Input }],
-            center: [{ type: core.Input }],
-            radius: [{ type: core.Input }],
-            centerChanged: [{ type: core.Output }],
-            circleClick: [{ type: core.Output }],
-            circleDblclick: [{ type: core.Output }],
-            circleDrag: [{ type: core.Output }],
-            circleDragend: [{ type: core.Output }],
-            circleDragstart: [{ type: core.Output }],
-            circleMousedown: [{ type: core.Output }],
-            circleMousemove: [{ type: core.Output }],
-            circleMouseout: [{ type: core.Output }],
-            circleMouseover: [{ type: core.Output }],
-            circleMouseup: [{ type: core.Output }],
-            radiusChanged: [{ type: core.Output }],
-            circleRightclick: [{ type: core.Output }]
-        };
         return MapCircle;
     }());
+    MapCircle.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-circle',
+                    exportAs: 'mapCircle',
+                },] }
+    ];
+    MapCircle.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.NgZone }
+    ]; };
+    MapCircle.propDecorators = {
+        options: [{ type: core.Input }],
+        center: [{ type: core.Input }],
+        radius: [{ type: core.Input }],
+        centerChanged: [{ type: core.Output }],
+        circleClick: [{ type: core.Output }],
+        circleDblclick: [{ type: core.Output }],
+        circleDrag: [{ type: core.Output }],
+        circleDragend: [{ type: core.Output }],
+        circleDragstart: [{ type: core.Output }],
+        circleMousedown: [{ type: core.Output }],
+        circleMousemove: [{ type: core.Output }],
+        circleMouseout: [{ type: core.Output }],
+        circleMouseover: [{ type: core.Output }],
+        circleMouseup: [{ type: core.Output }],
+        radiusChanged: [{ type: core.Output }],
+        circleRightclick: [{ type: core.Output }]
+    };
 
     /**
      * @license
@@ -1167,34 +1220,27 @@
                     'Please wait for the GroundOverlay to load before trying to interact with it.');
             }
         };
-        MapGroundOverlay.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'map-ground-overlay',
-                        exportAs: 'mapGroundOverlay',
-                    },] }
-        ];
-        MapGroundOverlay.ctorParameters = function () { return [
-            { type: GoogleMap },
-            { type: core.NgZone }
-        ]; };
-        MapGroundOverlay.propDecorators = {
-            url: [{ type: core.Input }],
-            bounds: [{ type: core.Input }],
-            clickable: [{ type: core.Input }],
-            opacity: [{ type: core.Input }],
-            mapClick: [{ type: core.Output }],
-            mapDblclick: [{ type: core.Output }]
-        };
         return MapGroundOverlay;
     }());
+    MapGroundOverlay.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-ground-overlay',
+                    exportAs: 'mapGroundOverlay',
+                },] }
+    ];
+    MapGroundOverlay.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.NgZone }
+    ]; };
+    MapGroundOverlay.propDecorators = {
+        url: [{ type: core.Input }],
+        bounds: [{ type: core.Input }],
+        clickable: [{ type: core.Input }],
+        opacity: [{ type: core.Input }],
+        mapClick: [{ type: core.Output }],
+        mapDblclick: [{ type: core.Output }]
+    };
 
-    /**
-     * @license
-     * Copyright Google LLC All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     /**
      * Angular component that renders a Google Maps info window via the Google Maps JavaScript API.
      *
@@ -1328,7 +1374,7 @@
             var _this = this;
             return rxjs.combineLatest([this._options, this._position]).pipe(operators.map(function (_a) {
                 var _b = __read(_a, 2), options = _b[0], position = _b[1];
-                var combinedOptions = __assign(__assign({}, options), { position: position || options.position, content: _this._elementRef.nativeElement });
+                var combinedOptions = Object.assign(Object.assign({}, options), { position: position || options.position, content: _this._elementRef.nativeElement });
                 return combinedOptions;
             }));
         };
@@ -1359,37 +1405,30 @@
                     'it.');
             }
         };
-        MapInfoWindow.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'map-info-window',
-                        exportAs: 'mapInfoWindow',
-                        host: { 'style': 'display: none' },
-                    },] }
-        ];
-        MapInfoWindow.ctorParameters = function () { return [
-            { type: GoogleMap },
-            { type: core.ElementRef },
-            { type: core.NgZone }
-        ]; };
-        MapInfoWindow.propDecorators = {
-            options: [{ type: core.Input }],
-            position: [{ type: core.Input }],
-            closeclick: [{ type: core.Output }],
-            contentChanged: [{ type: core.Output }],
-            domready: [{ type: core.Output }],
-            positionChanged: [{ type: core.Output }],
-            zindexChanged: [{ type: core.Output }]
-        };
         return MapInfoWindow;
     }());
+    MapInfoWindow.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-info-window',
+                    exportAs: 'mapInfoWindow',
+                    host: { 'style': 'display: none' },
+                },] }
+    ];
+    MapInfoWindow.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.ElementRef },
+        { type: core.NgZone }
+    ]; };
+    MapInfoWindow.propDecorators = {
+        options: [{ type: core.Input }],
+        position: [{ type: core.Input }],
+        closeclick: [{ type: core.Output }],
+        contentChanged: [{ type: core.Output }],
+        domready: [{ type: core.Output }],
+        positionChanged: [{ type: core.Output }],
+        zindexChanged: [{ type: core.Output }]
+    };
 
-    /**
-     * @license
-     * Copyright Google LLC All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     /**
      * Angular component that renders a Google Maps KML Layer via the Google Maps JavaScript API.
      *
@@ -1495,7 +1534,7 @@
         MapKmlLayer.prototype._combineOptions = function () {
             return rxjs.combineLatest([this._options, this._url]).pipe(operators.map(function (_a) {
                 var _b = __read(_a, 2), options = _b[0], url = _b[1];
-                var combinedOptions = __assign(__assign({}, options), { url: url || options.url });
+                var combinedOptions = Object.assign(Object.assign({}, options), { url: url || options.url });
                 return combinedOptions;
             }));
         };
@@ -1527,33 +1566,26 @@
                     'initialized. Please wait for the KmlLayer to load before trying to interact with it.');
             }
         };
-        MapKmlLayer.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'map-kml-layer',
-                        exportAs: 'mapKmlLayer',
-                    },] }
-        ];
-        MapKmlLayer.ctorParameters = function () { return [
-            { type: GoogleMap },
-            { type: core.NgZone }
-        ]; };
-        MapKmlLayer.propDecorators = {
-            options: [{ type: core.Input }],
-            url: [{ type: core.Input }],
-            kmlClick: [{ type: core.Output }],
-            defaultviewportChanged: [{ type: core.Output }],
-            statusChanged: [{ type: core.Output }]
-        };
         return MapKmlLayer;
     }());
+    MapKmlLayer.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-kml-layer',
+                    exportAs: 'mapKmlLayer',
+                },] }
+    ];
+    MapKmlLayer.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.NgZone }
+    ]; };
+    MapKmlLayer.propDecorators = {
+        options: [{ type: core.Input }],
+        url: [{ type: core.Input }],
+        kmlClick: [{ type: core.Output }],
+        defaultviewportChanged: [{ type: core.Output }],
+        statusChanged: [{ type: core.Output }]
+    };
 
-    /**
-     * @license
-     * Copyright Google LLC All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     /**
      * Default options for the Google Maps marker component. Displays a marker
      * at the Googleplex.
@@ -1851,7 +1883,7 @@
             return rxjs.combineLatest([this._options, this._title, this._position, this._label, this._clickable])
                 .pipe(operators.map(function (_a) {
                 var _b = __read(_a, 5), options = _b[0], title = _b[1], position = _b[2], label = _b[3], clickable = _b[4];
-                var combinedOptions = __assign(__assign({}, options), { title: title || options.title, position: position || options.position, label: label || options.label, clickable: clickable !== undefined ? clickable : options.clickable, map: _this._googleMap.googleMap });
+                var combinedOptions = Object.assign(Object.assign({}, options), { title: title || options.title, position: position || options.position, label: label || options.label, clickable: clickable !== undefined ? clickable : options.clickable, map: _this._googleMap.googleMap });
                 return combinedOptions;
             }));
         };
@@ -1910,54 +1942,47 @@
                     'initialized. Please wait for the Marker to load before trying to interact with it.');
             }
         };
-        MapMarker.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'map-marker',
-                        exportAs: 'mapMarker',
-                    },] }
-        ];
-        MapMarker.ctorParameters = function () { return [
-            { type: GoogleMap },
-            { type: core.NgZone }
-        ]; };
-        MapMarker.propDecorators = {
-            options: [{ type: core.Input }],
-            title: [{ type: core.Input }],
-            position: [{ type: core.Input }],
-            label: [{ type: core.Input }],
-            clickable: [{ type: core.Input }],
-            animationChanged: [{ type: core.Output }],
-            mapClick: [{ type: core.Output }],
-            clickableChanged: [{ type: core.Output }],
-            cursorChanged: [{ type: core.Output }],
-            mapDblclick: [{ type: core.Output }],
-            mapDrag: [{ type: core.Output }],
-            mapDragend: [{ type: core.Output }],
-            draggableChanged: [{ type: core.Output }],
-            mapDragstart: [{ type: core.Output }],
-            flatChanged: [{ type: core.Output }],
-            iconChanged: [{ type: core.Output }],
-            mapMousedown: [{ type: core.Output }],
-            mapMouseout: [{ type: core.Output }],
-            mapMouseover: [{ type: core.Output }],
-            mapMouseup: [{ type: core.Output }],
-            positionChanged: [{ type: core.Output }],
-            mapRightclick: [{ type: core.Output }],
-            shapeChanged: [{ type: core.Output }],
-            titleChanged: [{ type: core.Output }],
-            visibleChanged: [{ type: core.Output }],
-            zindexChanged: [{ type: core.Output }]
-        };
         return MapMarker;
     }());
+    MapMarker.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-marker',
+                    exportAs: 'mapMarker',
+                },] }
+    ];
+    MapMarker.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.NgZone }
+    ]; };
+    MapMarker.propDecorators = {
+        options: [{ type: core.Input }],
+        title: [{ type: core.Input }],
+        position: [{ type: core.Input }],
+        label: [{ type: core.Input }],
+        clickable: [{ type: core.Input }],
+        animationChanged: [{ type: core.Output }],
+        mapClick: [{ type: core.Output }],
+        clickableChanged: [{ type: core.Output }],
+        cursorChanged: [{ type: core.Output }],
+        mapDblclick: [{ type: core.Output }],
+        mapDrag: [{ type: core.Output }],
+        mapDragend: [{ type: core.Output }],
+        draggableChanged: [{ type: core.Output }],
+        mapDragstart: [{ type: core.Output }],
+        flatChanged: [{ type: core.Output }],
+        iconChanged: [{ type: core.Output }],
+        mapMousedown: [{ type: core.Output }],
+        mapMouseout: [{ type: core.Output }],
+        mapMouseover: [{ type: core.Output }],
+        mapMouseup: [{ type: core.Output }],
+        positionChanged: [{ type: core.Output }],
+        mapRightclick: [{ type: core.Output }],
+        shapeChanged: [{ type: core.Output }],
+        titleChanged: [{ type: core.Output }],
+        visibleChanged: [{ type: core.Output }],
+        zindexChanged: [{ type: core.Output }]
+    };
 
-    /**
-     * @license
-     * Copyright Google LLC All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     /**
      * Angular component that renders a Google Maps Polygon via the Google Maps JavaScript API.
      *
@@ -2095,7 +2120,7 @@
         MapPolygon.prototype._combineOptions = function () {
             return rxjs.combineLatest([this._options, this._paths]).pipe(operators.map(function (_a) {
                 var _b = __read(_a, 2), options = _b[0], paths = _b[1];
-                var combinedOptions = __assign(__assign({}, options), { paths: paths || options.paths });
+                var combinedOptions = Object.assign(Object.assign({}, options), { paths: paths || options.paths });
                 return combinedOptions;
             }));
         };
@@ -2125,41 +2150,34 @@
                     'initialized. Please wait for the Polygon to load before trying to interact with it.');
             }
         };
-        MapPolygon.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'map-polygon',
-                        exportAs: 'mapPolygon',
-                    },] }
-        ];
-        MapPolygon.ctorParameters = function () { return [
-            { type: GoogleMap },
-            { type: core.NgZone }
-        ]; };
-        MapPolygon.propDecorators = {
-            options: [{ type: core.Input }],
-            paths: [{ type: core.Input }],
-            polygonClick: [{ type: core.Output }],
-            polygonDblclick: [{ type: core.Output }],
-            polygonDrag: [{ type: core.Output }],
-            polygonDragend: [{ type: core.Output }],
-            polygonDragstart: [{ type: core.Output }],
-            polygonMousedown: [{ type: core.Output }],
-            polygonMousemove: [{ type: core.Output }],
-            polygonMouseout: [{ type: core.Output }],
-            polygonMouseover: [{ type: core.Output }],
-            polygonMouseup: [{ type: core.Output }],
-            polygonRightclick: [{ type: core.Output }]
-        };
         return MapPolygon;
     }());
+    MapPolygon.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-polygon',
+                    exportAs: 'mapPolygon',
+                },] }
+    ];
+    MapPolygon.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.NgZone }
+    ]; };
+    MapPolygon.propDecorators = {
+        options: [{ type: core.Input }],
+        paths: [{ type: core.Input }],
+        polygonClick: [{ type: core.Output }],
+        polygonDblclick: [{ type: core.Output }],
+        polygonDrag: [{ type: core.Output }],
+        polygonDragend: [{ type: core.Output }],
+        polygonDragstart: [{ type: core.Output }],
+        polygonMousedown: [{ type: core.Output }],
+        polygonMousemove: [{ type: core.Output }],
+        polygonMouseout: [{ type: core.Output }],
+        polygonMouseover: [{ type: core.Output }],
+        polygonMouseup: [{ type: core.Output }],
+        polygonRightclick: [{ type: core.Output }]
+    };
 
-    /**
-     * @license
-     * Copyright Google LLC All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     /**
      * Angular component that renders a Google Maps Polyline via the Google Maps JavaScript API.
      *
@@ -2289,7 +2307,7 @@
         MapPolyline.prototype._combineOptions = function () {
             return rxjs.combineLatest([this._options, this._path]).pipe(operators.map(function (_a) {
                 var _b = __read(_a, 2), options = _b[0], path = _b[1];
-                var combinedOptions = __assign(__assign({}, options), { path: path || options.path });
+                var combinedOptions = Object.assign(Object.assign({}, options), { path: path || options.path });
                 return combinedOptions;
             }));
         };
@@ -2319,41 +2337,34 @@
                     'initialized. Please wait for the Polyline to load before trying to interact with it.');
             }
         };
-        MapPolyline.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'map-polyline',
-                        exportAs: 'mapPolyline',
-                    },] }
-        ];
-        MapPolyline.ctorParameters = function () { return [
-            { type: GoogleMap },
-            { type: core.NgZone }
-        ]; };
-        MapPolyline.propDecorators = {
-            options: [{ type: core.Input }],
-            path: [{ type: core.Input }],
-            polylineClick: [{ type: core.Output }],
-            polylineDblclick: [{ type: core.Output }],
-            polylineDrag: [{ type: core.Output }],
-            polylineDragend: [{ type: core.Output }],
-            polylineDragstart: [{ type: core.Output }],
-            polylineMousedown: [{ type: core.Output }],
-            polylineMousemove: [{ type: core.Output }],
-            polylineMouseout: [{ type: core.Output }],
-            polylineMouseover: [{ type: core.Output }],
-            polylineMouseup: [{ type: core.Output }],
-            polylineRightclick: [{ type: core.Output }]
-        };
         return MapPolyline;
     }());
+    MapPolyline.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-polyline',
+                    exportAs: 'mapPolyline',
+                },] }
+    ];
+    MapPolyline.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.NgZone }
+    ]; };
+    MapPolyline.propDecorators = {
+        options: [{ type: core.Input }],
+        path: [{ type: core.Input }],
+        polylineClick: [{ type: core.Output }],
+        polylineDblclick: [{ type: core.Output }],
+        polylineDrag: [{ type: core.Output }],
+        polylineDragend: [{ type: core.Output }],
+        polylineDragstart: [{ type: core.Output }],
+        polylineMousedown: [{ type: core.Output }],
+        polylineMousemove: [{ type: core.Output }],
+        polylineMouseout: [{ type: core.Output }],
+        polylineMouseover: [{ type: core.Output }],
+        polylineMouseup: [{ type: core.Output }],
+        polylineRightclick: [{ type: core.Output }]
+    };
 
-    /**
-     * @license
-     * Copyright Google LLC All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     /**
      * Angular component that renders a Google Maps Rectangle via the Google Maps JavaScript API.
      *
@@ -2503,7 +2514,7 @@
         MapRectangle.prototype._combineOptions = function () {
             return rxjs.combineLatest([this._options, this._bounds]).pipe(operators.map(function (_a) {
                 var _b = __read(_a, 2), options = _b[0], bounds = _b[1];
-                var combinedOptions = __assign(__assign({}, options), { bounds: bounds || options.bounds });
+                var combinedOptions = Object.assign(Object.assign({}, options), { bounds: bounds || options.bounds });
                 return combinedOptions;
             }));
         };
@@ -2533,34 +2544,34 @@
                     'initialized. Please wait for the Rectangle to load before trying to interact with it.');
             }
         };
-        MapRectangle.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'map-rectangle',
-                        exportAs: 'mapRectangle',
-                    },] }
-        ];
-        MapRectangle.ctorParameters = function () { return [
-            { type: GoogleMap },
-            { type: core.NgZone }
-        ]; };
-        MapRectangle.propDecorators = {
-            options: [{ type: core.Input }],
-            bounds: [{ type: core.Input }],
-            boundsChanged: [{ type: core.Output }],
-            rectangleClick: [{ type: core.Output }],
-            rectangleDblclick: [{ type: core.Output }],
-            rectangleDrag: [{ type: core.Output }],
-            rectangleDragend: [{ type: core.Output }],
-            rectangleDragstart: [{ type: core.Output }],
-            rectangleMousedown: [{ type: core.Output }],
-            rectangleMousemove: [{ type: core.Output }],
-            rectangleMouseout: [{ type: core.Output }],
-            rectangleMouseover: [{ type: core.Output }],
-            rectangleMouseup: [{ type: core.Output }],
-            rectangleRightclick: [{ type: core.Output }]
-        };
         return MapRectangle;
     }());
+    MapRectangle.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-rectangle',
+                    exportAs: 'mapRectangle',
+                },] }
+    ];
+    MapRectangle.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.NgZone }
+    ]; };
+    MapRectangle.propDecorators = {
+        options: [{ type: core.Input }],
+        bounds: [{ type: core.Input }],
+        boundsChanged: [{ type: core.Output }],
+        rectangleClick: [{ type: core.Output }],
+        rectangleDblclick: [{ type: core.Output }],
+        rectangleDrag: [{ type: core.Output }],
+        rectangleDragend: [{ type: core.Output }],
+        rectangleDragstart: [{ type: core.Output }],
+        rectangleMousedown: [{ type: core.Output }],
+        rectangleMousemove: [{ type: core.Output }],
+        rectangleMouseout: [{ type: core.Output }],
+        rectangleMouseover: [{ type: core.Output }],
+        rectangleMouseup: [{ type: core.Output }],
+        rectangleRightclick: [{ type: core.Output }]
+    };
 
     /**
      * @license
@@ -2583,14 +2594,14 @@
     var GoogleMapsModule = /** @class */ (function () {
         function GoogleMapsModule() {
         }
-        GoogleMapsModule.decorators = [
-            { type: core.NgModule, args: [{
-                        declarations: COMPONENTS,
-                        exports: COMPONENTS,
-                    },] }
-        ];
         return GoogleMapsModule;
     }());
+    GoogleMapsModule.decorators = [
+        { type: core.NgModule, args: [{
+                    declarations: COMPONENTS,
+                    exports: COMPONENTS,
+                },] }
+    ];
 
     /**
      * @license
