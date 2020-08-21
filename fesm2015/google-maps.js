@@ -198,7 +198,7 @@ class GoogleMap {
             platformId ? isPlatformBrowser(platformId) : typeof window === 'object' && !!window;
         if (this._isBrowser) {
             const googleMapsWindow = window;
-            if (!googleMapsWindow.google) {
+            if (!googleMapsWindow.google && (typeof ngDevMode === 'undefined' || ngDevMode)) {
                 throw Error('Namespace google not found, cannot construct embedded google ' +
                     'map. Please install the Google Maps JavaScript API: ' +
                     'https://developers.google.com/maps/documentation/javascript/' +
@@ -431,7 +431,7 @@ class GoogleMap {
     }
     /** Asserts that the map has been initialized. */
     _assertInitialized() {
-        if (!this.googleMap) {
+        if (!this.googleMap && (typeof ngDevMode === 'undefined' || ngDevMode)) {
             throw Error('Cannot access Google Map information before the API has been initialized. ' +
                 'Please wait for the API to load before trying to interact with it.');
         }
@@ -685,13 +685,15 @@ class MapCircle {
         });
     }
     _assertInitialized() {
-        if (!this._map.googleMap) {
-            throw Error('Cannot access Google Map information before the API has been initialized. ' +
-                'Please wait for the API to load before trying to interact with it.');
-        }
-        if (!this.circle) {
-            throw Error('Cannot interact with a Google Map Circle before it has been ' +
-                'initialized. Please wait for the Circle to load before trying to interact with it.');
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._map.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.circle) {
+                throw Error('Cannot interact with a Google Map Circle before it has been ' +
+                    'initialized. Please wait for the Circle to load before trying to interact with it.');
+            }
         }
     }
 }
@@ -767,7 +769,7 @@ class MapGroundOverlay {
         this._opacity.next(opacity);
     }
     ngOnInit() {
-        if (!this.bounds) {
+        if (!this.bounds && (typeof ngDevMode === 'undefined' || ngDevMode)) {
             throw Error('Image bounds are required');
         }
         if (this._map._isBrowser) {
@@ -850,13 +852,15 @@ class MapGroundOverlay {
         });
     }
     _assertInitialized() {
-        if (!this._map.googleMap) {
-            throw Error('Cannot access Google Map information before the API has been initialized. ' +
-                'Please wait for the API to load before trying to interact with it.');
-        }
-        if (!this.groundOverlay) {
-            throw Error('Cannot interact with a Google Map GroundOverlay before it has been initialized. ' +
-                'Please wait for the GroundOverlay to load before trying to interact with it.');
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._map.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.groundOverlay) {
+                throw Error('Cannot interact with a Google Map GroundOverlay before it has been initialized. ' +
+                    'Please wait for the GroundOverlay to load before trying to interact with it.');
+            }
         }
     }
 }
@@ -1027,14 +1031,16 @@ class MapInfoWindow {
         });
     }
     _assertInitialized() {
-        if (!this._googleMap.googleMap) {
-            throw Error('Cannot access Google Map information before the API has been initialized. ' +
-                'Please wait for the API to load before trying to interact with it.');
-        }
-        if (!this.infoWindow) {
-            throw Error('Cannot interact with a Google Map Info Window before it has been ' +
-                'initialized. Please wait for the Info Window to load before trying to interact with ' +
-                'it.');
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._googleMap.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.infoWindow) {
+                throw Error('Cannot interact with a Google Map Info Window before it has been ' +
+                    'initialized. Please wait for the Info Window to load before trying to interact with ' +
+                    'it.');
+            }
         }
     }
 }
@@ -1183,13 +1189,15 @@ class MapKmlLayer {
         });
     }
     _assertInitialized() {
-        if (!this._map.googleMap) {
-            throw Error('Cannot access Google Map information before the API has been initialized. ' +
-                'Please wait for the API to load before trying to interact with it.');
-        }
-        if (!this.kmlLayer) {
-            throw Error('Cannot interact with a Google Map KmlLayer before it has been ' +
-                'initialized. Please wait for the KmlLayer to load before trying to interact with it.');
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._map.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.kmlLayer) {
+                throw Error('Cannot interact with a Google Map KmlLayer before it has been ' +
+                    'initialized. Please wait for the KmlLayer to load before trying to interact with it.');
+            }
         }
     }
 }
@@ -1537,13 +1545,15 @@ class MapMarker {
         });
     }
     _assertInitialized() {
-        if (!this._googleMap.googleMap) {
-            throw Error('Cannot access Google Map information before the API has been initialized. ' +
-                'Please wait for the API to load before trying to interact with it.');
-        }
-        if (!this.marker) {
-            throw Error('Cannot interact with a Google Map Marker before it has been ' +
-                'initialized. Please wait for the Marker to load before trying to interact with it.');
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._googleMap.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.marker) {
+                throw Error('Cannot interact with a Google Map Marker before it has been ' +
+                    'initialized. Please wait for the Marker to load before trying to interact with it.');
+            }
         }
     }
 }
@@ -1739,13 +1749,15 @@ class MapPolygon {
         });
     }
     _assertInitialized() {
-        if (!this._map.googleMap) {
-            throw Error('Cannot access Google Map information before the API has been initialized. ' +
-                'Please wait for the API to load before trying to interact with it.');
-        }
-        if (!this.polygon) {
-            throw Error('Cannot interact with a Google Map Polygon before it has been ' +
-                'initialized. Please wait for the Polygon to load before trying to interact with it.');
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._map.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.polygon) {
+                throw Error('Cannot interact with a Google Map Polygon before it has been ' +
+                    'initialized. Please wait for the Polygon to load before trying to interact with it.');
+            }
         }
     }
 }
@@ -1920,13 +1932,15 @@ class MapPolyline {
         });
     }
     _assertInitialized() {
-        if (!this._map.googleMap) {
-            throw Error('Cannot access Google Map information before the API has been initialized. ' +
-                'Please wait for the API to load before trying to interact with it.');
-        }
-        if (!this.polyline) {
-            throw Error('Cannot interact with a Google Map Polyline before it has been ' +
-                'initialized. Please wait for the Polyline to load before trying to interact with it.');
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._map.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.polyline) {
+                throw Error('Cannot interact with a Google Map Polyline before it has been ' +
+                    'initialized. Please wait for the Polyline to load before trying to interact with it.');
+            }
         }
     }
 }
@@ -2121,13 +2135,15 @@ class MapRectangle {
         });
     }
     _assertInitialized() {
-        if (!this._map.googleMap) {
-            throw Error('Cannot access Google Map information before the API has been initialized. ' +
-                'Please wait for the API to load before trying to interact with it.');
-        }
-        if (!this.rectangle) {
-            throw Error('Cannot interact with a Google Map Rectangle before it has been ' +
-                'initialized. Please wait for the Rectangle to load before trying to interact with it.');
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._map.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.rectangle) {
+                throw Error('Cannot interact with a Google Map Rectangle before it has been initialized. ' +
+                    'Please wait for the Rectangle to load before trying to interact with it.');
+            }
         }
     }
 }
