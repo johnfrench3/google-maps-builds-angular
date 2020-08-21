@@ -825,6 +825,90 @@
     }
 
     /**
+     * @license
+     * Copyright Google LLC All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
+    var MapBaseLayer = /** @class */ (function () {
+        function MapBaseLayer(_map, _ngZone) {
+            this._map = _map;
+            this._ngZone = _ngZone;
+        }
+        MapBaseLayer.prototype.ngOnInit = function () {
+            var _this = this;
+            if (this._map._isBrowser) {
+                this._ngZone.runOutsideAngular(function () {
+                    _this._initializeObject();
+                });
+                this._assertInitialized();
+                this._setMap();
+            }
+        };
+        MapBaseLayer.prototype.ngOnDestroy = function () {
+            this._unsetMap();
+        };
+        MapBaseLayer.prototype._assertInitialized = function () {
+            if (!this._map.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+        };
+        MapBaseLayer.prototype._initializeObject = function () { };
+        MapBaseLayer.prototype._setMap = function () { };
+        MapBaseLayer.prototype._unsetMap = function () { };
+        return MapBaseLayer;
+    }());
+    MapBaseLayer.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-base-layer',
+                    exportAs: 'mapBaseLayer',
+                },] }
+    ];
+    MapBaseLayer.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.NgZone }
+    ]; };
+
+    /**
+     * Angular component that renders a Google Maps Bicycling Layer via the Google Maps JavaScript API.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/map#BicyclingLayer
+     */
+    var MapBicyclingLayer = /** @class */ (function (_super) {
+        __extends(MapBicyclingLayer, _super);
+        function MapBicyclingLayer() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        MapBicyclingLayer.prototype._initializeObject = function () {
+            this.bicyclingLayer = new google.maps.BicyclingLayer();
+        };
+        MapBicyclingLayer.prototype._setMap = function () {
+            this._assertLayerInitialized();
+            this.bicyclingLayer.setMap(this._map.googleMap);
+        };
+        MapBicyclingLayer.prototype._unsetMap = function () {
+            if (this.bicyclingLayer) {
+                this.bicyclingLayer.setMap(null);
+            }
+        };
+        MapBicyclingLayer.prototype._assertLayerInitialized = function () {
+            if (!this.bicyclingLayer) {
+                throw Error('Cannot interact with a Google Map Bicycling Layer before it has been initialized. ' +
+                    'Please wait for the Transit Layer to load before trying to interact with it.');
+            }
+        };
+        return MapBicyclingLayer;
+    }(MapBaseLayer));
+    MapBicyclingLayer.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-bicycling-layer',
+                    exportAs: 'mapBicyclingLayer',
+                },] }
+    ];
+
+    /**
      * Angular component that renders a Google Maps Circle via the Google Maps JavaScript API.
      * @see developers.google.com/maps/documentation/javascript/reference/polygon#Circle
      */
@@ -2596,8 +2680,136 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
+    /**
+     * Angular component that renders a Google Maps Traffic Layer via the Google Maps JavaScript API.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/map#TrafficLayer
+     */
+    var MapTrafficLayer = /** @class */ (function () {
+        function MapTrafficLayer(_map, _ngZone) {
+            this._map = _map;
+            this._ngZone = _ngZone;
+            this._autoRefresh = new rxjs.BehaviorSubject(true);
+            this._destroyed = new rxjs.Subject();
+        }
+        Object.defineProperty(MapTrafficLayer.prototype, "autoRefresh", {
+            /**
+             * Whether the traffic layer refreshes with updated information automatically.
+             */
+            set: function (autoRefresh) {
+                this._autoRefresh.next(autoRefresh);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        MapTrafficLayer.prototype.ngOnInit = function () {
+            var _this = this;
+            if (this._map._isBrowser) {
+                this._combineOptions().pipe(operators.take(1)).subscribe(function (options) {
+                    // Create the object outside the zone so its events don't trigger change detection.
+                    _this._ngZone.runOutsideAngular(function () {
+                        _this.trafficLayer = new google.maps.TrafficLayer(options);
+                    });
+                    _this._assertInitialized();
+                    _this.trafficLayer.setMap(_this._map.googleMap);
+                });
+                this._watchForAutoRefreshChanges();
+            }
+        };
+        MapTrafficLayer.prototype.ngOnDestroy = function () {
+            this._destroyed.next();
+            this._destroyed.complete();
+            if (this.trafficLayer) {
+                this.trafficLayer.setMap(null);
+            }
+        };
+        MapTrafficLayer.prototype._combineOptions = function () {
+            return this._autoRefresh.pipe(operators.map(function (autoRefresh) {
+                var combinedOptions = { autoRefresh: autoRefresh };
+                return combinedOptions;
+            }));
+        };
+        MapTrafficLayer.prototype._watchForAutoRefreshChanges = function () {
+            var _this = this;
+            this._combineOptions().pipe(operators.takeUntil(this._destroyed)).subscribe(function (options) {
+                _this._assertInitialized();
+                _this.trafficLayer.setOptions(options);
+            });
+        };
+        MapTrafficLayer.prototype._assertInitialized = function () {
+            if (!this._map.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.trafficLayer) {
+                throw Error('Cannot interact with a Google Map Traffic Layer before it has been initialized. ' +
+                    'Please wait for the Traffic Layer to load before trying to interact with it.');
+            }
+        };
+        return MapTrafficLayer;
+    }());
+    MapTrafficLayer.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-traffic-layer',
+                    exportAs: 'mapTrafficLayer',
+                },] }
+    ];
+    MapTrafficLayer.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.NgZone }
+    ]; };
+    MapTrafficLayer.propDecorators = {
+        autoRefresh: [{ type: core.Input }]
+    };
+
+    /**
+     * Angular component that renders a Google Maps Transit Layer via the Google Maps JavaScript API.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/map#TransitLayer
+     */
+    var MapTransitLayer = /** @class */ (function (_super) {
+        __extends(MapTransitLayer, _super);
+        function MapTransitLayer() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        MapTransitLayer.prototype._initializeObject = function () {
+            this.transitLayer = new google.maps.TransitLayer();
+        };
+        MapTransitLayer.prototype._setMap = function () {
+            this._assertLayerInitialized();
+            this.transitLayer.setMap(this._map.googleMap);
+        };
+        MapTransitLayer.prototype._unsetMap = function () {
+            if (this.transitLayer) {
+                this.transitLayer.setMap(null);
+            }
+        };
+        MapTransitLayer.prototype._assertLayerInitialized = function () {
+            if (!this.transitLayer) {
+                throw Error('Cannot interact with a Google Map Transit Layer before it has been initialized. ' +
+                    'Please wait for the Transit Layer to load before trying to interact with it.');
+            }
+        };
+        return MapTransitLayer;
+    }(MapBaseLayer));
+    MapTransitLayer.decorators = [
+        { type: core.Directive, args: [{
+                    selector: 'map-transit-layer',
+                    exportAs: 'mapTransitLayer',
+                },] }
+    ];
+
+    /**
+     * @license
+     * Copyright Google LLC All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
     var COMPONENTS = [
         GoogleMap,
+        MapBaseLayer,
+        MapBicyclingLayer,
         MapCircle,
         MapGroundOverlay,
         MapInfoWindow,
@@ -2606,6 +2818,8 @@
         MapPolygon,
         MapPolyline,
         MapRectangle,
+        MapTrafficLayer,
+        MapTransitLayer,
     ];
     var GoogleMapsModule = /** @class */ (function () {
         function GoogleMapsModule() {
@@ -2633,6 +2847,8 @@
 
     exports.GoogleMap = GoogleMap;
     exports.GoogleMapsModule = GoogleMapsModule;
+    exports.MapBaseLayer = MapBaseLayer;
+    exports.MapBicyclingLayer = MapBicyclingLayer;
     exports.MapCircle = MapCircle;
     exports.MapGroundOverlay = MapGroundOverlay;
     exports.MapInfoWindow = MapInfoWindow;
@@ -2641,6 +2857,8 @@
     exports.MapPolygon = MapPolygon;
     exports.MapPolyline = MapPolyline;
     exports.MapRectangle = MapRectangle;
+    exports.MapTrafficLayer = MapTrafficLayer;
+    exports.MapTransitLayer = MapTransitLayer;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
