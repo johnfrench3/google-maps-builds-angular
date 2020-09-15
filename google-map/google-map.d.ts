@@ -139,12 +139,7 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.zoom_changed
      */
     zoomChanged: Observable<void>;
-    constructor(_elementRef: ElementRef, _ngZone: NgZone, 
-    /**
-     * @deprecated `platformId` parameter to become required.
-     * @breaking-change 10.0.0
-     */
-    platformId?: Object);
+    constructor(_elementRef: ElementRef, _ngZone: NgZone, platformId: Object);
     ngOnChanges(): void;
     ngOnInit(): void;
     ngOnDestroy(): void;

@@ -387,12 +387,7 @@
      * @see https://developers.google.com/maps/documentation/javascript/reference/
      */
     var GoogleMap = /** @class */ (function () {
-        function GoogleMap(_elementRef, _ngZone, 
-        /**
-         * @deprecated `platformId` parameter to become required.
-         * @breaking-change 10.0.0
-         */
-        platformId) {
+        function GoogleMap(_elementRef, _ngZone, platformId) {
             this._elementRef = _elementRef;
             this._ngZone = _ngZone;
             this._eventManager = new MapEventManager(this._ngZone);
@@ -494,9 +489,7 @@
              * https://developers.google.com/maps/documentation/javascript/reference/map#Map.zoom_changed
              */
             this.zoomChanged = this._eventManager.getLazyEmitter('zoom_changed');
-            // @breaking-change 10.0.0 Remove null check for `platformId`.
-            this._isBrowser =
-                platformId ? common.isPlatformBrowser(platformId) : typeof window === 'object' && !!window;
+            this._isBrowser = common.isPlatformBrowser(platformId);
             if (this._isBrowser) {
                 var googleMapsWindow = window;
                 if (!googleMapsWindow.google && (typeof ngDevMode === 'undefined' || ngDevMode)) {
@@ -787,7 +780,7 @@
     GoogleMap.ctorParameters = function () { return [
         { type: core.ElementRef },
         { type: core.NgZone },
-        { type: Object, decorators: [{ type: core.Optional }, { type: core.Inject, args: [core.PLATFORM_ID,] }] }
+        { type: Object, decorators: [{ type: core.Inject, args: [core.PLATFORM_ID,] }] }
     ]; };
     GoogleMap.propDecorators = {
         height: [{ type: core.Input }],
@@ -2390,7 +2383,6 @@
          */
         MapPolyline.prototype.getPath = function () {
             this._assertInitialized();
-            // @breaking-change 11.0.0 Make the return value nullable.
             return this.polyline.getPath();
         };
         /**

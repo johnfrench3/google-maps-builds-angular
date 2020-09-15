@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Optional, Inject, PLATFORM_ID, Input, Output, Directive, NgModule } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Inject, PLATFORM_ID, Input, Output, Directive, NgModule } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, BehaviorSubject, Subject, combineLatest } from 'rxjs';
 import { map, take, shareReplay, takeUntil } from 'rxjs/operators';
@@ -86,12 +86,7 @@ const DEFAULT_WIDTH = '500px';
  * @see https://developers.google.com/maps/documentation/javascript/reference/
  */
 class GoogleMap {
-    constructor(_elementRef, _ngZone, 
-    /**
-     * @deprecated `platformId` parameter to become required.
-     * @breaking-change 10.0.0
-     */
-    platformId) {
+    constructor(_elementRef, _ngZone, platformId) {
         this._elementRef = _elementRef;
         this._ngZone = _ngZone;
         this._eventManager = new MapEventManager(this._ngZone);
@@ -193,9 +188,7 @@ class GoogleMap {
          * https://developers.google.com/maps/documentation/javascript/reference/map#Map.zoom_changed
          */
         this.zoomChanged = this._eventManager.getLazyEmitter('zoom_changed');
-        // @breaking-change 10.0.0 Remove null check for `platformId`.
-        this._isBrowser =
-            platformId ? isPlatformBrowser(platformId) : typeof window === 'object' && !!window;
+        this._isBrowser = isPlatformBrowser(platformId);
         if (this._isBrowser) {
             const googleMapsWindow = window;
             if (!googleMapsWindow.google && (typeof ngDevMode === 'undefined' || ngDevMode)) {
@@ -449,7 +442,7 @@ GoogleMap.decorators = [
 GoogleMap.ctorParameters = () => [
     { type: ElementRef },
     { type: NgZone },
-    { type: Object, decorators: [{ type: Optional }, { type: Inject, args: [PLATFORM_ID,] }] }
+    { type: Object, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] }
 ];
 GoogleMap.propDecorators = {
     height: [{ type: Input }],
@@ -1985,7 +1978,6 @@ class MapPolyline {
      */
     getPath() {
         this._assertInitialized();
-        // @breaking-change 11.0.0 Make the return value nullable.
         return this.polyline.getPath();
     }
     /**
