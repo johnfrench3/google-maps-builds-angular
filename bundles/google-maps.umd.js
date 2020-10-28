@@ -312,6 +312,7 @@
             /** Pending listeners that were added before the target was set. */
             this._pending = [];
             this._listeners = [];
+            this._targetStream = new rxjs.BehaviorSubject(undefined);
         }
         /** Clears all currently-registered event listeners. */
         MapEventManager.prototype._clearListeners = function () {
@@ -334,31 +335,34 @@
         /** Gets an observable that adds an event listener to the map when a consumer subscribes to it. */
         MapEventManager.prototype.getLazyEmitter = function (name) {
             var _this = this;
-            var observable = new rxjs.Observable(function (observer) {
-                // If the target hasn't been initialized yet, cache the observer so it can be added later.
-                if (!_this._target) {
-                    _this._pending.push({ observable: observable, observer: observer });
-                    return undefined;
-                }
-                var listener = _this._target.addListener(name, function (event) {
-                    _this._ngZone.run(function () { return observer.next(event); });
+            return this._targetStream.pipe(operators.switchMap(function (target) {
+                var observable = new rxjs.Observable(function (observer) {
+                    // If the target hasn't been initialized yet, cache the observer so it can be added later.
+                    if (!target) {
+                        _this._pending.push({ observable: observable, observer: observer });
+                        return undefined;
+                    }
+                    var listener = target.addListener(name, function (event) {
+                        _this._ngZone.run(function () { return observer.next(event); });
+                    });
+                    _this._listeners.push(listener);
+                    return function () { return listener.remove(); };
                 });
-                _this._listeners.push(listener);
-                return function () { return listener.remove(); };
-            });
-            return observable;
+                return observable;
+            }));
         };
         /** Sets the current target that the manager should bind events to. */
         MapEventManager.prototype.setTarget = function (target) {
-            if (target === this._target) {
+            var currentTarget = this._targetStream.value;
+            if (target === currentTarget) {
                 return;
             }
             // Clear the listeners from the pre-existing target.
-            if (this._target) {
+            if (currentTarget) {
                 this._clearListeners();
                 this._pending = [];
             }
-            this._target = target;
+            this._targetStream.next(target);
             // Add the listeners that were bound before the map was initialized.
             this._pending.forEach(function (subscriber) { return subscriber.observable.subscribe(subscriber.observer); });
             this._pending = [];
@@ -367,7 +371,7 @@
         MapEventManager.prototype.destroy = function () {
             this._clearListeners();
             this._pending = [];
-            this._target = undefined;
+            this._targetStream.complete();
         };
         return MapEventManager;
     }());

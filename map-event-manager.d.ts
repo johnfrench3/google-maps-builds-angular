@@ -17,7 +17,7 @@ export declare class MapEventManager {
     /** Pending listeners that were added before the target was set. */
     private _pending;
     private _listeners;
-    private _target;
+    private _targetStream;
     /** Clears all currently-registered event listeners. */
     private _clearListeners;
     constructor(_ngZone: NgZone);
