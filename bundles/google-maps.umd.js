@@ -712,12 +712,13 @@
         GoogleMap.prototype._combineOptions = function () {
             var _this = this;
             return rxjs.combineLatest([this._options, this._center, this._zoom])
-                .pipe(operators.map(function (_a) {
-                var _b = __read(_a, 3), options = _b[0], center = _b[1], zoom = _b[2];
+                .pipe(operators.map(function (_b) {
+                var _c = __read(_b, 3), options = _c[0], center = _c[1], zoom = _c[2];
+                var _a;
                 var combinedOptions = Object.assign(Object.assign({}, options), {
-                    // It's important that we set **some** kind of `center`, otherwise
+                    // It's important that we set **some** kind of `center` and `zoom`, otherwise
                     // Google Maps will render a blank rectangle which looks broken.
-                    center: center || options.center || DEFAULT_OPTIONS.center, zoom: zoom !== undefined ? zoom : options.zoom, mapTypeId: _this.mapTypeId
+                    center: center || options.center || DEFAULT_OPTIONS.center, zoom: (_a = zoom !== null && zoom !== void 0 ? zoom : options.zoom) !== null && _a !== void 0 ? _a : DEFAULT_OPTIONS.zoom, mapTypeId: _this.mapTypeId
                 });
                 return combinedOptions;
             }));
@@ -734,16 +735,16 @@
         GoogleMap.prototype._watchForOptionsChanges = function () {
             rxjs.combineLatest([this._googleMapChanges, this._options])
                 .pipe(operators.takeUntil(this._destroy))
-                .subscribe(function (_a) {
-                var _b = __read(_a, 2), googleMap = _b[0], options = _b[1];
+                .subscribe(function (_b) {
+                var _c = __read(_b, 2), googleMap = _c[0], options = _c[1];
                 googleMap.setOptions(options);
             });
         };
         GoogleMap.prototype._watchForCenterChanges = function () {
             rxjs.combineLatest([this._googleMapChanges, this._center])
                 .pipe(operators.takeUntil(this._destroy))
-                .subscribe(function (_a) {
-                var _b = __read(_a, 2), googleMap = _b[0], center = _b[1];
+                .subscribe(function (_b) {
+                var _c = __read(_b, 2), googleMap = _c[0], center = _c[1];
                 if (center) {
                     googleMap.setCenter(center);
                 }
@@ -752,8 +753,8 @@
         GoogleMap.prototype._watchForZoomChanges = function () {
             rxjs.combineLatest([this._googleMapChanges, this._zoom])
                 .pipe(operators.takeUntil(this._destroy))
-                .subscribe(function (_a) {
-                var _b = __read(_a, 2), googleMap = _b[0], zoom = _b[1];
+                .subscribe(function (_b) {
+                var _c = __read(_b, 2), googleMap = _c[0], zoom = _c[1];
                 if (zoom !== undefined) {
                     googleMap.setZoom(zoom);
                 }
