@@ -20,6 +20,7 @@ export declare class MapGroundOverlay implements OnInit, OnDestroy {
     private _eventManager;
     private readonly _opacity;
     private readonly _url;
+    private readonly _bounds;
     private readonly _destroyed;
     /**
      * The underlying google.maps.GroundOverlay object.
@@ -30,7 +31,8 @@ export declare class MapGroundOverlay implements OnInit, OnDestroy {
     /** URL of the image that will be shown in the overlay. */
     set url(url: string);
     /** Bounds for the overlay. */
-    bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral;
+    get bounds(): google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral;
+    set bounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral);
     /** Whether the overlay is clickable */
     clickable: boolean;
     /** Opacity of the overlay. */
@@ -67,7 +69,6 @@ export declare class MapGroundOverlay implements OnInit, OnDestroy {
      * #GroundOverlay.getUrl
      */
     getUrl(): string;
-    private _combineOptions;
     private _watchForOpacityChanges;
     private _watchForUrlChanges;
     private _assertInitialized;

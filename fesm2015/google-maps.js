@@ -827,6 +827,7 @@ class MapGroundOverlay {
         this._eventManager = new MapEventManager(this._ngZone);
         this._opacity = new BehaviorSubject(1);
         this._url = new BehaviorSubject('');
+        this._bounds = new BehaviorSubject(undefined);
         this._destroyed = new Subject();
         /** Whether the overlay is clickable */
         this.clickable = false;
@@ -846,26 +847,41 @@ class MapGroundOverlay {
     set url(url) {
         this._url.next(url);
     }
+    /** Bounds for the overlay. */
+    get bounds() {
+        return this._bounds.value;
+    }
+    set bounds(bounds) {
+        this._bounds.next(bounds);
+    }
     /** Opacity of the overlay. */
     set opacity(opacity) {
         this._opacity.next(opacity);
     }
     ngOnInit() {
-        if (!this.bounds && (typeof ngDevMode === 'undefined' || ngDevMode)) {
-            throw Error('Image bounds are required');
-        }
         if (this._map._isBrowser) {
-            this._combineOptions().pipe(take(1)).subscribe(options => {
+            // The ground overlay setup is slightly different from the other Google Maps objects in that
+            // we have to recreate the `GroundOverlay` object whenever the bounds change, because
+            // Google Maps doesn't provide an API to update the bounds of an existing overlay.
+            this._bounds.pipe(takeUntil(this._destroyed)).subscribe(bounds => {
+                if (this.groundOverlay) {
+                    this.groundOverlay.setMap(null);
+                    this.groundOverlay = undefined;
+                }
                 // Create the object outside the zone so its events don't trigger change detection.
                 // We'll bring it back in inside the `MapEventManager` only for the events that the
                 // user has subscribed to.
-                this._ngZone.runOutsideAngular(() => {
-                    this.groundOverlay =
-                        new google.maps.GroundOverlay(this._url.getValue(), this.bounds, options);
-                });
-                this._assertInitialized();
-                this.groundOverlay.setMap(this._map.googleMap);
-                this._eventManager.setTarget(this.groundOverlay);
+                if (bounds) {
+                    this._ngZone.runOutsideAngular(() => {
+                        this.groundOverlay = new google.maps.GroundOverlay(this._url.getValue(), bounds, {
+                            clickable: this.clickable,
+                            opacity: this._opacity.value,
+                        });
+                    });
+                    this._assertInitialized();
+                    this.groundOverlay.setMap(this._map.googleMap);
+                    this._eventManager.setTarget(this.groundOverlay);
+                }
             });
             this._watchForOpacityChanges();
             this._watchForUrlChanges();
@@ -906,18 +922,9 @@ class MapGroundOverlay {
         this._assertInitialized();
         return this.groundOverlay.getUrl();
     }
-    _combineOptions() {
-        return this._opacity.pipe(map(opacity => {
-            const combinedOptions = {
-                clickable: this.clickable,
-                opacity,
-            };
-            return combinedOptions;
-        }));
-    }
     _watchForOpacityChanges() {
         this._opacity.pipe(takeUntil(this._destroyed)).subscribe(opacity => {
-            if (opacity) {
+            if (opacity != null) {
                 this._assertInitialized();
                 this.groundOverlay.setOpacity(opacity);
             }

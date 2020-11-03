@@ -1176,6 +1176,7 @@
             this._eventManager = new MapEventManager(this._ngZone);
             this._opacity = new rxjs.BehaviorSubject(1);
             this._url = new rxjs.BehaviorSubject('');
+            this._bounds = new rxjs.BehaviorSubject(undefined);
             this._destroyed = new rxjs.Subject();
             /** Whether the overlay is clickable */
             this.clickable = false;
@@ -1199,6 +1200,17 @@
             enumerable: false,
             configurable: true
         });
+        Object.defineProperty(MapGroundOverlay.prototype, "bounds", {
+            /** Bounds for the overlay. */
+            get: function () {
+                return this._bounds.value;
+            },
+            set: function (bounds) {
+                this._bounds.next(bounds);
+            },
+            enumerable: false,
+            configurable: true
+        });
         Object.defineProperty(MapGroundOverlay.prototype, "opacity", {
             /** Opacity of the overlay. */
             set: function (opacity) {
@@ -1209,21 +1221,29 @@
         });
         MapGroundOverlay.prototype.ngOnInit = function () {
             var _this = this;
-            if (!this.bounds && (typeof ngDevMode === 'undefined' || ngDevMode)) {
-                throw Error('Image bounds are required');
-            }
             if (this._map._isBrowser) {
-                this._combineOptions().pipe(operators.take(1)).subscribe(function (options) {
+                // The ground overlay setup is slightly different from the other Google Maps objects in that
+                // we have to recreate the `GroundOverlay` object whenever the bounds change, because
+                // Google Maps doesn't provide an API to update the bounds of an existing overlay.
+                this._bounds.pipe(operators.takeUntil(this._destroyed)).subscribe(function (bounds) {
+                    if (_this.groundOverlay) {
+                        _this.groundOverlay.setMap(null);
+                        _this.groundOverlay = undefined;
+                    }
                     // Create the object outside the zone so its events don't trigger change detection.
                     // We'll bring it back in inside the `MapEventManager` only for the events that the
                     // user has subscribed to.
-                    _this._ngZone.runOutsideAngular(function () {
-                        _this.groundOverlay =
-                            new google.maps.GroundOverlay(_this._url.getValue(), _this.bounds, options);
-                    });
-                    _this._assertInitialized();
-                    _this.groundOverlay.setMap(_this._map.googleMap);
-                    _this._eventManager.setTarget(_this.groundOverlay);
+                    if (bounds) {
+                        _this._ngZone.runOutsideAngular(function () {
+                            _this.groundOverlay = new google.maps.GroundOverlay(_this._url.getValue(), bounds, {
+                                clickable: _this.clickable,
+                                opacity: _this._opacity.value,
+                            });
+                        });
+                        _this._assertInitialized();
+                        _this.groundOverlay.setMap(_this._map.googleMap);
+                        _this._eventManager.setTarget(_this.groundOverlay);
+                    }
                 });
                 this._watchForOpacityChanges();
                 this._watchForUrlChanges();
@@ -1264,20 +1284,10 @@
             this._assertInitialized();
             return this.groundOverlay.getUrl();
         };
-        MapGroundOverlay.prototype._combineOptions = function () {
-            var _this = this;
-            return this._opacity.pipe(operators.map(function (opacity) {
-                var combinedOptions = {
-                    clickable: _this.clickable,
-                    opacity: opacity,
-                };
-                return combinedOptions;
-            }));
-        };
         MapGroundOverlay.prototype._watchForOpacityChanges = function () {
             var _this = this;
             this._opacity.pipe(operators.takeUntil(this._destroyed)).subscribe(function (opacity) {
-                if (opacity) {
+                if (opacity != null) {
                     _this._assertInitialized();
                     _this.groundOverlay.setOpacity(opacity);
                 }
