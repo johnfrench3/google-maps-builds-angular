@@ -2086,6 +2086,620 @@
     };
 
     /**
+     * Angular component for implementing a Google Maps Marker Clusterer.
+     *
+     * See https://developers.google.com/maps/documentation/javascript/marker-clustering
+     */
+    var MapMarkerClusterer = /** @class */ (function () {
+        function MapMarkerClusterer(_googleMap, _ngZone) {
+            this._googleMap = _googleMap;
+            this._ngZone = _ngZone;
+            this._ariaLabelFn = new rxjs.BehaviorSubject(undefined);
+            this._averageCenter = new rxjs.BehaviorSubject(undefined);
+            this._batchSizeIE = new rxjs.BehaviorSubject(undefined);
+            this._calculator = new rxjs.BehaviorSubject(undefined);
+            this._clusterClass = new rxjs.BehaviorSubject(undefined);
+            this._enableRetinalIcons = new rxjs.BehaviorSubject(undefined);
+            this._gridSize = new rxjs.BehaviorSubject(undefined);
+            this._ignoreHidden = new rxjs.BehaviorSubject(undefined);
+            this._imageExtension = new rxjs.BehaviorSubject(undefined);
+            this._imagePath = new rxjs.BehaviorSubject(undefined);
+            this._imageSizes = new rxjs.BehaviorSubject(undefined);
+            this._maxZoom = new rxjs.BehaviorSubject(undefined);
+            this._minimumClusterSize = new rxjs.BehaviorSubject(undefined);
+            this._styles = new rxjs.BehaviorSubject(undefined);
+            this._title = new rxjs.BehaviorSubject(undefined);
+            this._zIndex = new rxjs.BehaviorSubject(undefined);
+            this._zoomOnClick = new rxjs.BehaviorSubject(undefined);
+            this._currentMarkers = new Set();
+            this._eventManager = new MapEventManager(this._ngZone);
+            this._destroy = new rxjs.Subject();
+            /**
+             * See
+             * googlemaps.github.io/v3-utility-library/modules/
+             * _google_markerclustererplus.html#clusteringbegin
+             */
+            this.clusteringbegin = this._eventManager.getLazyEmitter('clusteringbegin');
+            /**
+             * See
+             * googlemaps.github.io/v3-utility-library/modules/_google_markerclustererplus.html#clusteringend
+             */
+            this.clusteringend = this._eventManager.getLazyEmitter('clusteringend');
+        }
+        Object.defineProperty(MapMarkerClusterer.prototype, "ariaLabelFn", {
+            get: function () {
+                return this.markerClusterer ? this.markerClusterer.ariaLabelFn : function () { return ''; };
+            },
+            set: function (ariaLabelFn) {
+                this._ariaLabelFn.next(ariaLabelFn);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "averageCenter", {
+            set: function (averageCenter) {
+                this._averageCenter.next(averageCenter);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "batchSizeIE", {
+            set: function (batchSizeIE) {
+                this._batchSizeIE.next(batchSizeIE);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "calculator", {
+            set: function (calculator) {
+                this._calculator.next(calculator);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "clusterClass", {
+            set: function (clusterClass) {
+                this._clusterClass.next(clusterClass);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "enableRetinalIcons", {
+            set: function (enableRetinalIcons) {
+                this._enableRetinalIcons.next(enableRetinalIcons);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "gridSize", {
+            set: function (gridSize) {
+                this._gridSize.next(gridSize);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "ignoreHidden", {
+            set: function (ignoreHidden) {
+                this._ignoreHidden.next(ignoreHidden);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "imageExtension", {
+            set: function (imageExtension) {
+                this._imageExtension.next(imageExtension);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "imagePath", {
+            set: function (imagePath) {
+                this._imagePath.next(imagePath);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "imageSizes", {
+            set: function (imageSizes) {
+                this._imageSizes.next(imageSizes);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "maxZoom", {
+            set: function (maxZoom) {
+                this._maxZoom.next(maxZoom);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "minimumClusterSize", {
+            set: function (minimumClusterSize) {
+                this._minimumClusterSize.next(minimumClusterSize);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "styles", {
+            set: function (styles) {
+                this._styles.next(styles);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "title", {
+            set: function (title) {
+                this._title.next(title);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "zIndex", {
+            set: function (zIndex) {
+                this._zIndex.next(zIndex);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarkerClusterer.prototype, "zoomOnClick", {
+            set: function (zoomOnClick) {
+                this._zoomOnClick.next(zoomOnClick);
+            },
+            enumerable: false,
+            configurable: true
+        });
+        MapMarkerClusterer.prototype.ngOnInit = function () {
+            var _this = this;
+            if (this._googleMap._isBrowser) {
+                this._combineOptions().pipe(operators.take(1)).subscribe(function (options) {
+                    // Create the object outside the zone so its events don't trigger change detection.
+                    // We'll bring it back in inside the `MapEventManager` only for the events that the
+                    // user has subscribed to.
+                    _this._ngZone.runOutsideAngular(function () {
+                        _this.markerClusterer = new MarkerClusterer(_this._googleMap.googleMap, [], options);
+                    });
+                    _this._assertInitialized();
+                    _this._eventManager.setTarget(_this.markerClusterer);
+                });
+                this._watchForAriaLabelFnChanges();
+                this._watchForAverageCenterChanges();
+                this._watchForBatchSizeIEChanges();
+                this._watchForCalculatorChanges();
+                this._watchForClusterClassChanges();
+                this._watchForEnableRetinalIconsChanges();
+                this._watchForGridSizeChanges();
+                this._watchForIgnoreHiddenChanges();
+                this._watchForImageExtensionChanges();
+                this._watchForImagePathChanges();
+                this._watchForImageSizesChanges();
+                this._watchForMaxZoomChanges();
+                this._watchForMinimumClusterSizeChanges();
+                this._watchForStylesChanges();
+                this._watchForTitleChanges();
+                this._watchForZIndexChanges();
+                this._watchForZoomOnClickChanges();
+            }
+        };
+        MapMarkerClusterer.prototype.ngAfterContentInit = function () {
+            this._watchForMarkerChanges();
+        };
+        MapMarkerClusterer.prototype.ngOnDestroy = function () {
+            this._destroy.next();
+            this._destroy.complete();
+            this._eventManager.destroy();
+            if (this.markerClusterer) {
+                this.markerClusterer.setMap(null);
+            }
+        };
+        MapMarkerClusterer.prototype.fitMapToMarkers = function (padding) {
+            this._assertInitialized();
+            this.markerClusterer.fitMapToMarkers(padding);
+        };
+        MapMarkerClusterer.prototype.getAverageCenter = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getAverageCenter();
+        };
+        MapMarkerClusterer.prototype.getBatchSizeIE = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getBatchSizeIE();
+        };
+        MapMarkerClusterer.prototype.getCalculator = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getCalculator();
+        };
+        MapMarkerClusterer.prototype.getClusterClass = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getClusterClass();
+        };
+        MapMarkerClusterer.prototype.getClusters = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getClusters();
+        };
+        MapMarkerClusterer.prototype.getEnableRetinalIcons = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getEnableRetinalIcons();
+        };
+        MapMarkerClusterer.prototype.getGridSize = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getGridSize();
+        };
+        MapMarkerClusterer.prototype.getIgnoreHidden = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getIgnoreHidden();
+        };
+        MapMarkerClusterer.prototype.getImageExtension = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getImageExtension();
+        };
+        MapMarkerClusterer.prototype.getImagePath = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getImagePath();
+        };
+        MapMarkerClusterer.prototype.getImageSizes = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getImageSizes();
+        };
+        MapMarkerClusterer.prototype.getMaxZoom = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getMaxZoom();
+        };
+        MapMarkerClusterer.prototype.getMinimumClusterSize = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getMinimumClusterSize();
+        };
+        MapMarkerClusterer.prototype.getStyles = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getStyles();
+        };
+        MapMarkerClusterer.prototype.getTitle = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getTitle();
+        };
+        MapMarkerClusterer.prototype.getTotalClusters = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getTotalClusters();
+        };
+        MapMarkerClusterer.prototype.getTotalMarkers = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getTotalMarkers();
+        };
+        MapMarkerClusterer.prototype.getZIndex = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getZIndex();
+        };
+        MapMarkerClusterer.prototype.getZoomOnClick = function () {
+            this._assertInitialized();
+            return this.markerClusterer.getZoomOnClick();
+        };
+        MapMarkerClusterer.prototype._combineOptions = function () {
+            var _this = this;
+            return rxjs.combineLatest([
+                this._ariaLabelFn,
+                this._averageCenter,
+                this._batchSizeIE,
+                this._calculator,
+                this._clusterClass,
+                this._enableRetinalIcons,
+                this._gridSize,
+                this._ignoreHidden,
+                this._imageExtension,
+                this._imagePath,
+                this._imageSizes,
+                this._maxZoom,
+                this._minimumClusterSize,
+                this._styles,
+                this._title,
+                this._zIndex,
+                this._zoomOnClick,
+            ]).pipe(operators.take(1), operators.map(function (_a) {
+                var _b = __read(_a, 17), ariaLabelFn = _b[0], averageCenter = _b[1], batchSizeIE = _b[2], calculator = _b[3], clusterClass = _b[4], enableRetinalIcons = _b[5], gridSize = _b[6], ignoreHidden = _b[7], imageExtension = _b[8], imagePath = _b[9], imageSizes = _b[10], maxZoom = _b[11], minimumClusterSize = _b[12], styles = _b[13], title = _b[14], zIndex = _b[15], zoomOnClick = _b[16];
+                var combinedOptions = {
+                    ariaLabelFn: ariaLabelFn,
+                    averageCenter: averageCenter,
+                    batchSize: _this.batchSize,
+                    batchSizeIE: batchSizeIE,
+                    calculator: calculator,
+                    clusterClass: clusterClass,
+                    enableRetinalIcons: enableRetinalIcons,
+                    gridSize: gridSize,
+                    ignoreHidden: ignoreHidden,
+                    imageExtension: imageExtension,
+                    imagePath: imagePath,
+                    imageSizes: imageSizes,
+                    maxZoom: maxZoom,
+                    minimumClusterSize: minimumClusterSize,
+                    styles: styles,
+                    title: title,
+                    zIndex: zIndex,
+                    zoomOnClick: zoomOnClick,
+                };
+                return combinedOptions;
+            }));
+        };
+        MapMarkerClusterer.prototype._watchForAriaLabelFnChanges = function () {
+            var _this = this;
+            this._ariaLabelFn.pipe(operators.takeUntil(this._destroy)).subscribe(function (ariaLabelFn) {
+                if (_this.markerClusterer && ariaLabelFn) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.ariaLabelFn = ariaLabelFn;
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForAverageCenterChanges = function () {
+            var _this = this;
+            this._averageCenter.pipe(operators.takeUntil(this._destroy)).subscribe(function (averageCenter) {
+                if (_this.markerClusterer && averageCenter !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setAverageCenter(averageCenter);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForBatchSizeIEChanges = function () {
+            var _this = this;
+            this._batchSizeIE.pipe(operators.takeUntil(this._destroy)).subscribe(function (batchSizeIE) {
+                if (_this.markerClusterer && batchSizeIE !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setBatchSizeIE(batchSizeIE);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForCalculatorChanges = function () {
+            var _this = this;
+            this._calculator.pipe(operators.takeUntil(this._destroy)).subscribe(function (calculator) {
+                if (_this.markerClusterer && calculator) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setCalculator(calculator);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForClusterClassChanges = function () {
+            var _this = this;
+            this._clusterClass.pipe(operators.takeUntil(this._destroy)).subscribe(function (clusterClass) {
+                if (_this.markerClusterer && clusterClass !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setClusterClass(clusterClass);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForEnableRetinalIconsChanges = function () {
+            var _this = this;
+            this._enableRetinalIcons.pipe(operators.takeUntil(this._destroy)).subscribe(function (enableRetinalIcons) {
+                if (_this.markerClusterer && enableRetinalIcons !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setEnableRetinalIcons(enableRetinalIcons);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForGridSizeChanges = function () {
+            var _this = this;
+            this._gridSize.pipe(operators.takeUntil(this._destroy)).subscribe(function (gridSize) {
+                if (_this.markerClusterer && gridSize !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setGridSize(gridSize);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForIgnoreHiddenChanges = function () {
+            var _this = this;
+            this._ignoreHidden.pipe(operators.takeUntil(this._destroy)).subscribe(function (ignoreHidden) {
+                if (_this.markerClusterer && ignoreHidden !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setIgnoreHidden(ignoreHidden);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForImageExtensionChanges = function () {
+            var _this = this;
+            this._imageExtension.pipe(operators.takeUntil(this._destroy)).subscribe(function (imageExtension) {
+                if (_this.markerClusterer && imageExtension !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setImageExtension(imageExtension);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForImagePathChanges = function () {
+            var _this = this;
+            this._imagePath.pipe(operators.takeUntil(this._destroy)).subscribe(function (imagePath) {
+                if (_this.markerClusterer && imagePath !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setImagePath(imagePath);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForImageSizesChanges = function () {
+            var _this = this;
+            this._imageSizes.pipe(operators.takeUntil(this._destroy)).subscribe(function (imageSizes) {
+                if (_this.markerClusterer && imageSizes) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setImageSizes(imageSizes);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForMaxZoomChanges = function () {
+            var _this = this;
+            this._maxZoom.pipe(operators.takeUntil(this._destroy)).subscribe(function (maxZoom) {
+                if (_this.markerClusterer && maxZoom !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setMaxZoom(maxZoom);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForMinimumClusterSizeChanges = function () {
+            var _this = this;
+            this._minimumClusterSize.pipe(operators.takeUntil(this._destroy)).subscribe(function (minimumClusterSize) {
+                if (_this.markerClusterer && minimumClusterSize !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setMinimumClusterSize(minimumClusterSize);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForStylesChanges = function () {
+            var _this = this;
+            this._styles.pipe(operators.takeUntil(this._destroy)).subscribe(function (styles) {
+                if (_this.markerClusterer && styles) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setStyles(styles);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForTitleChanges = function () {
+            var _this = this;
+            this._title.pipe(operators.takeUntil(this._destroy)).subscribe(function (title) {
+                if (_this.markerClusterer && title !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setTitle(title);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForZIndexChanges = function () {
+            var _this = this;
+            this._zIndex.pipe(operators.takeUntil(this._destroy)).subscribe(function (zIndex) {
+                if (_this.markerClusterer && zIndex !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setZIndex(zIndex);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForZoomOnClickChanges = function () {
+            var _this = this;
+            this._zoomOnClick.pipe(operators.takeUntil(this._destroy)).subscribe(function (zoomOnClick) {
+                if (_this.markerClusterer && zoomOnClick !== undefined) {
+                    _this._assertInitialized();
+                    _this.markerClusterer.setZoomOnClick(zoomOnClick);
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._watchForMarkerChanges = function () {
+            var e_1, _a;
+            var _this = this;
+            this._assertInitialized();
+            var initialMarkers = [];
+            try {
+                for (var _b = __values(this._getInternalMarkers(this._markers.toArray())), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var marker = _c.value;
+                    this._currentMarkers.add(marker);
+                    initialMarkers.push(marker);
+                }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_1) throw e_1.error; }
+            }
+            this.markerClusterer.addMarkers(initialMarkers);
+            this._markers.changes.pipe(operators.takeUntil(this._destroy)).subscribe(function (markerComponents) {
+                var e_2, _a, e_3, _b, e_4, _c;
+                _this._assertInitialized();
+                var newMarkers = new Set(_this._getInternalMarkers(markerComponents));
+                var markersToAdd = [];
+                var markersToRemove = [];
+                try {
+                    for (var _d = __values(Array.from(newMarkers)), _e = _d.next(); !_e.done; _e = _d.next()) {
+                        var marker = _e.value;
+                        if (!_this._currentMarkers.has(marker)) {
+                            _this._currentMarkers.add(marker);
+                            markersToAdd.push(marker);
+                        }
+                    }
+                }
+                catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                finally {
+                    try {
+                        if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
+                    }
+                    finally { if (e_2) throw e_2.error; }
+                }
+                try {
+                    for (var _f = __values(Array.from(_this._currentMarkers)), _g = _f.next(); !_g.done; _g = _f.next()) {
+                        var marker = _g.value;
+                        if (!newMarkers.has(marker)) {
+                            markersToRemove.push(marker);
+                        }
+                    }
+                }
+                catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                finally {
+                    try {
+                        if (_g && !_g.done && (_b = _f.return)) _b.call(_f);
+                    }
+                    finally { if (e_3) throw e_3.error; }
+                }
+                _this.markerClusterer.addMarkers(markersToAdd, true);
+                _this.markerClusterer.removeMarkers(markersToRemove, true);
+                _this.markerClusterer.repaint();
+                try {
+                    for (var markersToRemove_1 = __values(markersToRemove), markersToRemove_1_1 = markersToRemove_1.next(); !markersToRemove_1_1.done; markersToRemove_1_1 = markersToRemove_1.next()) {
+                        var marker = markersToRemove_1_1.value;
+                        _this._currentMarkers.delete(marker);
+                    }
+                }
+                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                finally {
+                    try {
+                        if (markersToRemove_1_1 && !markersToRemove_1_1.done && (_c = markersToRemove_1.return)) _c.call(markersToRemove_1);
+                    }
+                    finally { if (e_4) throw e_4.error; }
+                }
+            });
+        };
+        MapMarkerClusterer.prototype._getInternalMarkers = function (markers) {
+            return markers.filter(function (markerComponent) { return !!markerComponent.marker; })
+                .map(function (markerComponent) { return markerComponent.marker; });
+        };
+        MapMarkerClusterer.prototype._assertInitialized = function () {
+            if (typeof ngDevMode === 'undefined' || ngDevMode) {
+                if (!this._googleMap.googleMap) {
+                    throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                        'Please wait for the API to load before trying to interact with it.');
+                }
+                if (!this.markerClusterer) {
+                    throw Error('Cannot interact with a MarkerClusterer before it has been initialized. ' +
+                        'Please wait for the MarkerClusterer to load before trying to interact with it.');
+                }
+            }
+        };
+        return MapMarkerClusterer;
+    }());
+    MapMarkerClusterer.decorators = [
+        { type: core.Component, args: [{
+                    selector: 'map-marker-clusterer',
+                    exportAs: 'mapMarkerClusterer',
+                    changeDetection: core.ChangeDetectionStrategy.OnPush,
+                    template: '<ng-content></ng-content>',
+                    encapsulation: core.ViewEncapsulation.None
+                },] }
+    ];
+    MapMarkerClusterer.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: core.NgZone }
+    ]; };
+    MapMarkerClusterer.propDecorators = {
+        ariaLabelFn: [{ type: core.Input }],
+        averageCenter: [{ type: core.Input }],
+        batchSize: [{ type: core.Input }],
+        batchSizeIE: [{ type: core.Input }],
+        calculator: [{ type: core.Input }],
+        clusterClass: [{ type: core.Input }],
+        enableRetinalIcons: [{ type: core.Input }],
+        gridSize: [{ type: core.Input }],
+        ignoreHidden: [{ type: core.Input }],
+        imageExtension: [{ type: core.Input }],
+        imagePath: [{ type: core.Input }],
+        imageSizes: [{ type: core.Input }],
+        maxZoom: [{ type: core.Input }],
+        minimumClusterSize: [{ type: core.Input }],
+        styles: [{ type: core.Input }],
+        title: [{ type: core.Input }],
+        zIndex: [{ type: core.Input }],
+        zoomOnClick: [{ type: core.Input }],
+        clusteringbegin: [{ type: core.Output }],
+        clusteringend: [{ type: core.Output }],
+        _markers: [{ type: core.ContentChildren, args: [MapMarker, { descendants: true },] }]
+    };
+
+    /**
      * Angular component that renders a Google Maps Polygon via the Google Maps JavaScript API.
      *
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon
@@ -2822,6 +3436,7 @@
         MapInfoWindow,
         MapKmlLayer,
         MapMarker,
+        MapMarkerClusterer,
         MapPolygon,
         MapPolyline,
         MapRectangle,
@@ -2861,6 +3476,7 @@
     exports.MapInfoWindow = MapInfoWindow;
     exports.MapKmlLayer = MapKmlLayer;
     exports.MapMarker = MapMarker;
+    exports.MapMarkerClusterer = MapMarkerClusterer;
     exports.MapPolygon = MapPolygon;
     exports.MapPolyline = MapPolyline;
     exports.MapRectangle = MapRectangle;

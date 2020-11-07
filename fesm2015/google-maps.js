@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Inject, PLATFORM_ID, Input, Output, Directive, NgModule } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Inject, PLATFORM_ID, Input, Output, Directive, ContentChildren, NgModule } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { switchMap, map, take, shareReplay, takeUntil } from 'rxjs/operators';
@@ -1693,6 +1693,495 @@ MapMarker.propDecorators = {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
+ * Angular component for implementing a Google Maps Marker Clusterer.
+ *
+ * See https://developers.google.com/maps/documentation/javascript/marker-clustering
+ */
+class MapMarkerClusterer {
+    constructor(_googleMap, _ngZone) {
+        this._googleMap = _googleMap;
+        this._ngZone = _ngZone;
+        this._ariaLabelFn = new BehaviorSubject(undefined);
+        this._averageCenter = new BehaviorSubject(undefined);
+        this._batchSizeIE = new BehaviorSubject(undefined);
+        this._calculator = new BehaviorSubject(undefined);
+        this._clusterClass = new BehaviorSubject(undefined);
+        this._enableRetinalIcons = new BehaviorSubject(undefined);
+        this._gridSize = new BehaviorSubject(undefined);
+        this._ignoreHidden = new BehaviorSubject(undefined);
+        this._imageExtension = new BehaviorSubject(undefined);
+        this._imagePath = new BehaviorSubject(undefined);
+        this._imageSizes = new BehaviorSubject(undefined);
+        this._maxZoom = new BehaviorSubject(undefined);
+        this._minimumClusterSize = new BehaviorSubject(undefined);
+        this._styles = new BehaviorSubject(undefined);
+        this._title = new BehaviorSubject(undefined);
+        this._zIndex = new BehaviorSubject(undefined);
+        this._zoomOnClick = new BehaviorSubject(undefined);
+        this._currentMarkers = new Set();
+        this._eventManager = new MapEventManager(this._ngZone);
+        this._destroy = new Subject();
+        /**
+         * See
+         * googlemaps.github.io/v3-utility-library/modules/
+         * _google_markerclustererplus.html#clusteringbegin
+         */
+        this.clusteringbegin = this._eventManager.getLazyEmitter('clusteringbegin');
+        /**
+         * See
+         * googlemaps.github.io/v3-utility-library/modules/_google_markerclustererplus.html#clusteringend
+         */
+        this.clusteringend = this._eventManager.getLazyEmitter('clusteringend');
+    }
+    get ariaLabelFn() {
+        return this.markerClusterer ? this.markerClusterer.ariaLabelFn : () => '';
+    }
+    set ariaLabelFn(ariaLabelFn) {
+        this._ariaLabelFn.next(ariaLabelFn);
+    }
+    set averageCenter(averageCenter) {
+        this._averageCenter.next(averageCenter);
+    }
+    set batchSizeIE(batchSizeIE) {
+        this._batchSizeIE.next(batchSizeIE);
+    }
+    set calculator(calculator) {
+        this._calculator.next(calculator);
+    }
+    set clusterClass(clusterClass) {
+        this._clusterClass.next(clusterClass);
+    }
+    set enableRetinalIcons(enableRetinalIcons) {
+        this._enableRetinalIcons.next(enableRetinalIcons);
+    }
+    set gridSize(gridSize) {
+        this._gridSize.next(gridSize);
+    }
+    set ignoreHidden(ignoreHidden) {
+        this._ignoreHidden.next(ignoreHidden);
+    }
+    set imageExtension(imageExtension) {
+        this._imageExtension.next(imageExtension);
+    }
+    set imagePath(imagePath) {
+        this._imagePath.next(imagePath);
+    }
+    set imageSizes(imageSizes) {
+        this._imageSizes.next(imageSizes);
+    }
+    set maxZoom(maxZoom) {
+        this._maxZoom.next(maxZoom);
+    }
+    set minimumClusterSize(minimumClusterSize) {
+        this._minimumClusterSize.next(minimumClusterSize);
+    }
+    set styles(styles) {
+        this._styles.next(styles);
+    }
+    set title(title) {
+        this._title.next(title);
+    }
+    set zIndex(zIndex) {
+        this._zIndex.next(zIndex);
+    }
+    set zoomOnClick(zoomOnClick) {
+        this._zoomOnClick.next(zoomOnClick);
+    }
+    ngOnInit() {
+        if (this._googleMap._isBrowser) {
+            this._combineOptions().pipe(take(1)).subscribe(options => {
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                this._ngZone.runOutsideAngular(() => {
+                    this.markerClusterer = new MarkerClusterer(this._googleMap.googleMap, [], options);
+                });
+                this._assertInitialized();
+                this._eventManager.setTarget(this.markerClusterer);
+            });
+            this._watchForAriaLabelFnChanges();
+            this._watchForAverageCenterChanges();
+            this._watchForBatchSizeIEChanges();
+            this._watchForCalculatorChanges();
+            this._watchForClusterClassChanges();
+            this._watchForEnableRetinalIconsChanges();
+            this._watchForGridSizeChanges();
+            this._watchForIgnoreHiddenChanges();
+            this._watchForImageExtensionChanges();
+            this._watchForImagePathChanges();
+            this._watchForImageSizesChanges();
+            this._watchForMaxZoomChanges();
+            this._watchForMinimumClusterSizeChanges();
+            this._watchForStylesChanges();
+            this._watchForTitleChanges();
+            this._watchForZIndexChanges();
+            this._watchForZoomOnClickChanges();
+        }
+    }
+    ngAfterContentInit() {
+        this._watchForMarkerChanges();
+    }
+    ngOnDestroy() {
+        this._destroy.next();
+        this._destroy.complete();
+        this._eventManager.destroy();
+        if (this.markerClusterer) {
+            this.markerClusterer.setMap(null);
+        }
+    }
+    fitMapToMarkers(padding) {
+        this._assertInitialized();
+        this.markerClusterer.fitMapToMarkers(padding);
+    }
+    getAverageCenter() {
+        this._assertInitialized();
+        return this.markerClusterer.getAverageCenter();
+    }
+    getBatchSizeIE() {
+        this._assertInitialized();
+        return this.markerClusterer.getBatchSizeIE();
+    }
+    getCalculator() {
+        this._assertInitialized();
+        return this.markerClusterer.getCalculator();
+    }
+    getClusterClass() {
+        this._assertInitialized();
+        return this.markerClusterer.getClusterClass();
+    }
+    getClusters() {
+        this._assertInitialized();
+        return this.markerClusterer.getClusters();
+    }
+    getEnableRetinalIcons() {
+        this._assertInitialized();
+        return this.markerClusterer.getEnableRetinalIcons();
+    }
+    getGridSize() {
+        this._assertInitialized();
+        return this.markerClusterer.getGridSize();
+    }
+    getIgnoreHidden() {
+        this._assertInitialized();
+        return this.markerClusterer.getIgnoreHidden();
+    }
+    getImageExtension() {
+        this._assertInitialized();
+        return this.markerClusterer.getImageExtension();
+    }
+    getImagePath() {
+        this._assertInitialized();
+        return this.markerClusterer.getImagePath();
+    }
+    getImageSizes() {
+        this._assertInitialized();
+        return this.markerClusterer.getImageSizes();
+    }
+    getMaxZoom() {
+        this._assertInitialized();
+        return this.markerClusterer.getMaxZoom();
+    }
+    getMinimumClusterSize() {
+        this._assertInitialized();
+        return this.markerClusterer.getMinimumClusterSize();
+    }
+    getStyles() {
+        this._assertInitialized();
+        return this.markerClusterer.getStyles();
+    }
+    getTitle() {
+        this._assertInitialized();
+        return this.markerClusterer.getTitle();
+    }
+    getTotalClusters() {
+        this._assertInitialized();
+        return this.markerClusterer.getTotalClusters();
+    }
+    getTotalMarkers() {
+        this._assertInitialized();
+        return this.markerClusterer.getTotalMarkers();
+    }
+    getZIndex() {
+        this._assertInitialized();
+        return this.markerClusterer.getZIndex();
+    }
+    getZoomOnClick() {
+        this._assertInitialized();
+        return this.markerClusterer.getZoomOnClick();
+    }
+    _combineOptions() {
+        return combineLatest([
+            this._ariaLabelFn,
+            this._averageCenter,
+            this._batchSizeIE,
+            this._calculator,
+            this._clusterClass,
+            this._enableRetinalIcons,
+            this._gridSize,
+            this._ignoreHidden,
+            this._imageExtension,
+            this._imagePath,
+            this._imageSizes,
+            this._maxZoom,
+            this._minimumClusterSize,
+            this._styles,
+            this._title,
+            this._zIndex,
+            this._zoomOnClick,
+        ]).pipe(take(1), map(([ariaLabelFn, averageCenter, batchSizeIE, calculator, clusterClass, enableRetinalIcons, gridSize, ignoreHidden, imageExtension, imagePath, imageSizes, maxZoom, minimumClusterSize, styles, title, zIndex, zoomOnClick,]) => {
+            const combinedOptions = {
+                ariaLabelFn: ariaLabelFn,
+                averageCenter: averageCenter,
+                batchSize: this.batchSize,
+                batchSizeIE: batchSizeIE,
+                calculator: calculator,
+                clusterClass: clusterClass,
+                enableRetinalIcons: enableRetinalIcons,
+                gridSize: gridSize,
+                ignoreHidden: ignoreHidden,
+                imageExtension: imageExtension,
+                imagePath: imagePath,
+                imageSizes: imageSizes,
+                maxZoom: maxZoom,
+                minimumClusterSize: minimumClusterSize,
+                styles: styles,
+                title: title,
+                zIndex: zIndex,
+                zoomOnClick: zoomOnClick,
+            };
+            return combinedOptions;
+        }));
+    }
+    _watchForAriaLabelFnChanges() {
+        this._ariaLabelFn.pipe(takeUntil(this._destroy)).subscribe(ariaLabelFn => {
+            if (this.markerClusterer && ariaLabelFn) {
+                this._assertInitialized();
+                this.markerClusterer.ariaLabelFn = ariaLabelFn;
+            }
+        });
+    }
+    _watchForAverageCenterChanges() {
+        this._averageCenter.pipe(takeUntil(this._destroy)).subscribe(averageCenter => {
+            if (this.markerClusterer && averageCenter !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setAverageCenter(averageCenter);
+            }
+        });
+    }
+    _watchForBatchSizeIEChanges() {
+        this._batchSizeIE.pipe(takeUntil(this._destroy)).subscribe(batchSizeIE => {
+            if (this.markerClusterer && batchSizeIE !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setBatchSizeIE(batchSizeIE);
+            }
+        });
+    }
+    _watchForCalculatorChanges() {
+        this._calculator.pipe(takeUntil(this._destroy)).subscribe(calculator => {
+            if (this.markerClusterer && calculator) {
+                this._assertInitialized();
+                this.markerClusterer.setCalculator(calculator);
+            }
+        });
+    }
+    _watchForClusterClassChanges() {
+        this._clusterClass.pipe(takeUntil(this._destroy)).subscribe(clusterClass => {
+            if (this.markerClusterer && clusterClass !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setClusterClass(clusterClass);
+            }
+        });
+    }
+    _watchForEnableRetinalIconsChanges() {
+        this._enableRetinalIcons.pipe(takeUntil(this._destroy)).subscribe(enableRetinalIcons => {
+            if (this.markerClusterer && enableRetinalIcons !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setEnableRetinalIcons(enableRetinalIcons);
+            }
+        });
+    }
+    _watchForGridSizeChanges() {
+        this._gridSize.pipe(takeUntil(this._destroy)).subscribe(gridSize => {
+            if (this.markerClusterer && gridSize !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setGridSize(gridSize);
+            }
+        });
+    }
+    _watchForIgnoreHiddenChanges() {
+        this._ignoreHidden.pipe(takeUntil(this._destroy)).subscribe(ignoreHidden => {
+            if (this.markerClusterer && ignoreHidden !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setIgnoreHidden(ignoreHidden);
+            }
+        });
+    }
+    _watchForImageExtensionChanges() {
+        this._imageExtension.pipe(takeUntil(this._destroy)).subscribe(imageExtension => {
+            if (this.markerClusterer && imageExtension !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setImageExtension(imageExtension);
+            }
+        });
+    }
+    _watchForImagePathChanges() {
+        this._imagePath.pipe(takeUntil(this._destroy)).subscribe(imagePath => {
+            if (this.markerClusterer && imagePath !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setImagePath(imagePath);
+            }
+        });
+    }
+    _watchForImageSizesChanges() {
+        this._imageSizes.pipe(takeUntil(this._destroy)).subscribe(imageSizes => {
+            if (this.markerClusterer && imageSizes) {
+                this._assertInitialized();
+                this.markerClusterer.setImageSizes(imageSizes);
+            }
+        });
+    }
+    _watchForMaxZoomChanges() {
+        this._maxZoom.pipe(takeUntil(this._destroy)).subscribe(maxZoom => {
+            if (this.markerClusterer && maxZoom !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setMaxZoom(maxZoom);
+            }
+        });
+    }
+    _watchForMinimumClusterSizeChanges() {
+        this._minimumClusterSize.pipe(takeUntil(this._destroy)).subscribe(minimumClusterSize => {
+            if (this.markerClusterer && minimumClusterSize !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setMinimumClusterSize(minimumClusterSize);
+            }
+        });
+    }
+    _watchForStylesChanges() {
+        this._styles.pipe(takeUntil(this._destroy)).subscribe(styles => {
+            if (this.markerClusterer && styles) {
+                this._assertInitialized();
+                this.markerClusterer.setStyles(styles);
+            }
+        });
+    }
+    _watchForTitleChanges() {
+        this._title.pipe(takeUntil(this._destroy)).subscribe(title => {
+            if (this.markerClusterer && title !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setTitle(title);
+            }
+        });
+    }
+    _watchForZIndexChanges() {
+        this._zIndex.pipe(takeUntil(this._destroy)).subscribe(zIndex => {
+            if (this.markerClusterer && zIndex !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setZIndex(zIndex);
+            }
+        });
+    }
+    _watchForZoomOnClickChanges() {
+        this._zoomOnClick.pipe(takeUntil(this._destroy)).subscribe(zoomOnClick => {
+            if (this.markerClusterer && zoomOnClick !== undefined) {
+                this._assertInitialized();
+                this.markerClusterer.setZoomOnClick(zoomOnClick);
+            }
+        });
+    }
+    _watchForMarkerChanges() {
+        this._assertInitialized();
+        const initialMarkers = [];
+        for (const marker of this._getInternalMarkers(this._markers.toArray())) {
+            this._currentMarkers.add(marker);
+            initialMarkers.push(marker);
+        }
+        this.markerClusterer.addMarkers(initialMarkers);
+        this._markers.changes.pipe(takeUntil(this._destroy)).subscribe((markerComponents) => {
+            this._assertInitialized();
+            const newMarkers = new Set(this._getInternalMarkers(markerComponents));
+            const markersToAdd = [];
+            const markersToRemove = [];
+            for (const marker of Array.from(newMarkers)) {
+                if (!this._currentMarkers.has(marker)) {
+                    this._currentMarkers.add(marker);
+                    markersToAdd.push(marker);
+                }
+            }
+            for (const marker of Array.from(this._currentMarkers)) {
+                if (!newMarkers.has(marker)) {
+                    markersToRemove.push(marker);
+                }
+            }
+            this.markerClusterer.addMarkers(markersToAdd, true);
+            this.markerClusterer.removeMarkers(markersToRemove, true);
+            this.markerClusterer.repaint();
+            for (const marker of markersToRemove) {
+                this._currentMarkers.delete(marker);
+            }
+        });
+    }
+    _getInternalMarkers(markers) {
+        return markers.filter(markerComponent => !!markerComponent.marker)
+            .map(markerComponent => markerComponent.marker);
+    }
+    _assertInitialized() {
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._googleMap.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.markerClusterer) {
+                throw Error('Cannot interact with a MarkerClusterer before it has been initialized. ' +
+                    'Please wait for the MarkerClusterer to load before trying to interact with it.');
+            }
+        }
+    }
+}
+MapMarkerClusterer.decorators = [
+    { type: Component, args: [{
+                selector: 'map-marker-clusterer',
+                exportAs: 'mapMarkerClusterer',
+                changeDetection: ChangeDetectionStrategy.OnPush,
+                template: '<ng-content></ng-content>',
+                encapsulation: ViewEncapsulation.None
+            },] }
+];
+MapMarkerClusterer.ctorParameters = () => [
+    { type: GoogleMap },
+    { type: NgZone }
+];
+MapMarkerClusterer.propDecorators = {
+    ariaLabelFn: [{ type: Input }],
+    averageCenter: [{ type: Input }],
+    batchSize: [{ type: Input }],
+    batchSizeIE: [{ type: Input }],
+    calculator: [{ type: Input }],
+    clusterClass: [{ type: Input }],
+    enableRetinalIcons: [{ type: Input }],
+    gridSize: [{ type: Input }],
+    ignoreHidden: [{ type: Input }],
+    imageExtension: [{ type: Input }],
+    imagePath: [{ type: Input }],
+    imageSizes: [{ type: Input }],
+    maxZoom: [{ type: Input }],
+    minimumClusterSize: [{ type: Input }],
+    styles: [{ type: Input }],
+    title: [{ type: Input }],
+    zIndex: [{ type: Input }],
+    zoomOnClick: [{ type: Input }],
+    clusteringbegin: [{ type: Output }],
+    clusteringend: [{ type: Output }],
+    _markers: [{ type: ContentChildren, args: [MapMarker, { descendants: true },] }]
+};
+
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
  * Angular component that renders a Google Maps Polygon via the Google Maps JavaScript API.
  *
  * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon
@@ -2399,6 +2888,7 @@ const COMPONENTS = [
     MapInfoWindow,
     MapKmlLayer,
     MapMarker,
+    MapMarkerClusterer,
     MapPolygon,
     MapPolyline,
     MapRectangle,
@@ -2426,5 +2916,5 @@ GoogleMapsModule.decorators = [
  * Generated bundle index. Do not edit.
  */
 
-export { GoogleMap, GoogleMapsModule, MapBaseLayer, MapBicyclingLayer, MapCircle, MapGroundOverlay, MapInfoWindow, MapKmlLayer, MapMarker, MapPolygon, MapPolyline, MapRectangle, MapTrafficLayer, MapTransitLayer };
+export { GoogleMap, GoogleMapsModule, MapBaseLayer, MapBicyclingLayer, MapCircle, MapGroundOverlay, MapInfoWindow, MapKmlLayer, MapMarker, MapMarkerClusterer, MapPolygon, MapPolyline, MapRectangle, MapTrafficLayer, MapTransitLayer };
 //# sourceMappingURL=google-maps.js.map
