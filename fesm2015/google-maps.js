@@ -1093,8 +1093,11 @@ class MapInfoWindow {
     open(anchor) {
         this._assertInitialized();
         const anchorObject = anchor ? anchor.getAnchor() : undefined;
-        // Prevent the info window from initializing if trying to reopen on the same anchor.
-        if (this.infoWindow.get('anchor') !== anchorObject) {
+        // Prevent the info window from initializing when trying to reopen on the same anchor.
+        // Note that when the window is opened for the first time, the anchor will always be
+        // undefined. If that's the case, we have to allow it to open in order to handle the
+        // case where the window doesn't have an anchor, but is placed at a particular position.
+        if (this.infoWindow.get('anchor') !== anchorObject || !anchorObject) {
             this._elementRef.nativeElement.style.display = '';
             this.infoWindow.open(this._googleMap.googleMap, anchorObject);
         }
