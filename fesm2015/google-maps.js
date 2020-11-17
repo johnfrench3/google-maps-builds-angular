@@ -1335,12 +1335,6 @@ class MapMarker {
         this._googleMap = _googleMap;
         this._ngZone = _ngZone;
         this._eventManager = new MapEventManager(this._ngZone);
-        this._options = new BehaviorSubject(DEFAULT_MARKER_OPTIONS);
-        this._title = new BehaviorSubject(undefined);
-        this._position = new BehaviorSubject(undefined);
-        this._label = new BehaviorSubject(undefined);
-        this._clickable = new BehaviorSubject(undefined);
-        this._destroy = new Subject();
         /**
          * See
          * developers.google.com/maps/documentation/javascript/reference/marker#Marker.animation_changed
@@ -1447,42 +1441,75 @@ class MapMarker {
          */
         this.zindexChanged = this._eventManager.getLazyEmitter('zindex_changed');
     }
-    set options(options) {
-        this._options.next(options || DEFAULT_MARKER_OPTIONS);
-    }
+    /**
+     * Title of the marker.
+     * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.title
+     */
     set title(title) {
-        this._title.next(title);
+        this._title = title;
     }
+    /**
+     * Title of the marker. See:
+     * developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.position
+     */
     set position(position) {
-        this._position.next(position);
+        this._position = position;
     }
+    /**
+     * Label for the marker.
+     * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.label
+     */
     set label(label) {
-        this._label.next(label);
+        this._label = label;
     }
+    /**
+     * Whether the marker is clickable. See:
+     * developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.clickable
+     */
     set clickable(clickable) {
-        this._clickable.next(clickable);
+        this._clickable = clickable;
+    }
+    /**
+     * Options used to configure the marker.
+     * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions
+     */
+    set options(options) {
+        this._options = options;
     }
     ngOnInit() {
         if (this._googleMap._isBrowser) {
-            this._combineOptions().pipe(take(1)).subscribe(options => {
-                // Create the object outside the zone so its events don't trigger change detection.
-                // We'll bring it back in inside the `MapEventManager` only for the events that the
-                // user has subscribed to.
-                this._ngZone.runOutsideAngular(() => this.marker = new google.maps.Marker(options));
-                this._assertInitialized();
-                this.marker.setMap(this._googleMap.googleMap);
-                this._eventManager.setTarget(this.marker);
+            // Create the object outside the zone so its events don't trigger change detection.
+            // We'll bring it back in inside the `MapEventManager` only for the events that the
+            // user has subscribed to.
+            this._ngZone.runOutsideAngular(() => {
+                this.marker = new google.maps.Marker(this._combineOptions());
             });
-            this._watchForOptionsChanges();
-            this._watchForTitleChanges();
-            this._watchForPositionChanges();
-            this._watchForLabelChanges();
-            this._watchForClickableChanges();
+            this._assertInitialized();
+            this.marker.setMap(this._googleMap.googleMap);
+            this._eventManager.setTarget(this.marker);
+        }
+    }
+    ngOnChanges(changes) {
+        const { marker, _title, _position, _label, _clickable } = this;
+        if (marker) {
+            if (changes.options) {
+                marker.setOptions(this._combineOptions());
+            }
+            if (changes.title && _title !== undefined) {
+                marker.setTitle(_title);
+            }
+            if (changes.position && _position) {
+                marker.setPosition(_position);
+            }
+            if (changes.label && _label !== undefined) {
+                marker.setLabel(_label);
+            }
+            if (changes.clickable && _clickable !== undefined) {
+                marker.setClickable(_clickable);
+            }
         }
     }
     ngOnDestroy() {
-        this._destroy.next();
-        this._destroy.complete();
         this._eventManager.destroy();
         if (this.marker) {
             this.marker.setMap(null);
@@ -1589,52 +1616,10 @@ class MapMarker {
         this._assertInitialized();
         return this.marker;
     }
+    /** Creates a combined options object using the passed-in options and the individual inputs. */
     _combineOptions() {
-        return combineLatest([this._options, this._title, this._position, this._label, this._clickable])
-            .pipe(map(([options, title, position, label, clickable]) => {
-            const combinedOptions = Object.assign(Object.assign({}, options), { title: title || options.title, position: position || options.position, label: label || options.label, clickable: clickable !== undefined ? clickable : options.clickable, map: this._googleMap.googleMap });
-            return combinedOptions;
-        }));
-    }
-    _watchForOptionsChanges() {
-        this._options.pipe(takeUntil(this._destroy)).subscribe(options => {
-            if (this.marker) {
-                this._assertInitialized();
-                this.marker.setOptions(options);
-            }
-        });
-    }
-    _watchForTitleChanges() {
-        this._title.pipe(takeUntil(this._destroy)).subscribe(title => {
-            if (this.marker && title !== undefined) {
-                this._assertInitialized();
-                this.marker.setTitle(title);
-            }
-        });
-    }
-    _watchForPositionChanges() {
-        this._position.pipe(takeUntil(this._destroy)).subscribe(position => {
-            if (this.marker && position) {
-                this._assertInitialized();
-                this.marker.setPosition(position);
-            }
-        });
-    }
-    _watchForLabelChanges() {
-        this._label.pipe(takeUntil(this._destroy)).subscribe(label => {
-            if (this.marker && label !== undefined) {
-                this._assertInitialized();
-                this.marker.setLabel(label);
-            }
-        });
-    }
-    _watchForClickableChanges() {
-        this._clickable.pipe(takeUntil(this._destroy)).subscribe(clickable => {
-            if (this.marker && clickable !== undefined) {
-                this._assertInitialized();
-                this.marker.setClickable(clickable);
-            }
-        });
+        const options = this._options || DEFAULT_MARKER_OPTIONS;
+        return Object.assign(Object.assign({}, options), { title: this._title || options.title, position: this._position || options.position, label: this._label || options.label, clickable: this._clickable !== undefined ? this._clickable : options.clickable, map: this._googleMap.googleMap });
     }
     _assertInitialized() {
         if (typeof ngDevMode === 'undefined' || ngDevMode) {
@@ -1660,11 +1645,11 @@ MapMarker.ctorParameters = () => [
     { type: NgZone }
 ];
 MapMarker.propDecorators = {
-    options: [{ type: Input }],
     title: [{ type: Input }],
     position: [{ type: Input }],
     label: [{ type: Input }],
     clickable: [{ type: Input }],
+    options: [{ type: Input }],
     animationChanged: [{ type: Output }],
     mapClick: [{ type: Output }],
     clickableChanged: [{ type: Output }],

@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 /// <reference types="googlemaps" />
-import { OnDestroy, OnInit, NgZone } from '@angular/core';
+import { OnDestroy, OnInit, NgZone, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
 import { MapAnchorPoint } from '../map-anchor-point';
@@ -25,21 +25,40 @@ export declare const DEFAULT_MARKER_OPTIONS: {
  *
  * See developers.google.com/maps/documentation/javascript/reference/marker
  */
-export declare class MapMarker implements OnInit, OnDestroy, MapAnchorPoint {
+export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAnchorPoint {
     private readonly _googleMap;
     private _ngZone;
     private _eventManager;
-    private readonly _options;
-    private readonly _title;
-    private readonly _position;
-    private readonly _label;
-    private readonly _clickable;
-    private readonly _destroy;
-    set options(options: google.maps.MarkerOptions);
+    /**
+     * Title of the marker.
+     * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.title
+     */
     set title(title: string);
+    private _title;
+    /**
+     * Title of the marker. See:
+     * developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.position
+     */
     set position(position: google.maps.LatLngLiteral | google.maps.LatLng);
+    private _position;
+    /**
+     * Label for the marker.
+     * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.label
+     */
     set label(label: string | google.maps.MarkerLabel);
+    private _label;
+    /**
+     * Whether the marker is clickable. See:
+     * developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.clickable
+     */
     set clickable(clickable: boolean);
+    private _clickable;
+    /**
+     * Options used to configure the marker.
+     * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions
+     */
+    set options(options: google.maps.MarkerOptions);
+    private _options;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.animation_changed
@@ -153,6 +172,7 @@ export declare class MapMarker implements OnInit, OnDestroy, MapAnchorPoint {
     marker?: google.maps.Marker;
     constructor(_googleMap: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
     /**
      * See
@@ -216,11 +236,7 @@ export declare class MapMarker implements OnInit, OnDestroy, MapAnchorPoint {
     getZIndex(): number | null;
     /** Gets the anchor point that can be used to attach other Google Maps objects. */
     getAnchor(): google.maps.MVCObject;
+    /** Creates a combined options object using the passed-in options and the individual inputs. */
     private _combineOptions;
-    private _watchForOptionsChanges;
-    private _watchForTitleChanges;
-    private _watchForPositionChanges;
-    private _watchForLabelChanges;
-    private _watchForClickableChanges;
     private _assertInitialized;
 }

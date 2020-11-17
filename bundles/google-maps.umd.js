@@ -1690,6 +1690,13 @@
     };
 
     /**
+     * @license
+     * Copyright Google LLC All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
+    /**
      * Default options for the Google Maps marker component. Displays a marker
      * at the Googleplex.
      */
@@ -1706,12 +1713,6 @@
             this._googleMap = _googleMap;
             this._ngZone = _ngZone;
             this._eventManager = new MapEventManager(this._ngZone);
-            this._options = new rxjs.BehaviorSubject(DEFAULT_MARKER_OPTIONS);
-            this._title = new rxjs.BehaviorSubject(undefined);
-            this._position = new rxjs.BehaviorSubject(undefined);
-            this._label = new rxjs.BehaviorSubject(undefined);
-            this._clickable = new rxjs.BehaviorSubject(undefined);
-            this._destroy = new rxjs.Subject();
             /**
              * See
              * developers.google.com/maps/documentation/javascript/reference/marker#Marker.animation_changed
@@ -1818,37 +1819,57 @@
              */
             this.zindexChanged = this._eventManager.getLazyEmitter('zindex_changed');
         }
-        Object.defineProperty(MapMarker.prototype, "options", {
-            set: function (options) {
-                this._options.next(options || DEFAULT_MARKER_OPTIONS);
-            },
-            enumerable: false,
-            configurable: true
-        });
         Object.defineProperty(MapMarker.prototype, "title", {
+            /**
+             * Title of the marker.
+             * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.title
+             */
             set: function (title) {
-                this._title.next(title);
+                this._title = title;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarker.prototype, "position", {
+            /**
+             * Title of the marker. See:
+             * developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.position
+             */
             set: function (position) {
-                this._position.next(position);
+                this._position = position;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarker.prototype, "label", {
+            /**
+             * Label for the marker.
+             * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.label
+             */
             set: function (label) {
-                this._label.next(label);
+                this._label = label;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarker.prototype, "clickable", {
+            /**
+             * Whether the marker is clickable. See:
+             * developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.clickable
+             */
             set: function (clickable) {
-                this._clickable.next(clickable);
+                this._clickable = clickable;
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapMarker.prototype, "options", {
+            /**
+             * Options used to configure the marker.
+             * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions
+             */
+            set: function (options) {
+                this._options = options;
             },
             enumerable: false,
             configurable: true
@@ -1856,25 +1877,38 @@
         MapMarker.prototype.ngOnInit = function () {
             var _this = this;
             if (this._googleMap._isBrowser) {
-                this._combineOptions().pipe(operators.take(1)).subscribe(function (options) {
-                    // Create the object outside the zone so its events don't trigger change detection.
-                    // We'll bring it back in inside the `MapEventManager` only for the events that the
-                    // user has subscribed to.
-                    _this._ngZone.runOutsideAngular(function () { return _this.marker = new google.maps.Marker(options); });
-                    _this._assertInitialized();
-                    _this.marker.setMap(_this._googleMap.googleMap);
-                    _this._eventManager.setTarget(_this.marker);
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                this._ngZone.runOutsideAngular(function () {
+                    _this.marker = new google.maps.Marker(_this._combineOptions());
                 });
-                this._watchForOptionsChanges();
-                this._watchForTitleChanges();
-                this._watchForPositionChanges();
-                this._watchForLabelChanges();
-                this._watchForClickableChanges();
+                this._assertInitialized();
+                this.marker.setMap(this._googleMap.googleMap);
+                this._eventManager.setTarget(this.marker);
+            }
+        };
+        MapMarker.prototype.ngOnChanges = function (changes) {
+            var _a = this, marker = _a.marker, _title = _a._title, _position = _a._position, _label = _a._label, _clickable = _a._clickable;
+            if (marker) {
+                if (changes.options) {
+                    marker.setOptions(this._combineOptions());
+                }
+                if (changes.title && _title !== undefined) {
+                    marker.setTitle(_title);
+                }
+                if (changes.position && _position) {
+                    marker.setPosition(_position);
+                }
+                if (changes.label && _label !== undefined) {
+                    marker.setLabel(_label);
+                }
+                if (changes.clickable && _clickable !== undefined) {
+                    marker.setClickable(_clickable);
+                }
             }
         };
         MapMarker.prototype.ngOnDestroy = function () {
-            this._destroy.next();
-            this._destroy.complete();
             this._eventManager.destroy();
             if (this.marker) {
                 this.marker.setMap(null);
@@ -1981,59 +2015,10 @@
             this._assertInitialized();
             return this.marker;
         };
+        /** Creates a combined options object using the passed-in options and the individual inputs. */
         MapMarker.prototype._combineOptions = function () {
-            var _this = this;
-            return rxjs.combineLatest([this._options, this._title, this._position, this._label, this._clickable])
-                .pipe(operators.map(function (_a) {
-                var _b = __read(_a, 5), options = _b[0], title = _b[1], position = _b[2], label = _b[3], clickable = _b[4];
-                var combinedOptions = Object.assign(Object.assign({}, options), { title: title || options.title, position: position || options.position, label: label || options.label, clickable: clickable !== undefined ? clickable : options.clickable, map: _this._googleMap.googleMap });
-                return combinedOptions;
-            }));
-        };
-        MapMarker.prototype._watchForOptionsChanges = function () {
-            var _this = this;
-            this._options.pipe(operators.takeUntil(this._destroy)).subscribe(function (options) {
-                if (_this.marker) {
-                    _this._assertInitialized();
-                    _this.marker.setOptions(options);
-                }
-            });
-        };
-        MapMarker.prototype._watchForTitleChanges = function () {
-            var _this = this;
-            this._title.pipe(operators.takeUntil(this._destroy)).subscribe(function (title) {
-                if (_this.marker && title !== undefined) {
-                    _this._assertInitialized();
-                    _this.marker.setTitle(title);
-                }
-            });
-        };
-        MapMarker.prototype._watchForPositionChanges = function () {
-            var _this = this;
-            this._position.pipe(operators.takeUntil(this._destroy)).subscribe(function (position) {
-                if (_this.marker && position) {
-                    _this._assertInitialized();
-                    _this.marker.setPosition(position);
-                }
-            });
-        };
-        MapMarker.prototype._watchForLabelChanges = function () {
-            var _this = this;
-            this._label.pipe(operators.takeUntil(this._destroy)).subscribe(function (label) {
-                if (_this.marker && label !== undefined) {
-                    _this._assertInitialized();
-                    _this.marker.setLabel(label);
-                }
-            });
-        };
-        MapMarker.prototype._watchForClickableChanges = function () {
-            var _this = this;
-            this._clickable.pipe(operators.takeUntil(this._destroy)).subscribe(function (clickable) {
-                if (_this.marker && clickable !== undefined) {
-                    _this._assertInitialized();
-                    _this.marker.setClickable(clickable);
-                }
-            });
+            var options = this._options || DEFAULT_MARKER_OPTIONS;
+            return Object.assign(Object.assign({}, options), { title: this._title || options.title, position: this._position || options.position, label: this._label || options.label, clickable: this._clickable !== undefined ? this._clickable : options.clickable, map: this._googleMap.googleMap });
         };
         MapMarker.prototype._assertInitialized = function () {
             if (typeof ngDevMode === 'undefined' || ngDevMode) {
@@ -2060,11 +2045,11 @@
         { type: core.NgZone }
     ]; };
     MapMarker.propDecorators = {
-        options: [{ type: core.Input }],
         title: [{ type: core.Input }],
         position: [{ type: core.Input }],
         label: [{ type: core.Input }],
         clickable: [{ type: core.Input }],
+        options: [{ type: core.Input }],
         animationChanged: [{ type: core.Output }],
         mapClick: [{ type: core.Output }],
         clickableChanged: [{ type: core.Output }],
