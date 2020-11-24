@@ -39,6 +39,8 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnD
     private readonly _currentMarkers;
     private readonly _eventManager;
     private readonly _destroy;
+    /** Whether the clusterer is allowed to be initialized. */
+    private readonly _canInitialize;
     get ariaLabelFn(): AriaLabelFn;
     set ariaLabelFn(ariaLabelFn: AriaLabelFn);
     set averageCenter(averageCenter: boolean);

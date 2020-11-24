@@ -2113,6 +2113,7 @@
              * googlemaps.github.io/v3-utility-library/modules/_google_markerclustererplus.html#clusteringend
              */
             this.clusteringend = this._eventManager.getLazyEmitter('clusteringend');
+            this._canInitialize = this._googleMap._isBrowser;
         }
         Object.defineProperty(MapMarkerClusterer.prototype, "ariaLabelFn", {
             get: function () {
@@ -2238,7 +2239,7 @@
         });
         MapMarkerClusterer.prototype.ngOnInit = function () {
             var _this = this;
-            if (this._googleMap._isBrowser) {
+            if (this._canInitialize) {
                 this._combineOptions().pipe(operators.take(1)).subscribe(function (options) {
                     // Create the object outside the zone so its events don't trigger change detection.
                     // We'll bring it back in inside the `MapEventManager` only for the events that the
@@ -2269,7 +2270,9 @@
             }
         };
         MapMarkerClusterer.prototype.ngAfterContentInit = function () {
-            this._watchForMarkerChanges();
+            if (this._canInitialize) {
+                this._watchForMarkerChanges();
+            }
         };
         MapMarkerClusterer.prototype.ngOnDestroy = function () {
             this._destroy.next();

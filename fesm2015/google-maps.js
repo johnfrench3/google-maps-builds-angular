@@ -1720,6 +1720,7 @@ class MapMarkerClusterer {
          * googlemaps.github.io/v3-utility-library/modules/_google_markerclustererplus.html#clusteringend
          */
         this.clusteringend = this._eventManager.getLazyEmitter('clusteringend');
+        this._canInitialize = this._googleMap._isBrowser;
     }
     get ariaLabelFn() {
         return this.markerClusterer ? this.markerClusterer.ariaLabelFn : () => '';
@@ -1776,7 +1777,7 @@ class MapMarkerClusterer {
         this._zoomOnClick.next(zoomOnClick);
     }
     ngOnInit() {
-        if (this._googleMap._isBrowser) {
+        if (this._canInitialize) {
             this._combineOptions().pipe(take(1)).subscribe(options => {
                 // Create the object outside the zone so its events don't trigger change detection.
                 // We'll bring it back in inside the `MapEventManager` only for the events that the
@@ -1807,7 +1808,9 @@ class MapMarkerClusterer {
         }
     }
     ngAfterContentInit() {
-        this._watchForMarkerChanges();
+        if (this._canInitialize) {
+            this._watchForMarkerChanges();
+        }
     }
     ngOnDestroy() {
         this._destroy.next();
