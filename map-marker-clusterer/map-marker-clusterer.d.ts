@@ -24,7 +24,7 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnD
     private readonly _batchSizeIE;
     private readonly _calculator;
     private readonly _clusterClass;
-    private readonly _enableRetinalIcons;
+    private readonly _enableRetinaIcons;
     private readonly _gridSize;
     private readonly _ignoreHidden;
     private readonly _imageExtension;
@@ -48,7 +48,7 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnD
     set batchSizeIE(batchSizeIE: number);
     set calculator(calculator: Calculator);
     set clusterClass(clusterClass: string);
-    set enableRetinalIcons(enableRetinalIcons: boolean);
+    set enableRetinaIcons(enableRetinaIcons: boolean);
     set gridSize(gridSize: number);
     set ignoreHidden(ignoreHidden: boolean);
     set imageExtension(imageExtension: string);
@@ -90,7 +90,7 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnD
     getCalculator(): Calculator;
     getClusterClass(): string;
     getClusters(): Cluster[];
-    getEnableRetinalIcons(): boolean;
+    getEnableRetinaIcons(): boolean;
     getGridSize(): number;
     getIgnoreHidden(): boolean;
     getImageExtension(): string;
@@ -110,7 +110,7 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnD
     private _watchForBatchSizeIEChanges;
     private _watchForCalculatorChanges;
     private _watchForClusterClassChanges;
-    private _watchForEnableRetinalIconsChanges;
+    private _watchForEnableRetinaIconsChanges;
     private _watchForGridSizeChanges;
     private _watchForIgnoreHiddenChanges;
     private _watchForImageExtensionChanges;

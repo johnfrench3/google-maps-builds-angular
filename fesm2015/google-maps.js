@@ -1694,7 +1694,7 @@ class MapMarkerClusterer {
         this._batchSizeIE = new BehaviorSubject(undefined);
         this._calculator = new BehaviorSubject(undefined);
         this._clusterClass = new BehaviorSubject(undefined);
-        this._enableRetinalIcons = new BehaviorSubject(undefined);
+        this._enableRetinaIcons = new BehaviorSubject(undefined);
         this._gridSize = new BehaviorSubject(undefined);
         this._ignoreHidden = new BehaviorSubject(undefined);
         this._imageExtension = new BehaviorSubject(undefined);
@@ -1740,8 +1740,8 @@ class MapMarkerClusterer {
     set clusterClass(clusterClass) {
         this._clusterClass.next(clusterClass);
     }
-    set enableRetinalIcons(enableRetinalIcons) {
-        this._enableRetinalIcons.next(enableRetinalIcons);
+    set enableRetinaIcons(enableRetinaIcons) {
+        this._enableRetinaIcons.next(enableRetinaIcons);
     }
     set gridSize(gridSize) {
         this._gridSize.next(gridSize);
@@ -1793,7 +1793,7 @@ class MapMarkerClusterer {
             this._watchForBatchSizeIEChanges();
             this._watchForCalculatorChanges();
             this._watchForClusterClassChanges();
-            this._watchForEnableRetinalIconsChanges();
+            this._watchForEnableRetinaIconsChanges();
             this._watchForGridSizeChanges();
             this._watchForIgnoreHiddenChanges();
             this._watchForImageExtensionChanges();
@@ -1844,9 +1844,9 @@ class MapMarkerClusterer {
         this._assertInitialized();
         return this.markerClusterer.getClusters();
     }
-    getEnableRetinalIcons() {
+    getEnableRetinaIcons() {
         this._assertInitialized();
-        return this.markerClusterer.getEnableRetinalIcons();
+        return this.markerClusterer.getEnableRetinaIcons();
     }
     getGridSize() {
         this._assertInitialized();
@@ -1907,7 +1907,7 @@ class MapMarkerClusterer {
             this._batchSizeIE,
             this._calculator,
             this._clusterClass,
-            this._enableRetinalIcons,
+            this._enableRetinaIcons,
             this._gridSize,
             this._ignoreHidden,
             this._imageExtension,
@@ -1919,7 +1919,7 @@ class MapMarkerClusterer {
             this._title,
             this._zIndex,
             this._zoomOnClick,
-        ]).pipe(take(1), map(([ariaLabelFn, averageCenter, batchSizeIE, calculator, clusterClass, enableRetinalIcons, gridSize, ignoreHidden, imageExtension, imagePath, imageSizes, maxZoom, minimumClusterSize, styles, title, zIndex, zoomOnClick,]) => {
+        ]).pipe(take(1), map(([ariaLabelFn, averageCenter, batchSizeIE, calculator, clusterClass, enableRetinaIcons, gridSize, ignoreHidden, imageExtension, imagePath, imageSizes, maxZoom, minimumClusterSize, styles, title, zIndex, zoomOnClick,]) => {
             const combinedOptions = {
                 ariaLabelFn: ariaLabelFn,
                 averageCenter: averageCenter,
@@ -1927,7 +1927,7 @@ class MapMarkerClusterer {
                 batchSizeIE: batchSizeIE,
                 calculator: calculator,
                 clusterClass: clusterClass,
-                enableRetinalIcons: enableRetinalIcons,
+                enableRetinaIcons: enableRetinaIcons,
                 gridSize: gridSize,
                 ignoreHidden: ignoreHidden,
                 imageExtension: imageExtension,
@@ -1983,11 +1983,11 @@ class MapMarkerClusterer {
             }
         });
     }
-    _watchForEnableRetinalIconsChanges() {
-        this._enableRetinalIcons.pipe(takeUntil(this._destroy)).subscribe(enableRetinalIcons => {
-            if (this.markerClusterer && enableRetinalIcons !== undefined) {
+    _watchForEnableRetinaIconsChanges() {
+        this._enableRetinaIcons.pipe(takeUntil(this._destroy)).subscribe(enableRetinaIcons => {
+            if (this.markerClusterer && enableRetinaIcons !== undefined) {
                 this._assertInitialized();
-                this.markerClusterer.setEnableRetinalIcons(enableRetinalIcons);
+                this.markerClusterer.setEnableRetinaIcons(enableRetinaIcons);
             }
         });
     }
@@ -2148,7 +2148,7 @@ MapMarkerClusterer.propDecorators = {
     batchSizeIE: [{ type: Input }],
     calculator: [{ type: Input }],
     clusterClass: [{ type: Input }],
-    enableRetinalIcons: [{ type: Input }],
+    enableRetinaIcons: [{ type: Input }],
     gridSize: [{ type: Input }],
     ignoreHidden: [{ type: Input }],
     imageExtension: [{ type: Input }],

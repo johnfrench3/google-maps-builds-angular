@@ -2087,7 +2087,7 @@
             this._batchSizeIE = new rxjs.BehaviorSubject(undefined);
             this._calculator = new rxjs.BehaviorSubject(undefined);
             this._clusterClass = new rxjs.BehaviorSubject(undefined);
-            this._enableRetinalIcons = new rxjs.BehaviorSubject(undefined);
+            this._enableRetinaIcons = new rxjs.BehaviorSubject(undefined);
             this._gridSize = new rxjs.BehaviorSubject(undefined);
             this._ignoreHidden = new rxjs.BehaviorSubject(undefined);
             this._imageExtension = new rxjs.BehaviorSubject(undefined);
@@ -2153,9 +2153,9 @@
             enumerable: false,
             configurable: true
         });
-        Object.defineProperty(MapMarkerClusterer.prototype, "enableRetinalIcons", {
-            set: function (enableRetinalIcons) {
-                this._enableRetinalIcons.next(enableRetinalIcons);
+        Object.defineProperty(MapMarkerClusterer.prototype, "enableRetinaIcons", {
+            set: function (enableRetinaIcons) {
+                this._enableRetinaIcons.next(enableRetinaIcons);
             },
             enumerable: false,
             configurable: true
@@ -2255,7 +2255,7 @@
                 this._watchForBatchSizeIEChanges();
                 this._watchForCalculatorChanges();
                 this._watchForClusterClassChanges();
-                this._watchForEnableRetinalIconsChanges();
+                this._watchForEnableRetinaIconsChanges();
                 this._watchForGridSizeChanges();
                 this._watchForIgnoreHiddenChanges();
                 this._watchForImageExtensionChanges();
@@ -2306,9 +2306,9 @@
             this._assertInitialized();
             return this.markerClusterer.getClusters();
         };
-        MapMarkerClusterer.prototype.getEnableRetinalIcons = function () {
+        MapMarkerClusterer.prototype.getEnableRetinaIcons = function () {
             this._assertInitialized();
-            return this.markerClusterer.getEnableRetinalIcons();
+            return this.markerClusterer.getEnableRetinaIcons();
         };
         MapMarkerClusterer.prototype.getGridSize = function () {
             this._assertInitialized();
@@ -2370,7 +2370,7 @@
                 this._batchSizeIE,
                 this._calculator,
                 this._clusterClass,
-                this._enableRetinalIcons,
+                this._enableRetinaIcons,
                 this._gridSize,
                 this._ignoreHidden,
                 this._imageExtension,
@@ -2383,7 +2383,7 @@
                 this._zIndex,
                 this._zoomOnClick,
             ]).pipe(operators.take(1), operators.map(function (_a) {
-                var _b = __read(_a, 17), ariaLabelFn = _b[0], averageCenter = _b[1], batchSizeIE = _b[2], calculator = _b[3], clusterClass = _b[4], enableRetinalIcons = _b[5], gridSize = _b[6], ignoreHidden = _b[7], imageExtension = _b[8], imagePath = _b[9], imageSizes = _b[10], maxZoom = _b[11], minimumClusterSize = _b[12], styles = _b[13], title = _b[14], zIndex = _b[15], zoomOnClick = _b[16];
+                var _b = __read(_a, 17), ariaLabelFn = _b[0], averageCenter = _b[1], batchSizeIE = _b[2], calculator = _b[3], clusterClass = _b[4], enableRetinaIcons = _b[5], gridSize = _b[6], ignoreHidden = _b[7], imageExtension = _b[8], imagePath = _b[9], imageSizes = _b[10], maxZoom = _b[11], minimumClusterSize = _b[12], styles = _b[13], title = _b[14], zIndex = _b[15], zoomOnClick = _b[16];
                 var combinedOptions = {
                     ariaLabelFn: ariaLabelFn,
                     averageCenter: averageCenter,
@@ -2391,7 +2391,7 @@
                     batchSizeIE: batchSizeIE,
                     calculator: calculator,
                     clusterClass: clusterClass,
-                    enableRetinalIcons: enableRetinalIcons,
+                    enableRetinaIcons: enableRetinaIcons,
                     gridSize: gridSize,
                     ignoreHidden: ignoreHidden,
                     imageExtension: imageExtension,
@@ -2452,12 +2452,12 @@
                 }
             });
         };
-        MapMarkerClusterer.prototype._watchForEnableRetinalIconsChanges = function () {
+        MapMarkerClusterer.prototype._watchForEnableRetinaIconsChanges = function () {
             var _this = this;
-            this._enableRetinalIcons.pipe(operators.takeUntil(this._destroy)).subscribe(function (enableRetinalIcons) {
-                if (_this.markerClusterer && enableRetinalIcons !== undefined) {
+            this._enableRetinaIcons.pipe(operators.takeUntil(this._destroy)).subscribe(function (enableRetinaIcons) {
+                if (_this.markerClusterer && enableRetinaIcons !== undefined) {
                     _this._assertInitialized();
-                    _this.markerClusterer.setEnableRetinalIcons(enableRetinalIcons);
+                    _this.markerClusterer.setEnableRetinaIcons(enableRetinaIcons);
                 }
             });
         };
@@ -2673,7 +2673,7 @@
         batchSizeIE: [{ type: core.Input }],
         calculator: [{ type: core.Input }],
         clusterClass: [{ type: core.Input }],
-        enableRetinalIcons: [{ type: core.Input }],
+        enableRetinaIcons: [{ type: core.Input }],
         gridSize: [{ type: core.Input }],
         ignoreHidden: [{ type: core.Input }],
         imageExtension: [{ type: core.Input }],
