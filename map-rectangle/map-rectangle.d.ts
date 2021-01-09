@@ -38,57 +38,57 @@ export declare class MapRectangle implements OnInit, OnDestroy {
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.click
      */
-    rectangleClick: Observable<google.maps.MapMouseEvent>;
+    rectangleClick: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dblclick
      */
-    rectangleDblclick: Observable<google.maps.MapMouseEvent>;
+    rectangleDblclick: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.drag
      */
-    rectangleDrag: Observable<google.maps.MapMouseEvent>;
+    rectangleDrag: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dragend
      */
-    rectangleDragend: Observable<google.maps.MapMouseEvent>;
+    rectangleDragend: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.dragstart
      */
-    rectangleDragstart: Observable<google.maps.MapMouseEvent>;
+    rectangleDragstart: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mousedown
      */
-    rectangleMousedown: Observable<google.maps.MapMouseEvent>;
+    rectangleMousedown: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mousemove
      */
-    rectangleMousemove: Observable<google.maps.MapMouseEvent>;
+    rectangleMousemove: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseout
      */
-    rectangleMouseout: Observable<google.maps.MapMouseEvent>;
+    rectangleMouseout: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseover
      */
-    rectangleMouseover: Observable<google.maps.MapMouseEvent>;
+    rectangleMouseover: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.mouseup
      */
-    rectangleMouseup: Observable<google.maps.MapMouseEvent>;
+    rectangleMouseup: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.rightclick
      */
-    rectangleRightclick: Observable<google.maps.MapMouseEvent>;
+    rectangleRightclick: Observable<google.maps.MouseEvent>;
     constructor(_map: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;

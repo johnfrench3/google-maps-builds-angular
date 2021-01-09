@@ -41,13 +41,13 @@ export declare class MapGroundOverlay implements OnInit, OnDestroy {
      * See
      * developers.google.com/maps/documentation/javascript/reference/image-overlay#GroundOverlay.click
      */
-    mapClick: Observable<google.maps.MapMouseEvent>;
+    mapClick: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/image-overlay
      * #GroundOverlay.dblclick
      */
-    mapDblclick: Observable<google.maps.MapMouseEvent>;
+    mapDblclick: Observable<google.maps.MouseEvent>;
     constructor(_map: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;

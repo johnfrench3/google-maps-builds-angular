@@ -68,7 +68,7 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.click
      */
-    mapClick: Observable<google.maps.MapMouseEvent>;
+    mapClick: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.clickable_changed
@@ -83,17 +83,17 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.dblclick
      */
-    mapDblclick: Observable<google.maps.MapMouseEvent>;
+    mapDblclick: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.drag
      */
-    mapDrag: Observable<google.maps.MapMouseEvent>;
+    mapDrag: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.dragend
      */
-    mapDragend: Observable<google.maps.MapMouseEvent>;
+    mapDragend: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.draggable_changed
@@ -103,7 +103,7 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.dragstart
      */
-    mapDragstart: Observable<google.maps.MapMouseEvent>;
+    mapDragstart: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.flat_changed
@@ -118,22 +118,22 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.mousedown
      */
-    mapMousedown: Observable<google.maps.MapMouseEvent>;
+    mapMousedown: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.mouseout
      */
-    mapMouseout: Observable<google.maps.MapMouseEvent>;
+    mapMouseout: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.mouseover
      */
-    mapMouseover: Observable<google.maps.MapMouseEvent>;
+    mapMouseover: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.mouseup
      */
-    mapMouseup: Observable<google.maps.MapMouseEvent>;
+    mapMouseup: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.position_changed
@@ -143,7 +143,7 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.rightclick
      */
-    mapRightclick: Observable<google.maps.MapMouseEvent>;
+    mapRightclick: Observable<google.maps.MouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.shape_changed

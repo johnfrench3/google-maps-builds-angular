@@ -39,52 +39,52 @@ export declare class MapCircle implements OnInit, OnDestroy {
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.click
      */
-    circleClick: Observable<google.maps.MapMouseEvent>;
+    circleClick: Observable<google.maps.MouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.dblclick
      */
-    circleDblclick: Observable<google.maps.MapMouseEvent>;
+    circleDblclick: Observable<google.maps.MouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.drag
      */
-    circleDrag: Observable<google.maps.MapMouseEvent>;
+    circleDrag: Observable<google.maps.MouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.dragend
      */
-    circleDragend: Observable<google.maps.MapMouseEvent>;
+    circleDragend: Observable<google.maps.MouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.dragstart
      */
-    circleDragstart: Observable<google.maps.MapMouseEvent>;
+    circleDragstart: Observable<google.maps.MouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mousedown
      */
-    circleMousedown: Observable<google.maps.MapMouseEvent>;
+    circleMousedown: Observable<google.maps.MouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mousemove
      */
-    circleMousemove: Observable<google.maps.MapMouseEvent>;
+    circleMousemove: Observable<google.maps.MouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mouseout
      */
-    circleMouseout: Observable<google.maps.MapMouseEvent>;
+    circleMouseout: Observable<google.maps.MouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mouseover
      */
-    circleMouseover: Observable<google.maps.MapMouseEvent>;
+    circleMouseover: Observable<google.maps.MouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mouseup
      */
-    circleMouseup: Observable<google.maps.MapMouseEvent>;
+    circleMouseup: Observable<google.maps.MouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.radius_changed
@@ -94,7 +94,7 @@ export declare class MapCircle implements OnInit, OnDestroy {
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.rightclick
      */
-    circleRightclick: Observable<google.maps.MapMouseEvent>;
+    circleRightclick: Observable<google.maps.MouseEvent>;
     constructor(_map: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;
