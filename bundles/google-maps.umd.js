@@ -417,7 +417,8 @@
              * See
              * https://developers.google.com/maps/documentation/javascript/reference/map#Map.click
              */
-            this.mapClick = this._eventManager.getLazyEmitter('click');
+            this.mapClick = this._eventManager
+                .getLazyEmitter('click');
             /**
              * See
              * https://developers.google.com/maps/documentation/javascript/reference/map#Map.dblclick

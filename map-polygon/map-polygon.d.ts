@@ -40,15 +40,15 @@ export declare class MapPolygon implements OnInit, OnDestroy {
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.drag
      */
-    polygonDrag: Observable<google.maps.MouseEvent>;
+    polygonDrag: Observable<google.maps.MapMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragend
      */
-    polygonDragend: Observable<google.maps.MouseEvent>;
+    polygonDragend: Observable<google.maps.MapMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.dragstart
      */
-    polygonDragstart: Observable<google.maps.MouseEvent>;
+    polygonDragstart: Observable<google.maps.MapMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polygon.mousedown
      */
