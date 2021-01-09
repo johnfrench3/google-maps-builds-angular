@@ -63,12 +63,12 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.click
      */
-    mapClick: Observable<google.maps.MouseEvent | google.maps.IconMouseEvent>;
+    mapClick: Observable<google.maps.MapMouseEvent | google.maps.IconMouseEvent>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.dblclick
      */
-    mapDblclick: Observable<google.maps.MouseEvent>;
+    mapDblclick: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.drag
@@ -103,17 +103,17 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.mousemove
      */
-    mapMousemove: Observable<google.maps.MouseEvent>;
+    mapMousemove: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.mouseout
      */
-    mapMouseout: Observable<google.maps.MouseEvent>;
+    mapMouseout: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.mouseover
      */
-    mapMouseover: Observable<google.maps.MouseEvent>;
+    mapMouseover: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/map#Map.projection_changed
@@ -123,7 +123,7 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.rightclick
      */
-    mapRightclick: Observable<google.maps.MouseEvent>;
+    mapRightclick: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.tilesloaded
