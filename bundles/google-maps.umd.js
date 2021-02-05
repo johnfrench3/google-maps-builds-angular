@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('rxjs'), require('rxjs/operators')) :
     typeof define === 'function' && define.amd ? define('@angular/google-maps', ['exports', '@angular/core', '@angular/common', 'rxjs', 'rxjs/operators'], factory) :
     (global = global || self, factory((global.ng = global.ng || {}, global.ng.googleMaps = {}), global.ng.core, global.ng.common, global.rxjs, global.rxjs.operators));
-}(this, (function (exports, core, common, rxjs, operators) { 'use strict';
+}(this, (function (exports, i0, common, rxjs, operators) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -783,44 +783,44 @@
         return GoogleMap;
     }());
     GoogleMap.decorators = [
-        { type: core.Component, args: [{
+        { type: i0.Component, args: [{
                     selector: 'google-map',
                     exportAs: 'googleMap',
-                    changeDetection: core.ChangeDetectionStrategy.OnPush,
+                    changeDetection: i0.ChangeDetectionStrategy.OnPush,
                     template: '<div class="map-container"></div><ng-content></ng-content>',
-                    encapsulation: core.ViewEncapsulation.None
+                    encapsulation: i0.ViewEncapsulation.None
                 },] }
     ];
     GoogleMap.ctorParameters = function () { return [
-        { type: core.ElementRef },
-        { type: core.NgZone },
-        { type: Object, decorators: [{ type: core.Inject, args: [core.PLATFORM_ID,] }] }
+        { type: i0.ElementRef },
+        { type: i0.NgZone },
+        { type: Object, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] }
     ]; };
     GoogleMap.propDecorators = {
-        height: [{ type: core.Input }],
-        width: [{ type: core.Input }],
-        mapTypeId: [{ type: core.Input }],
-        center: [{ type: core.Input }],
-        zoom: [{ type: core.Input }],
-        options: [{ type: core.Input }],
-        boundsChanged: [{ type: core.Output }],
-        centerChanged: [{ type: core.Output }],
-        mapClick: [{ type: core.Output }],
-        mapDblclick: [{ type: core.Output }],
-        mapDrag: [{ type: core.Output }],
-        mapDragend: [{ type: core.Output }],
-        mapDragstart: [{ type: core.Output }],
-        headingChanged: [{ type: core.Output }],
-        idle: [{ type: core.Output }],
-        maptypeidChanged: [{ type: core.Output }],
-        mapMousemove: [{ type: core.Output }],
-        mapMouseout: [{ type: core.Output }],
-        mapMouseover: [{ type: core.Output }],
-        projectionChanged: [{ type: core.Output }],
-        mapRightclick: [{ type: core.Output }],
-        tilesloaded: [{ type: core.Output }],
-        tiltChanged: [{ type: core.Output }],
-        zoomChanged: [{ type: core.Output }]
+        height: [{ type: i0.Input }],
+        width: [{ type: i0.Input }],
+        mapTypeId: [{ type: i0.Input }],
+        center: [{ type: i0.Input }],
+        zoom: [{ type: i0.Input }],
+        options: [{ type: i0.Input }],
+        boundsChanged: [{ type: i0.Output }],
+        centerChanged: [{ type: i0.Output }],
+        mapClick: [{ type: i0.Output }],
+        mapDblclick: [{ type: i0.Output }],
+        mapDrag: [{ type: i0.Output }],
+        mapDragend: [{ type: i0.Output }],
+        mapDragstart: [{ type: i0.Output }],
+        headingChanged: [{ type: i0.Output }],
+        idle: [{ type: i0.Output }],
+        maptypeidChanged: [{ type: i0.Output }],
+        mapMousemove: [{ type: i0.Output }],
+        mapMouseout: [{ type: i0.Output }],
+        mapMouseover: [{ type: i0.Output }],
+        projectionChanged: [{ type: i0.Output }],
+        mapRightclick: [{ type: i0.Output }],
+        tilesloaded: [{ type: i0.Output }],
+        tiltChanged: [{ type: i0.Output }],
+        zoomChanged: [{ type: i0.Output }]
     };
     var cssUnitsPattern = /([A-Za-z%]+)$/;
     /** Coerces a value to a CSS pixel value. */
@@ -868,14 +868,14 @@
         return MapBaseLayer;
     }());
     MapBaseLayer.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-base-layer',
                     exportAs: 'mapBaseLayer',
                 },] }
     ];
     MapBaseLayer.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.NgZone }
+        { type: i0.NgZone }
     ]; };
 
     /**
@@ -909,7 +909,7 @@
         return MapBicyclingLayer;
     }(MapBaseLayer));
     MapBicyclingLayer.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-bicycling-layer',
                     exportAs: 'mapBicyclingLayer',
                 },] }
@@ -1138,32 +1138,167 @@
         return MapCircle;
     }());
     MapCircle.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-circle',
                     exportAs: 'mapCircle',
                 },] }
     ];
     MapCircle.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.NgZone }
+        { type: i0.NgZone }
     ]; };
     MapCircle.propDecorators = {
-        options: [{ type: core.Input }],
-        center: [{ type: core.Input }],
-        radius: [{ type: core.Input }],
-        centerChanged: [{ type: core.Output }],
-        circleClick: [{ type: core.Output }],
-        circleDblclick: [{ type: core.Output }],
-        circleDrag: [{ type: core.Output }],
-        circleDragend: [{ type: core.Output }],
-        circleDragstart: [{ type: core.Output }],
-        circleMousedown: [{ type: core.Output }],
-        circleMousemove: [{ type: core.Output }],
-        circleMouseout: [{ type: core.Output }],
-        circleMouseover: [{ type: core.Output }],
-        circleMouseup: [{ type: core.Output }],
-        radiusChanged: [{ type: core.Output }],
-        circleRightclick: [{ type: core.Output }]
+        options: [{ type: i0.Input }],
+        center: [{ type: i0.Input }],
+        radius: [{ type: i0.Input }],
+        centerChanged: [{ type: i0.Output }],
+        circleClick: [{ type: i0.Output }],
+        circleDblclick: [{ type: i0.Output }],
+        circleDrag: [{ type: i0.Output }],
+        circleDragend: [{ type: i0.Output }],
+        circleDragstart: [{ type: i0.Output }],
+        circleMousedown: [{ type: i0.Output }],
+        circleMousemove: [{ type: i0.Output }],
+        circleMouseout: [{ type: i0.Output }],
+        circleMouseover: [{ type: i0.Output }],
+        circleMouseup: [{ type: i0.Output }],
+        radiusChanged: [{ type: i0.Output }],
+        circleRightclick: [{ type: i0.Output }]
+    };
+
+    /**
+     * @license
+     * Copyright Google LLC All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
+    /**
+     * Angular component that renders a Google Maps Directions Renderer via the Google Maps
+     * JavaScript API.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/directions#DirectionsRenderer
+     */
+    var MapDirectionsRenderer = /** @class */ (function () {
+        function MapDirectionsRenderer(_googleMap, _ngZone) {
+            this._googleMap = _googleMap;
+            this._ngZone = _ngZone;
+            this._eventManager = new MapEventManager(this._ngZone);
+            /**
+             * See developers.google.com/maps/documentation/javascript/reference/directions
+             * #DirectionsRenderer.directions_changed
+             */
+            this.directionsChanged = this._eventManager.getLazyEmitter('directions_changed');
+        }
+        Object.defineProperty(MapDirectionsRenderer.prototype, "directions", {
+            /**
+             * See developers.google.com/maps/documentation/javascript/reference/directions
+             * #DirectionsRendererOptions.directions
+             */
+            set: function (directions) {
+                this._directions = directions;
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapDirectionsRenderer.prototype, "options", {
+            /**
+             * See developers.google.com/maps/documentation/javascript/reference/directions
+             * #DirectionsRendererOptions
+             */
+            set: function (options) {
+                this._options = options;
+            },
+            enumerable: false,
+            configurable: true
+        });
+        MapDirectionsRenderer.prototype.ngOnInit = function () {
+            var _this = this;
+            if (this._googleMap._isBrowser) {
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                this._ngZone.runOutsideAngular(function () {
+                    _this.directionsRenderer = new google.maps.DirectionsRenderer(_this._combineOptions());
+                });
+                this._assertInitialized();
+                this.directionsRenderer.setMap(this._googleMap.googleMap);
+                this._eventManager.setTarget(this.directionsRenderer);
+            }
+        };
+        MapDirectionsRenderer.prototype.ngOnChanges = function (changes) {
+            if (this.directionsRenderer) {
+                if (changes['options']) {
+                    this.directionsRenderer.setOptions(this._combineOptions());
+                }
+                if (changes['directions'] && this._directions !== undefined) {
+                    this.directionsRenderer.setDirections(this._directions);
+                }
+            }
+        };
+        MapDirectionsRenderer.prototype.ngOnDestroy = function () {
+            this._eventManager.destroy();
+            if (this.directionsRenderer) {
+                this.directionsRenderer.setMap(null);
+            }
+        };
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/directions
+         * #DirectionsRenderer.getDirections
+         */
+        MapDirectionsRenderer.prototype.getDirections = function () {
+            this._assertInitialized();
+            return this.directionsRenderer.getDirections();
+        };
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/directions
+         * #DirectionsRenderer.getPanel
+         */
+        MapDirectionsRenderer.prototype.getPanel = function () {
+            this._assertInitialized();
+            return this.directionsRenderer.getPanel();
+        };
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/directions
+         * #DirectionsRenderer.getRouteIndex
+         */
+        MapDirectionsRenderer.prototype.getRouteIndex = function () {
+            this._assertInitialized();
+            return this.directionsRenderer.getRouteIndex();
+        };
+        MapDirectionsRenderer.prototype._combineOptions = function () {
+            var options = this._options || {};
+            return Object.assign(Object.assign({}, options), { directions: this._directions || options.directions, map: this._googleMap.googleMap });
+        };
+        MapDirectionsRenderer.prototype._assertInitialized = function () {
+            if (typeof ngDevMode === 'undefined' || ngDevMode) {
+                if (!this._googleMap.googleMap) {
+                    throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                        'Please wait for the API to load before trying to interact with it.');
+                }
+                if (!this.directionsRenderer) {
+                    throw Error('Cannot interact with a Google Map Directions Renderer before it has been ' +
+                        'initialized. Please wait for the Directions Renderer to load before trying ' +
+                        'to interact with it.');
+                }
+            }
+        };
+        return MapDirectionsRenderer;
+    }());
+    MapDirectionsRenderer.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: 'map-directions-renderer',
+                    exportAs: 'mapDirectionsRenderer',
+                },] }
+    ];
+    MapDirectionsRenderer.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: i0.NgZone }
+    ]; };
+    MapDirectionsRenderer.propDecorators = {
+        directions: [{ type: i0.Input }],
+        options: [{ type: i0.Input }],
+        directionsChanged: [{ type: i0.Output }]
     };
 
     /**
@@ -1328,22 +1463,22 @@
         return MapGroundOverlay;
     }());
     MapGroundOverlay.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-ground-overlay',
                     exportAs: 'mapGroundOverlay',
                 },] }
     ];
     MapGroundOverlay.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.NgZone }
+        { type: i0.NgZone }
     ]; };
     MapGroundOverlay.propDecorators = {
-        url: [{ type: core.Input }],
-        bounds: [{ type: core.Input }],
-        clickable: [{ type: core.Input }],
-        opacity: [{ type: core.Input }],
-        mapClick: [{ type: core.Output }],
-        mapDblclick: [{ type: core.Output }]
+        url: [{ type: i0.Input }],
+        bounds: [{ type: i0.Input }],
+        clickable: [{ type: i0.Input }],
+        opacity: [{ type: i0.Input }],
+        mapClick: [{ type: i0.Output }],
+        mapDblclick: [{ type: i0.Output }]
     };
 
     /**
@@ -1518,7 +1653,7 @@
         return MapInfoWindow;
     }());
     MapInfoWindow.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-info-window',
                     exportAs: 'mapInfoWindow',
                     host: { 'style': 'display: none' },
@@ -1526,17 +1661,17 @@
     ];
     MapInfoWindow.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.ElementRef },
-        { type: core.NgZone }
+        { type: i0.ElementRef },
+        { type: i0.NgZone }
     ]; };
     MapInfoWindow.propDecorators = {
-        options: [{ type: core.Input }],
-        position: [{ type: core.Input }],
-        closeclick: [{ type: core.Output }],
-        contentChanged: [{ type: core.Output }],
-        domready: [{ type: core.Output }],
-        positionChanged: [{ type: core.Output }],
-        zindexChanged: [{ type: core.Output }]
+        options: [{ type: i0.Input }],
+        position: [{ type: i0.Input }],
+        closeclick: [{ type: i0.Output }],
+        contentChanged: [{ type: i0.Output }],
+        domready: [{ type: i0.Output }],
+        positionChanged: [{ type: i0.Output }],
+        zindexChanged: [{ type: i0.Output }]
     };
 
     /**
@@ -1681,21 +1816,21 @@
         return MapKmlLayer;
     }());
     MapKmlLayer.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-kml-layer',
                     exportAs: 'mapKmlLayer',
                 },] }
     ];
     MapKmlLayer.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.NgZone }
+        { type: i0.NgZone }
     ]; };
     MapKmlLayer.propDecorators = {
-        options: [{ type: core.Input }],
-        url: [{ type: core.Input }],
-        kmlClick: [{ type: core.Output }],
-        defaultviewportChanged: [{ type: core.Output }],
-        statusChanged: [{ type: core.Output }]
+        options: [{ type: i0.Input }],
+        url: [{ type: i0.Input }],
+        kmlClick: [{ type: i0.Output }],
+        defaultviewportChanged: [{ type: i0.Output }],
+        statusChanged: [{ type: i0.Output }]
     };
 
     /**
@@ -2044,42 +2179,42 @@
         return MapMarker;
     }());
     MapMarker.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-marker',
                     exportAs: 'mapMarker',
                 },] }
     ];
     MapMarker.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.NgZone }
+        { type: i0.NgZone }
     ]; };
     MapMarker.propDecorators = {
-        title: [{ type: core.Input }],
-        position: [{ type: core.Input }],
-        label: [{ type: core.Input }],
-        clickable: [{ type: core.Input }],
-        options: [{ type: core.Input }],
-        animationChanged: [{ type: core.Output }],
-        mapClick: [{ type: core.Output }],
-        clickableChanged: [{ type: core.Output }],
-        cursorChanged: [{ type: core.Output }],
-        mapDblclick: [{ type: core.Output }],
-        mapDrag: [{ type: core.Output }],
-        mapDragend: [{ type: core.Output }],
-        draggableChanged: [{ type: core.Output }],
-        mapDragstart: [{ type: core.Output }],
-        flatChanged: [{ type: core.Output }],
-        iconChanged: [{ type: core.Output }],
-        mapMousedown: [{ type: core.Output }],
-        mapMouseout: [{ type: core.Output }],
-        mapMouseover: [{ type: core.Output }],
-        mapMouseup: [{ type: core.Output }],
-        positionChanged: [{ type: core.Output }],
-        mapRightclick: [{ type: core.Output }],
-        shapeChanged: [{ type: core.Output }],
-        titleChanged: [{ type: core.Output }],
-        visibleChanged: [{ type: core.Output }],
-        zindexChanged: [{ type: core.Output }]
+        title: [{ type: i0.Input }],
+        position: [{ type: i0.Input }],
+        label: [{ type: i0.Input }],
+        clickable: [{ type: i0.Input }],
+        options: [{ type: i0.Input }],
+        animationChanged: [{ type: i0.Output }],
+        mapClick: [{ type: i0.Output }],
+        clickableChanged: [{ type: i0.Output }],
+        cursorChanged: [{ type: i0.Output }],
+        mapDblclick: [{ type: i0.Output }],
+        mapDrag: [{ type: i0.Output }],
+        mapDragend: [{ type: i0.Output }],
+        draggableChanged: [{ type: i0.Output }],
+        mapDragstart: [{ type: i0.Output }],
+        flatChanged: [{ type: i0.Output }],
+        iconChanged: [{ type: i0.Output }],
+        mapMousedown: [{ type: i0.Output }],
+        mapMouseout: [{ type: i0.Output }],
+        mapMouseover: [{ type: i0.Output }],
+        mapMouseup: [{ type: i0.Output }],
+        positionChanged: [{ type: i0.Output }],
+        mapRightclick: [{ type: i0.Output }],
+        shapeChanged: [{ type: i0.Output }],
+        titleChanged: [{ type: i0.Output }],
+        visibleChanged: [{ type: i0.Output }],
+        zindexChanged: [{ type: i0.Output }]
     };
 
     /**
@@ -2498,40 +2633,40 @@
         return MapMarkerClusterer;
     }());
     MapMarkerClusterer.decorators = [
-        { type: core.Component, args: [{
+        { type: i0.Component, args: [{
                     selector: 'map-marker-clusterer',
                     exportAs: 'mapMarkerClusterer',
-                    changeDetection: core.ChangeDetectionStrategy.OnPush,
+                    changeDetection: i0.ChangeDetectionStrategy.OnPush,
                     template: '<ng-content></ng-content>',
-                    encapsulation: core.ViewEncapsulation.None
+                    encapsulation: i0.ViewEncapsulation.None
                 },] }
     ];
     MapMarkerClusterer.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.NgZone }
+        { type: i0.NgZone }
     ]; };
     MapMarkerClusterer.propDecorators = {
-        ariaLabelFn: [{ type: core.Input }],
-        averageCenter: [{ type: core.Input }],
-        batchSize: [{ type: core.Input }],
-        batchSizeIE: [{ type: core.Input }],
-        calculator: [{ type: core.Input }],
-        clusterClass: [{ type: core.Input }],
-        enableRetinaIcons: [{ type: core.Input }],
-        gridSize: [{ type: core.Input }],
-        ignoreHidden: [{ type: core.Input }],
-        imageExtension: [{ type: core.Input }],
-        imagePath: [{ type: core.Input }],
-        imageSizes: [{ type: core.Input }],
-        maxZoom: [{ type: core.Input }],
-        minimumClusterSize: [{ type: core.Input }],
-        styles: [{ type: core.Input }],
-        title: [{ type: core.Input }],
-        zIndex: [{ type: core.Input }],
-        zoomOnClick: [{ type: core.Input }],
-        clusteringbegin: [{ type: core.Output }],
-        clusteringend: [{ type: core.Output }],
-        _markers: [{ type: core.ContentChildren, args: [MapMarker, { descendants: true },] }]
+        ariaLabelFn: [{ type: i0.Input }],
+        averageCenter: [{ type: i0.Input }],
+        batchSize: [{ type: i0.Input }],
+        batchSizeIE: [{ type: i0.Input }],
+        calculator: [{ type: i0.Input }],
+        clusterClass: [{ type: i0.Input }],
+        enableRetinaIcons: [{ type: i0.Input }],
+        gridSize: [{ type: i0.Input }],
+        ignoreHidden: [{ type: i0.Input }],
+        imageExtension: [{ type: i0.Input }],
+        imagePath: [{ type: i0.Input }],
+        imageSizes: [{ type: i0.Input }],
+        maxZoom: [{ type: i0.Input }],
+        minimumClusterSize: [{ type: i0.Input }],
+        styles: [{ type: i0.Input }],
+        title: [{ type: i0.Input }],
+        zIndex: [{ type: i0.Input }],
+        zoomOnClick: [{ type: i0.Input }],
+        clusteringbegin: [{ type: i0.Output }],
+        clusteringend: [{ type: i0.Output }],
+        _markers: [{ type: i0.ContentChildren, args: [MapMarker, { descendants: true },] }]
     };
 
     /**
@@ -2706,29 +2841,29 @@
         return MapPolygon;
     }());
     MapPolygon.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-polygon',
                     exportAs: 'mapPolygon',
                 },] }
     ];
     MapPolygon.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.NgZone }
+        { type: i0.NgZone }
     ]; };
     MapPolygon.propDecorators = {
-        options: [{ type: core.Input }],
-        paths: [{ type: core.Input }],
-        polygonClick: [{ type: core.Output }],
-        polygonDblclick: [{ type: core.Output }],
-        polygonDrag: [{ type: core.Output }],
-        polygonDragend: [{ type: core.Output }],
-        polygonDragstart: [{ type: core.Output }],
-        polygonMousedown: [{ type: core.Output }],
-        polygonMousemove: [{ type: core.Output }],
-        polygonMouseout: [{ type: core.Output }],
-        polygonMouseover: [{ type: core.Output }],
-        polygonMouseup: [{ type: core.Output }],
-        polygonRightclick: [{ type: core.Output }]
+        options: [{ type: i0.Input }],
+        paths: [{ type: i0.Input }],
+        polygonClick: [{ type: i0.Output }],
+        polygonDblclick: [{ type: i0.Output }],
+        polygonDrag: [{ type: i0.Output }],
+        polygonDragend: [{ type: i0.Output }],
+        polygonDragstart: [{ type: i0.Output }],
+        polygonMousedown: [{ type: i0.Output }],
+        polygonMousemove: [{ type: i0.Output }],
+        polygonMouseout: [{ type: i0.Output }],
+        polygonMouseover: [{ type: i0.Output }],
+        polygonMouseup: [{ type: i0.Output }],
+        polygonRightclick: [{ type: i0.Output }]
     };
 
     /**
@@ -2894,29 +3029,29 @@
         return MapPolyline;
     }());
     MapPolyline.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-polyline',
                     exportAs: 'mapPolyline',
                 },] }
     ];
     MapPolyline.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.NgZone }
+        { type: i0.NgZone }
     ]; };
     MapPolyline.propDecorators = {
-        options: [{ type: core.Input }],
-        path: [{ type: core.Input }],
-        polylineClick: [{ type: core.Output }],
-        polylineDblclick: [{ type: core.Output }],
-        polylineDrag: [{ type: core.Output }],
-        polylineDragend: [{ type: core.Output }],
-        polylineDragstart: [{ type: core.Output }],
-        polylineMousedown: [{ type: core.Output }],
-        polylineMousemove: [{ type: core.Output }],
-        polylineMouseout: [{ type: core.Output }],
-        polylineMouseover: [{ type: core.Output }],
-        polylineMouseup: [{ type: core.Output }],
-        polylineRightclick: [{ type: core.Output }]
+        options: [{ type: i0.Input }],
+        path: [{ type: i0.Input }],
+        polylineClick: [{ type: i0.Output }],
+        polylineDblclick: [{ type: i0.Output }],
+        polylineDrag: [{ type: i0.Output }],
+        polylineDragend: [{ type: i0.Output }],
+        polylineDragstart: [{ type: i0.Output }],
+        polylineMousedown: [{ type: i0.Output }],
+        polylineMousemove: [{ type: i0.Output }],
+        polylineMouseout: [{ type: i0.Output }],
+        polylineMouseover: [{ type: i0.Output }],
+        polylineMouseup: [{ type: i0.Output }],
+        polylineRightclick: [{ type: i0.Output }]
     };
 
     /**
@@ -3103,30 +3238,30 @@
         return MapRectangle;
     }());
     MapRectangle.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-rectangle',
                     exportAs: 'mapRectangle',
                 },] }
     ];
     MapRectangle.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.NgZone }
+        { type: i0.NgZone }
     ]; };
     MapRectangle.propDecorators = {
-        options: [{ type: core.Input }],
-        bounds: [{ type: core.Input }],
-        boundsChanged: [{ type: core.Output }],
-        rectangleClick: [{ type: core.Output }],
-        rectangleDblclick: [{ type: core.Output }],
-        rectangleDrag: [{ type: core.Output }],
-        rectangleDragend: [{ type: core.Output }],
-        rectangleDragstart: [{ type: core.Output }],
-        rectangleMousedown: [{ type: core.Output }],
-        rectangleMousemove: [{ type: core.Output }],
-        rectangleMouseout: [{ type: core.Output }],
-        rectangleMouseover: [{ type: core.Output }],
-        rectangleMouseup: [{ type: core.Output }],
-        rectangleRightclick: [{ type: core.Output }]
+        options: [{ type: i0.Input }],
+        bounds: [{ type: i0.Input }],
+        boundsChanged: [{ type: i0.Output }],
+        rectangleClick: [{ type: i0.Output }],
+        rectangleDblclick: [{ type: i0.Output }],
+        rectangleDrag: [{ type: i0.Output }],
+        rectangleDragend: [{ type: i0.Output }],
+        rectangleDragstart: [{ type: i0.Output }],
+        rectangleMousedown: [{ type: i0.Output }],
+        rectangleMousemove: [{ type: i0.Output }],
+        rectangleMouseout: [{ type: i0.Output }],
+        rectangleMouseover: [{ type: i0.Output }],
+        rectangleMouseup: [{ type: i0.Output }],
+        rectangleRightclick: [{ type: i0.Output }]
     };
 
     /**
@@ -3205,17 +3340,17 @@
         return MapTrafficLayer;
     }());
     MapTrafficLayer.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-traffic-layer',
                     exportAs: 'mapTrafficLayer',
                 },] }
     ];
     MapTrafficLayer.ctorParameters = function () { return [
         { type: GoogleMap },
-        { type: core.NgZone }
+        { type: i0.NgZone }
     ]; };
     MapTrafficLayer.propDecorators = {
-        autoRefresh: [{ type: core.Input }]
+        autoRefresh: [{ type: i0.Input }]
     };
 
     /**
@@ -3249,7 +3384,7 @@
         return MapTransitLayer;
     }(MapBaseLayer));
     MapTransitLayer.decorators = [
-        { type: core.Directive, args: [{
+        { type: i0.Directive, args: [{
                     selector: 'map-transit-layer',
                     exportAs: 'mapTransitLayer',
                 },] }
@@ -3267,6 +3402,7 @@
         MapBaseLayer,
         MapBicyclingLayer,
         MapCircle,
+        MapDirectionsRenderer,
         MapGroundOverlay,
         MapInfoWindow,
         MapKmlLayer,
@@ -3284,11 +3420,56 @@
         return GoogleMapsModule;
     }());
     GoogleMapsModule.decorators = [
-        { type: core.NgModule, args: [{
+        { type: i0.NgModule, args: [{
                     declarations: COMPONENTS,
                     exports: COMPONENTS,
                 },] }
     ];
+
+    /**
+     * @license
+     * Copyright Google LLC All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
+    /**
+     * Angular service that wraps the Google Maps DirectionsService from the Google Maps JavaScript
+     * API.
+     *
+     * See developers.google.com/maps/documentation/javascript/reference/directions#DirectionsService
+     */
+    var MapDirectionsService = /** @class */ (function () {
+        function MapDirectionsService(_ngZone) {
+            this._ngZone = _ngZone;
+            this._directionsService = new google.maps.DirectionsService();
+        }
+        /**
+         * See
+         * developers.google.com/maps/documentation/javascript/reference/directions
+         * #DirectionsService.route
+         */
+        MapDirectionsService.prototype.route = function (request) {
+            var _this = this;
+            return new rxjs.Observable(function (observer) {
+                var callback = function (result, status) {
+                    _this._ngZone.run(function () {
+                        observer.next({ result: result, status: status });
+                        observer.complete();
+                    });
+                };
+                _this._directionsService.route(request, callback);
+            });
+        };
+        return MapDirectionsService;
+    }());
+    MapDirectionsService.ɵprov = i0.ɵɵdefineInjectable({ factory: function MapDirectionsService_Factory() { return new MapDirectionsService(i0.ɵɵinject(i0.NgZone)); }, token: MapDirectionsService, providedIn: "root" });
+    MapDirectionsService.decorators = [
+        { type: i0.Injectable, args: [{ providedIn: 'root' },] }
+    ];
+    MapDirectionsService.ctorParameters = function () { return [
+        { type: i0.NgZone }
+    ]; };
 
     /**
      * @license
@@ -3307,6 +3488,8 @@
     exports.MapBaseLayer = MapBaseLayer;
     exports.MapBicyclingLayer = MapBicyclingLayer;
     exports.MapCircle = MapCircle;
+    exports.MapDirectionsRenderer = MapDirectionsRenderer;
+    exports.MapDirectionsService = MapDirectionsService;
     exports.MapGroundOverlay = MapGroundOverlay;
     exports.MapInfoWindow = MapInfoWindow;
     exports.MapKmlLayer = MapKmlLayer;

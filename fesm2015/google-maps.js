@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Inject, PLATFORM_ID, Input, Output, Directive, ContentChildren, NgModule } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Inject, PLATFORM_ID, Input, Output, Directive, ContentChildren, NgModule, ɵɵdefineInjectable, ɵɵinject, Injectable } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { switchMap, map, take, shareReplay, takeUntil } from 'rxjs/operators';
@@ -807,6 +807,131 @@ MapCircle.propDecorators = {
     circleMouseup: [{ type: Output }],
     radiusChanged: [{ type: Output }],
     circleRightclick: [{ type: Output }]
+};
+
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * Angular component that renders a Google Maps Directions Renderer via the Google Maps
+ * JavaScript API.
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/directions#DirectionsRenderer
+ */
+class MapDirectionsRenderer {
+    constructor(_googleMap, _ngZone) {
+        this._googleMap = _googleMap;
+        this._ngZone = _ngZone;
+        this._eventManager = new MapEventManager(this._ngZone);
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/directions
+         * #DirectionsRenderer.directions_changed
+         */
+        this.directionsChanged = this._eventManager.getLazyEmitter('directions_changed');
+    }
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/directions
+     * #DirectionsRendererOptions.directions
+     */
+    set directions(directions) {
+        this._directions = directions;
+    }
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/directions
+     * #DirectionsRendererOptions
+     */
+    set options(options) {
+        this._options = options;
+    }
+    ngOnInit() {
+        if (this._googleMap._isBrowser) {
+            // Create the object outside the zone so its events don't trigger change detection.
+            // We'll bring it back in inside the `MapEventManager` only for the events that the
+            // user has subscribed to.
+            this._ngZone.runOutsideAngular(() => {
+                this.directionsRenderer = new google.maps.DirectionsRenderer(this._combineOptions());
+            });
+            this._assertInitialized();
+            this.directionsRenderer.setMap(this._googleMap.googleMap);
+            this._eventManager.setTarget(this.directionsRenderer);
+        }
+    }
+    ngOnChanges(changes) {
+        if (this.directionsRenderer) {
+            if (changes['options']) {
+                this.directionsRenderer.setOptions(this._combineOptions());
+            }
+            if (changes['directions'] && this._directions !== undefined) {
+                this.directionsRenderer.setDirections(this._directions);
+            }
+        }
+    }
+    ngOnDestroy() {
+        this._eventManager.destroy();
+        if (this.directionsRenderer) {
+            this.directionsRenderer.setMap(null);
+        }
+    }
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/directions
+     * #DirectionsRenderer.getDirections
+     */
+    getDirections() {
+        this._assertInitialized();
+        return this.directionsRenderer.getDirections();
+    }
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/directions
+     * #DirectionsRenderer.getPanel
+     */
+    getPanel() {
+        this._assertInitialized();
+        return this.directionsRenderer.getPanel();
+    }
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/directions
+     * #DirectionsRenderer.getRouteIndex
+     */
+    getRouteIndex() {
+        this._assertInitialized();
+        return this.directionsRenderer.getRouteIndex();
+    }
+    _combineOptions() {
+        const options = this._options || {};
+        return Object.assign(Object.assign({}, options), { directions: this._directions || options.directions, map: this._googleMap.googleMap });
+    }
+    _assertInitialized() {
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._googleMap.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.directionsRenderer) {
+                throw Error('Cannot interact with a Google Map Directions Renderer before it has been ' +
+                    'initialized. Please wait for the Directions Renderer to load before trying ' +
+                    'to interact with it.');
+            }
+        }
+    }
+}
+MapDirectionsRenderer.decorators = [
+    { type: Directive, args: [{
+                selector: 'map-directions-renderer',
+                exportAs: 'mapDirectionsRenderer',
+            },] }
+];
+MapDirectionsRenderer.ctorParameters = () => [
+    { type: GoogleMap },
+    { type: NgZone }
+];
+MapDirectionsRenderer.propDecorators = {
+    directions: [{ type: Input }],
+    options: [{ type: Input }],
+    directionsChanged: [{ type: Output }]
 };
 
 /**
@@ -2734,6 +2859,7 @@ const COMPONENTS = [
     MapBaseLayer,
     MapBicyclingLayer,
     MapCircle,
+    MapDirectionsRenderer,
     MapGroundOverlay,
     MapInfoWindow,
     MapKmlLayer,
@@ -2761,10 +2887,53 @@ GoogleMapsModule.decorators = [
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+/**
+ * Angular service that wraps the Google Maps DirectionsService from the Google Maps JavaScript
+ * API.
+ *
+ * See developers.google.com/maps/documentation/javascript/reference/directions#DirectionsService
+ */
+class MapDirectionsService {
+    constructor(_ngZone) {
+        this._ngZone = _ngZone;
+        this._directionsService = new google.maps.DirectionsService();
+    }
+    /**
+     * See
+     * developers.google.com/maps/documentation/javascript/reference/directions
+     * #DirectionsService.route
+     */
+    route(request) {
+        return new Observable(observer => {
+            const callback = (result, status) => {
+                this._ngZone.run(() => {
+                    observer.next({ result, status });
+                    observer.complete();
+                });
+            };
+            this._directionsService.route(request, callback);
+        });
+    }
+}
+MapDirectionsService.ɵprov = ɵɵdefineInjectable({ factory: function MapDirectionsService_Factory() { return new MapDirectionsService(ɵɵinject(NgZone)); }, token: MapDirectionsService, providedIn: "root" });
+MapDirectionsService.decorators = [
+    { type: Injectable, args: [{ providedIn: 'root' },] }
+];
+MapDirectionsService.ctorParameters = () => [
+    { type: NgZone }
+];
+
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { GoogleMap, GoogleMapsModule, MapBaseLayer, MapBicyclingLayer, MapCircle, MapGroundOverlay, MapInfoWindow, MapKmlLayer, MapMarker, MapMarkerClusterer, MapPolygon, MapPolyline, MapRectangle, MapTrafficLayer, MapTransitLayer };
+export { GoogleMap, GoogleMapsModule, MapBaseLayer, MapBicyclingLayer, MapCircle, MapDirectionsRenderer, MapDirectionsService, MapGroundOverlay, MapInfoWindow, MapKmlLayer, MapMarker, MapMarkerClusterer, MapPolygon, MapPolyline, MapRectangle, MapTrafficLayer, MapTransitLayer };
 //# sourceMappingURL=google-maps.js.map
