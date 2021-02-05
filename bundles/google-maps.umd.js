@@ -2091,26 +2091,10 @@
         function MapMarkerClusterer(_googleMap, _ngZone) {
             this._googleMap = _googleMap;
             this._ngZone = _ngZone;
-            this._ariaLabelFn = new rxjs.BehaviorSubject(undefined);
-            this._averageCenter = new rxjs.BehaviorSubject(undefined);
-            this._batchSizeIE = new rxjs.BehaviorSubject(undefined);
-            this._calculator = new rxjs.BehaviorSubject(undefined);
-            this._clusterClass = new rxjs.BehaviorSubject(undefined);
-            this._enableRetinaIcons = new rxjs.BehaviorSubject(undefined);
-            this._gridSize = new rxjs.BehaviorSubject(undefined);
-            this._ignoreHidden = new rxjs.BehaviorSubject(undefined);
-            this._imageExtension = new rxjs.BehaviorSubject(undefined);
-            this._imagePath = new rxjs.BehaviorSubject(undefined);
-            this._imageSizes = new rxjs.BehaviorSubject(undefined);
-            this._maxZoom = new rxjs.BehaviorSubject(undefined);
-            this._minimumClusterSize = new rxjs.BehaviorSubject(undefined);
-            this._styles = new rxjs.BehaviorSubject(undefined);
-            this._title = new rxjs.BehaviorSubject(undefined);
-            this._zIndex = new rxjs.BehaviorSubject(undefined);
-            this._zoomOnClick = new rxjs.BehaviorSubject(undefined);
             this._currentMarkers = new Set();
             this._eventManager = new MapEventManager(this._ngZone);
             this._destroy = new rxjs.Subject();
+            this.ariaLabelFn = function () { return ''; };
             /**
              * See
              * googlemaps.github.io/v3-utility-library/modules/
@@ -2124,124 +2108,114 @@
             this.clusteringend = this._eventManager.getLazyEmitter('clusteringend');
             this._canInitialize = this._googleMap._isBrowser;
         }
-        Object.defineProperty(MapMarkerClusterer.prototype, "ariaLabelFn", {
-            get: function () {
-                return this.markerClusterer ? this.markerClusterer.ariaLabelFn : function () { return ''; };
-            },
-            set: function (ariaLabelFn) {
-                this._ariaLabelFn.next(ariaLabelFn);
-            },
-            enumerable: false,
-            configurable: true
-        });
         Object.defineProperty(MapMarkerClusterer.prototype, "averageCenter", {
             set: function (averageCenter) {
-                this._averageCenter.next(averageCenter);
+                this._averageCenter = averageCenter;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "batchSizeIE", {
             set: function (batchSizeIE) {
-                this._batchSizeIE.next(batchSizeIE);
+                this._batchSizeIE = batchSizeIE;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "calculator", {
             set: function (calculator) {
-                this._calculator.next(calculator);
+                this._calculator = calculator;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "clusterClass", {
             set: function (clusterClass) {
-                this._clusterClass.next(clusterClass);
+                this._clusterClass = clusterClass;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "enableRetinaIcons", {
             set: function (enableRetinaIcons) {
-                this._enableRetinaIcons.next(enableRetinaIcons);
+                this._enableRetinaIcons = enableRetinaIcons;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "gridSize", {
             set: function (gridSize) {
-                this._gridSize.next(gridSize);
+                this._gridSize = gridSize;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "ignoreHidden", {
             set: function (ignoreHidden) {
-                this._ignoreHidden.next(ignoreHidden);
+                this._ignoreHidden = ignoreHidden;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "imageExtension", {
             set: function (imageExtension) {
-                this._imageExtension.next(imageExtension);
+                this._imageExtension = imageExtension;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "imagePath", {
             set: function (imagePath) {
-                this._imagePath.next(imagePath);
+                this._imagePath = imagePath;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "imageSizes", {
             set: function (imageSizes) {
-                this._imageSizes.next(imageSizes);
+                this._imageSizes = imageSizes;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "maxZoom", {
             set: function (maxZoom) {
-                this._maxZoom.next(maxZoom);
+                this._maxZoom = maxZoom;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "minimumClusterSize", {
             set: function (minimumClusterSize) {
-                this._minimumClusterSize.next(minimumClusterSize);
+                this._minimumClusterSize = minimumClusterSize;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "styles", {
             set: function (styles) {
-                this._styles.next(styles);
+                this._styles = styles;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "title", {
             set: function (title) {
-                this._title.next(title);
+                this._title = title;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "zIndex", {
             set: function (zIndex) {
-                this._zIndex.next(zIndex);
+                this._zIndex = zIndex;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(MapMarkerClusterer.prototype, "zoomOnClick", {
             set: function (zoomOnClick) {
-                this._zoomOnClick.next(zoomOnClick);
+                this._zoomOnClick = zoomOnClick;
             },
             enumerable: false,
             configurable: true
@@ -2249,38 +2223,75 @@
         MapMarkerClusterer.prototype.ngOnInit = function () {
             var _this = this;
             if (this._canInitialize) {
-                this._combineOptions().pipe(operators.take(1)).subscribe(function (options) {
-                    // Create the object outside the zone so its events don't trigger change detection.
-                    // We'll bring it back in inside the `MapEventManager` only for the events that the
-                    // user has subscribed to.
-                    _this._ngZone.runOutsideAngular(function () {
-                        _this.markerClusterer = new MarkerClusterer(_this._googleMap.googleMap, [], options);
-                    });
-                    _this._assertInitialized();
-                    _this._eventManager.setTarget(_this.markerClusterer);
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                this._ngZone.runOutsideAngular(function () {
+                    _this.markerClusterer = new MarkerClusterer(_this._googleMap.googleMap, [], _this._combineOptions());
                 });
-                this._watchForAriaLabelFnChanges();
-                this._watchForAverageCenterChanges();
-                this._watchForBatchSizeIEChanges();
-                this._watchForCalculatorChanges();
-                this._watchForClusterClassChanges();
-                this._watchForEnableRetinaIconsChanges();
-                this._watchForGridSizeChanges();
-                this._watchForIgnoreHiddenChanges();
-                this._watchForImageExtensionChanges();
-                this._watchForImagePathChanges();
-                this._watchForImageSizesChanges();
-                this._watchForMaxZoomChanges();
-                this._watchForMinimumClusterSizeChanges();
-                this._watchForStylesChanges();
-                this._watchForTitleChanges();
-                this._watchForZIndexChanges();
-                this._watchForZoomOnClickChanges();
+                this._assertInitialized();
+                this._eventManager.setTarget(this.markerClusterer);
             }
         };
         MapMarkerClusterer.prototype.ngAfterContentInit = function () {
             if (this._canInitialize) {
                 this._watchForMarkerChanges();
+            }
+        };
+        MapMarkerClusterer.prototype.ngOnChanges = function (changes) {
+            var _a = this, clusterer = _a.markerClusterer, ariaLabelFn = _a.ariaLabelFn, _averageCenter = _a._averageCenter, _batchSizeIE = _a._batchSizeIE, _calculator = _a._calculator, _styles = _a._styles, _clusterClass = _a._clusterClass, _enableRetinaIcons = _a._enableRetinaIcons, _gridSize = _a._gridSize, _ignoreHidden = _a._ignoreHidden, _imageExtension = _a._imageExtension, _imagePath = _a._imagePath, _imageSizes = _a._imageSizes, _maxZoom = _a._maxZoom, _minimumClusterSize = _a._minimumClusterSize, _title = _a._title, _zIndex = _a._zIndex, _zoomOnClick = _a._zoomOnClick;
+            if (clusterer) {
+                if (changes['ariaLabelFn']) {
+                    clusterer.ariaLabelFn = ariaLabelFn;
+                }
+                if (changes['averageCenter'] && _averageCenter !== undefined) {
+                    clusterer.setAverageCenter(_averageCenter);
+                }
+                if (changes['batchSizeIE'] && _batchSizeIE !== undefined) {
+                    clusterer.setBatchSizeIE(_batchSizeIE);
+                }
+                if (changes['calculator'] && _calculator) {
+                    clusterer.setCalculator(_calculator);
+                }
+                if (changes['clusterClass'] && _clusterClass !== undefined) {
+                    clusterer.setClusterClass(_clusterClass);
+                }
+                if (changes['enableRetinaIcons'] && _enableRetinaIcons !== undefined) {
+                    clusterer.setEnableRetinaIcons(_enableRetinaIcons);
+                }
+                if (changes['gridSize'] && _gridSize !== undefined) {
+                    clusterer.setGridSize(_gridSize);
+                }
+                if (changes['ignoreHidden'] && _ignoreHidden !== undefined) {
+                    clusterer.setIgnoreHidden(_ignoreHidden);
+                }
+                if (changes['imageExtension'] && _imageExtension !== undefined) {
+                    clusterer.setImageExtension(_imageExtension);
+                }
+                if (changes['imagePath'] && _imagePath !== undefined) {
+                    clusterer.setImagePath(_imagePath);
+                }
+                if (changes['imageSizes'] && _imageSizes) {
+                    clusterer.setImageSizes(_imageSizes);
+                }
+                if (changes['maxZoom'] && _maxZoom !== undefined) {
+                    clusterer.setMaxZoom(_maxZoom);
+                }
+                if (changes['minimumClusterSize'] && _minimumClusterSize !== undefined) {
+                    clusterer.setMinimumClusterSize(_minimumClusterSize);
+                }
+                if (changes['styles'] && _styles) {
+                    clusterer.setStyles(_styles);
+                }
+                if (changes['title'] && _title !== undefined) {
+                    clusterer.setTitle(_title);
+                }
+                if (changes['zIndex'] && _zIndex !== undefined) {
+                    clusterer.setZIndex(_zIndex);
+                }
+                if (changes['zoomOnClick'] && _zoomOnClick !== undefined) {
+                    clusterer.setZoomOnClick(_zoomOnClick);
+                }
             }
         };
         MapMarkerClusterer.prototype.ngOnDestroy = function () {
@@ -2372,202 +2383,26 @@
             return this.markerClusterer.getZoomOnClick();
         };
         MapMarkerClusterer.prototype._combineOptions = function () {
-            var _this = this;
-            return rxjs.combineLatest([
-                this._ariaLabelFn,
-                this._averageCenter,
-                this._batchSizeIE,
-                this._calculator,
-                this._clusterClass,
-                this._enableRetinaIcons,
-                this._gridSize,
-                this._ignoreHidden,
-                this._imageExtension,
-                this._imagePath,
-                this._imageSizes,
-                this._maxZoom,
-                this._minimumClusterSize,
-                this._styles,
-                this._title,
-                this._zIndex,
-                this._zoomOnClick,
-            ]).pipe(operators.take(1), operators.map(function (_a) {
-                var _b = __read(_a, 17), ariaLabelFn = _b[0], averageCenter = _b[1], batchSizeIE = _b[2], calculator = _b[3], clusterClass = _b[4], enableRetinaIcons = _b[5], gridSize = _b[6], ignoreHidden = _b[7], imageExtension = _b[8], imagePath = _b[9], imageSizes = _b[10], maxZoom = _b[11], minimumClusterSize = _b[12], styles = _b[13], title = _b[14], zIndex = _b[15], zoomOnClick = _b[16];
-                var combinedOptions = {
-                    ariaLabelFn: ariaLabelFn,
-                    averageCenter: averageCenter,
-                    batchSize: _this.batchSize,
-                    batchSizeIE: batchSizeIE,
-                    calculator: calculator,
-                    clusterClass: clusterClass,
-                    enableRetinaIcons: enableRetinaIcons,
-                    gridSize: gridSize,
-                    ignoreHidden: ignoreHidden,
-                    imageExtension: imageExtension,
-                    imagePath: imagePath,
-                    imageSizes: imageSizes,
-                    maxZoom: maxZoom,
-                    minimumClusterSize: minimumClusterSize,
-                    styles: styles,
-                    title: title,
-                    zIndex: zIndex,
-                    zoomOnClick: zoomOnClick,
-                };
-                return combinedOptions;
-            }));
-        };
-        MapMarkerClusterer.prototype._watchForAriaLabelFnChanges = function () {
-            var _this = this;
-            this._ariaLabelFn.pipe(operators.takeUntil(this._destroy)).subscribe(function (ariaLabelFn) {
-                if (_this.markerClusterer && ariaLabelFn) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.ariaLabelFn = ariaLabelFn;
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForAverageCenterChanges = function () {
-            var _this = this;
-            this._averageCenter.pipe(operators.takeUntil(this._destroy)).subscribe(function (averageCenter) {
-                if (_this.markerClusterer && averageCenter !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setAverageCenter(averageCenter);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForBatchSizeIEChanges = function () {
-            var _this = this;
-            this._batchSizeIE.pipe(operators.takeUntil(this._destroy)).subscribe(function (batchSizeIE) {
-                if (_this.markerClusterer && batchSizeIE !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setBatchSizeIE(batchSizeIE);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForCalculatorChanges = function () {
-            var _this = this;
-            this._calculator.pipe(operators.takeUntil(this._destroy)).subscribe(function (calculator) {
-                if (_this.markerClusterer && calculator) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setCalculator(calculator);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForClusterClassChanges = function () {
-            var _this = this;
-            this._clusterClass.pipe(operators.takeUntil(this._destroy)).subscribe(function (clusterClass) {
-                if (_this.markerClusterer && clusterClass !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setClusterClass(clusterClass);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForEnableRetinaIconsChanges = function () {
-            var _this = this;
-            this._enableRetinaIcons.pipe(operators.takeUntil(this._destroy)).subscribe(function (enableRetinaIcons) {
-                if (_this.markerClusterer && enableRetinaIcons !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setEnableRetinaIcons(enableRetinaIcons);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForGridSizeChanges = function () {
-            var _this = this;
-            this._gridSize.pipe(operators.takeUntil(this._destroy)).subscribe(function (gridSize) {
-                if (_this.markerClusterer && gridSize !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setGridSize(gridSize);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForIgnoreHiddenChanges = function () {
-            var _this = this;
-            this._ignoreHidden.pipe(operators.takeUntil(this._destroy)).subscribe(function (ignoreHidden) {
-                if (_this.markerClusterer && ignoreHidden !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setIgnoreHidden(ignoreHidden);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForImageExtensionChanges = function () {
-            var _this = this;
-            this._imageExtension.pipe(operators.takeUntil(this._destroy)).subscribe(function (imageExtension) {
-                if (_this.markerClusterer && imageExtension !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setImageExtension(imageExtension);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForImagePathChanges = function () {
-            var _this = this;
-            this._imagePath.pipe(operators.takeUntil(this._destroy)).subscribe(function (imagePath) {
-                if (_this.markerClusterer && imagePath !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setImagePath(imagePath);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForImageSizesChanges = function () {
-            var _this = this;
-            this._imageSizes.pipe(operators.takeUntil(this._destroy)).subscribe(function (imageSizes) {
-                if (_this.markerClusterer && imageSizes) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setImageSizes(imageSizes);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForMaxZoomChanges = function () {
-            var _this = this;
-            this._maxZoom.pipe(operators.takeUntil(this._destroy)).subscribe(function (maxZoom) {
-                if (_this.markerClusterer && maxZoom !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setMaxZoom(maxZoom);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForMinimumClusterSizeChanges = function () {
-            var _this = this;
-            this._minimumClusterSize.pipe(operators.takeUntil(this._destroy)).subscribe(function (minimumClusterSize) {
-                if (_this.markerClusterer && minimumClusterSize !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setMinimumClusterSize(minimumClusterSize);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForStylesChanges = function () {
-            var _this = this;
-            this._styles.pipe(operators.takeUntil(this._destroy)).subscribe(function (styles) {
-                if (_this.markerClusterer && styles) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setStyles(styles);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForTitleChanges = function () {
-            var _this = this;
-            this._title.pipe(operators.takeUntil(this._destroy)).subscribe(function (title) {
-                if (_this.markerClusterer && title !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setTitle(title);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForZIndexChanges = function () {
-            var _this = this;
-            this._zIndex.pipe(operators.takeUntil(this._destroy)).subscribe(function (zIndex) {
-                if (_this.markerClusterer && zIndex !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setZIndex(zIndex);
-                }
-            });
-        };
-        MapMarkerClusterer.prototype._watchForZoomOnClickChanges = function () {
-            var _this = this;
-            this._zoomOnClick.pipe(operators.takeUntil(this._destroy)).subscribe(function (zoomOnClick) {
-                if (_this.markerClusterer && zoomOnClick !== undefined) {
-                    _this._assertInitialized();
-                    _this.markerClusterer.setZoomOnClick(zoomOnClick);
-                }
-            });
+            return {
+                ariaLabelFn: this.ariaLabelFn,
+                averageCenter: this._averageCenter,
+                batchSize: this.batchSize,
+                batchSizeIE: this._batchSizeIE,
+                calculator: this._calculator,
+                clusterClass: this._clusterClass,
+                enableRetinaIcons: this._enableRetinaIcons,
+                gridSize: this._gridSize,
+                ignoreHidden: this._ignoreHidden,
+                imageExtension: this._imageExtension,
+                imagePath: this._imagePath,
+                imageSizes: this._imageSizes,
+                maxZoom: this._maxZoom,
+                minimumClusterSize: this._minimumClusterSize,
+                styles: this._styles,
+                title: this._title,
+                zIndex: this._zIndex,
+                zoomOnClick: this._zoomOnClick,
+            };
         };
         MapMarkerClusterer.prototype._watchForMarkerChanges = function () {
             var e_1, _a;

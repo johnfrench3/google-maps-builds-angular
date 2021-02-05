@@ -1690,26 +1690,10 @@ class MapMarkerClusterer {
     constructor(_googleMap, _ngZone) {
         this._googleMap = _googleMap;
         this._ngZone = _ngZone;
-        this._ariaLabelFn = new BehaviorSubject(undefined);
-        this._averageCenter = new BehaviorSubject(undefined);
-        this._batchSizeIE = new BehaviorSubject(undefined);
-        this._calculator = new BehaviorSubject(undefined);
-        this._clusterClass = new BehaviorSubject(undefined);
-        this._enableRetinaIcons = new BehaviorSubject(undefined);
-        this._gridSize = new BehaviorSubject(undefined);
-        this._ignoreHidden = new BehaviorSubject(undefined);
-        this._imageExtension = new BehaviorSubject(undefined);
-        this._imagePath = new BehaviorSubject(undefined);
-        this._imageSizes = new BehaviorSubject(undefined);
-        this._maxZoom = new BehaviorSubject(undefined);
-        this._minimumClusterSize = new BehaviorSubject(undefined);
-        this._styles = new BehaviorSubject(undefined);
-        this._title = new BehaviorSubject(undefined);
-        this._zIndex = new BehaviorSubject(undefined);
-        this._zoomOnClick = new BehaviorSubject(undefined);
         this._currentMarkers = new Set();
         this._eventManager = new MapEventManager(this._ngZone);
         this._destroy = new Subject();
+        this.ariaLabelFn = () => '';
         /**
          * See
          * googlemaps.github.io/v3-utility-library/modules/
@@ -1723,94 +1707,125 @@ class MapMarkerClusterer {
         this.clusteringend = this._eventManager.getLazyEmitter('clusteringend');
         this._canInitialize = this._googleMap._isBrowser;
     }
-    get ariaLabelFn() {
-        return this.markerClusterer ? this.markerClusterer.ariaLabelFn : () => '';
-    }
-    set ariaLabelFn(ariaLabelFn) {
-        this._ariaLabelFn.next(ariaLabelFn);
-    }
     set averageCenter(averageCenter) {
-        this._averageCenter.next(averageCenter);
+        this._averageCenter = averageCenter;
     }
     set batchSizeIE(batchSizeIE) {
-        this._batchSizeIE.next(batchSizeIE);
+        this._batchSizeIE = batchSizeIE;
     }
     set calculator(calculator) {
-        this._calculator.next(calculator);
+        this._calculator = calculator;
     }
     set clusterClass(clusterClass) {
-        this._clusterClass.next(clusterClass);
+        this._clusterClass = clusterClass;
     }
     set enableRetinaIcons(enableRetinaIcons) {
-        this._enableRetinaIcons.next(enableRetinaIcons);
+        this._enableRetinaIcons = enableRetinaIcons;
     }
     set gridSize(gridSize) {
-        this._gridSize.next(gridSize);
+        this._gridSize = gridSize;
     }
     set ignoreHidden(ignoreHidden) {
-        this._ignoreHidden.next(ignoreHidden);
+        this._ignoreHidden = ignoreHidden;
     }
     set imageExtension(imageExtension) {
-        this._imageExtension.next(imageExtension);
+        this._imageExtension = imageExtension;
     }
     set imagePath(imagePath) {
-        this._imagePath.next(imagePath);
+        this._imagePath = imagePath;
     }
     set imageSizes(imageSizes) {
-        this._imageSizes.next(imageSizes);
+        this._imageSizes = imageSizes;
     }
     set maxZoom(maxZoom) {
-        this._maxZoom.next(maxZoom);
+        this._maxZoom = maxZoom;
     }
     set minimumClusterSize(minimumClusterSize) {
-        this._minimumClusterSize.next(minimumClusterSize);
+        this._minimumClusterSize = minimumClusterSize;
     }
     set styles(styles) {
-        this._styles.next(styles);
+        this._styles = styles;
     }
     set title(title) {
-        this._title.next(title);
+        this._title = title;
     }
     set zIndex(zIndex) {
-        this._zIndex.next(zIndex);
+        this._zIndex = zIndex;
     }
     set zoomOnClick(zoomOnClick) {
-        this._zoomOnClick.next(zoomOnClick);
+        this._zoomOnClick = zoomOnClick;
     }
     ngOnInit() {
         if (this._canInitialize) {
-            this._combineOptions().pipe(take(1)).subscribe(options => {
-                // Create the object outside the zone so its events don't trigger change detection.
-                // We'll bring it back in inside the `MapEventManager` only for the events that the
-                // user has subscribed to.
-                this._ngZone.runOutsideAngular(() => {
-                    this.markerClusterer = new MarkerClusterer(this._googleMap.googleMap, [], options);
-                });
-                this._assertInitialized();
-                this._eventManager.setTarget(this.markerClusterer);
+            // Create the object outside the zone so its events don't trigger change detection.
+            // We'll bring it back in inside the `MapEventManager` only for the events that the
+            // user has subscribed to.
+            this._ngZone.runOutsideAngular(() => {
+                this.markerClusterer = new MarkerClusterer(this._googleMap.googleMap, [], this._combineOptions());
             });
-            this._watchForAriaLabelFnChanges();
-            this._watchForAverageCenterChanges();
-            this._watchForBatchSizeIEChanges();
-            this._watchForCalculatorChanges();
-            this._watchForClusterClassChanges();
-            this._watchForEnableRetinaIconsChanges();
-            this._watchForGridSizeChanges();
-            this._watchForIgnoreHiddenChanges();
-            this._watchForImageExtensionChanges();
-            this._watchForImagePathChanges();
-            this._watchForImageSizesChanges();
-            this._watchForMaxZoomChanges();
-            this._watchForMinimumClusterSizeChanges();
-            this._watchForStylesChanges();
-            this._watchForTitleChanges();
-            this._watchForZIndexChanges();
-            this._watchForZoomOnClickChanges();
+            this._assertInitialized();
+            this._eventManager.setTarget(this.markerClusterer);
         }
     }
     ngAfterContentInit() {
         if (this._canInitialize) {
             this._watchForMarkerChanges();
+        }
+    }
+    ngOnChanges(changes) {
+        const { markerClusterer: clusterer, ariaLabelFn, _averageCenter, _batchSizeIE, _calculator, _styles, _clusterClass, _enableRetinaIcons, _gridSize, _ignoreHidden, _imageExtension, _imagePath, _imageSizes, _maxZoom, _minimumClusterSize, _title, _zIndex, _zoomOnClick } = this;
+        if (clusterer) {
+            if (changes['ariaLabelFn']) {
+                clusterer.ariaLabelFn = ariaLabelFn;
+            }
+            if (changes['averageCenter'] && _averageCenter !== undefined) {
+                clusterer.setAverageCenter(_averageCenter);
+            }
+            if (changes['batchSizeIE'] && _batchSizeIE !== undefined) {
+                clusterer.setBatchSizeIE(_batchSizeIE);
+            }
+            if (changes['calculator'] && _calculator) {
+                clusterer.setCalculator(_calculator);
+            }
+            if (changes['clusterClass'] && _clusterClass !== undefined) {
+                clusterer.setClusterClass(_clusterClass);
+            }
+            if (changes['enableRetinaIcons'] && _enableRetinaIcons !== undefined) {
+                clusterer.setEnableRetinaIcons(_enableRetinaIcons);
+            }
+            if (changes['gridSize'] && _gridSize !== undefined) {
+                clusterer.setGridSize(_gridSize);
+            }
+            if (changes['ignoreHidden'] && _ignoreHidden !== undefined) {
+                clusterer.setIgnoreHidden(_ignoreHidden);
+            }
+            if (changes['imageExtension'] && _imageExtension !== undefined) {
+                clusterer.setImageExtension(_imageExtension);
+            }
+            if (changes['imagePath'] && _imagePath !== undefined) {
+                clusterer.setImagePath(_imagePath);
+            }
+            if (changes['imageSizes'] && _imageSizes) {
+                clusterer.setImageSizes(_imageSizes);
+            }
+            if (changes['maxZoom'] && _maxZoom !== undefined) {
+                clusterer.setMaxZoom(_maxZoom);
+            }
+            if (changes['minimumClusterSize'] && _minimumClusterSize !== undefined) {
+                clusterer.setMinimumClusterSize(_minimumClusterSize);
+            }
+            if (changes['styles'] && _styles) {
+                clusterer.setStyles(_styles);
+            }
+            if (changes['title'] && _title !== undefined) {
+                clusterer.setTitle(_title);
+            }
+            if (changes['zIndex'] && _zIndex !== undefined) {
+                clusterer.setZIndex(_zIndex);
+            }
+            if (changes['zoomOnClick'] && _zoomOnClick !== undefined) {
+                clusterer.setZoomOnClick(_zoomOnClick);
+            }
         }
     }
     ngOnDestroy() {
@@ -1902,183 +1917,26 @@ class MapMarkerClusterer {
         return this.markerClusterer.getZoomOnClick();
     }
     _combineOptions() {
-        return combineLatest([
-            this._ariaLabelFn,
-            this._averageCenter,
-            this._batchSizeIE,
-            this._calculator,
-            this._clusterClass,
-            this._enableRetinaIcons,
-            this._gridSize,
-            this._ignoreHidden,
-            this._imageExtension,
-            this._imagePath,
-            this._imageSizes,
-            this._maxZoom,
-            this._minimumClusterSize,
-            this._styles,
-            this._title,
-            this._zIndex,
-            this._zoomOnClick,
-        ]).pipe(take(1), map(([ariaLabelFn, averageCenter, batchSizeIE, calculator, clusterClass, enableRetinaIcons, gridSize, ignoreHidden, imageExtension, imagePath, imageSizes, maxZoom, minimumClusterSize, styles, title, zIndex, zoomOnClick,]) => {
-            const combinedOptions = {
-                ariaLabelFn: ariaLabelFn,
-                averageCenter: averageCenter,
-                batchSize: this.batchSize,
-                batchSizeIE: batchSizeIE,
-                calculator: calculator,
-                clusterClass: clusterClass,
-                enableRetinaIcons: enableRetinaIcons,
-                gridSize: gridSize,
-                ignoreHidden: ignoreHidden,
-                imageExtension: imageExtension,
-                imagePath: imagePath,
-                imageSizes: imageSizes,
-                maxZoom: maxZoom,
-                minimumClusterSize: minimumClusterSize,
-                styles: styles,
-                title: title,
-                zIndex: zIndex,
-                zoomOnClick: zoomOnClick,
-            };
-            return combinedOptions;
-        }));
-    }
-    _watchForAriaLabelFnChanges() {
-        this._ariaLabelFn.pipe(takeUntil(this._destroy)).subscribe(ariaLabelFn => {
-            if (this.markerClusterer && ariaLabelFn) {
-                this._assertInitialized();
-                this.markerClusterer.ariaLabelFn = ariaLabelFn;
-            }
-        });
-    }
-    _watchForAverageCenterChanges() {
-        this._averageCenter.pipe(takeUntil(this._destroy)).subscribe(averageCenter => {
-            if (this.markerClusterer && averageCenter !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setAverageCenter(averageCenter);
-            }
-        });
-    }
-    _watchForBatchSizeIEChanges() {
-        this._batchSizeIE.pipe(takeUntil(this._destroy)).subscribe(batchSizeIE => {
-            if (this.markerClusterer && batchSizeIE !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setBatchSizeIE(batchSizeIE);
-            }
-        });
-    }
-    _watchForCalculatorChanges() {
-        this._calculator.pipe(takeUntil(this._destroy)).subscribe(calculator => {
-            if (this.markerClusterer && calculator) {
-                this._assertInitialized();
-                this.markerClusterer.setCalculator(calculator);
-            }
-        });
-    }
-    _watchForClusterClassChanges() {
-        this._clusterClass.pipe(takeUntil(this._destroy)).subscribe(clusterClass => {
-            if (this.markerClusterer && clusterClass !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setClusterClass(clusterClass);
-            }
-        });
-    }
-    _watchForEnableRetinaIconsChanges() {
-        this._enableRetinaIcons.pipe(takeUntil(this._destroy)).subscribe(enableRetinaIcons => {
-            if (this.markerClusterer && enableRetinaIcons !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setEnableRetinaIcons(enableRetinaIcons);
-            }
-        });
-    }
-    _watchForGridSizeChanges() {
-        this._gridSize.pipe(takeUntil(this._destroy)).subscribe(gridSize => {
-            if (this.markerClusterer && gridSize !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setGridSize(gridSize);
-            }
-        });
-    }
-    _watchForIgnoreHiddenChanges() {
-        this._ignoreHidden.pipe(takeUntil(this._destroy)).subscribe(ignoreHidden => {
-            if (this.markerClusterer && ignoreHidden !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setIgnoreHidden(ignoreHidden);
-            }
-        });
-    }
-    _watchForImageExtensionChanges() {
-        this._imageExtension.pipe(takeUntil(this._destroy)).subscribe(imageExtension => {
-            if (this.markerClusterer && imageExtension !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setImageExtension(imageExtension);
-            }
-        });
-    }
-    _watchForImagePathChanges() {
-        this._imagePath.pipe(takeUntil(this._destroy)).subscribe(imagePath => {
-            if (this.markerClusterer && imagePath !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setImagePath(imagePath);
-            }
-        });
-    }
-    _watchForImageSizesChanges() {
-        this._imageSizes.pipe(takeUntil(this._destroy)).subscribe(imageSizes => {
-            if (this.markerClusterer && imageSizes) {
-                this._assertInitialized();
-                this.markerClusterer.setImageSizes(imageSizes);
-            }
-        });
-    }
-    _watchForMaxZoomChanges() {
-        this._maxZoom.pipe(takeUntil(this._destroy)).subscribe(maxZoom => {
-            if (this.markerClusterer && maxZoom !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setMaxZoom(maxZoom);
-            }
-        });
-    }
-    _watchForMinimumClusterSizeChanges() {
-        this._minimumClusterSize.pipe(takeUntil(this._destroy)).subscribe(minimumClusterSize => {
-            if (this.markerClusterer && minimumClusterSize !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setMinimumClusterSize(minimumClusterSize);
-            }
-        });
-    }
-    _watchForStylesChanges() {
-        this._styles.pipe(takeUntil(this._destroy)).subscribe(styles => {
-            if (this.markerClusterer && styles) {
-                this._assertInitialized();
-                this.markerClusterer.setStyles(styles);
-            }
-        });
-    }
-    _watchForTitleChanges() {
-        this._title.pipe(takeUntil(this._destroy)).subscribe(title => {
-            if (this.markerClusterer && title !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setTitle(title);
-            }
-        });
-    }
-    _watchForZIndexChanges() {
-        this._zIndex.pipe(takeUntil(this._destroy)).subscribe(zIndex => {
-            if (this.markerClusterer && zIndex !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setZIndex(zIndex);
-            }
-        });
-    }
-    _watchForZoomOnClickChanges() {
-        this._zoomOnClick.pipe(takeUntil(this._destroy)).subscribe(zoomOnClick => {
-            if (this.markerClusterer && zoomOnClick !== undefined) {
-                this._assertInitialized();
-                this.markerClusterer.setZoomOnClick(zoomOnClick);
-            }
-        });
+        return {
+            ariaLabelFn: this.ariaLabelFn,
+            averageCenter: this._averageCenter,
+            batchSize: this.batchSize,
+            batchSizeIE: this._batchSizeIE,
+            calculator: this._calculator,
+            clusterClass: this._clusterClass,
+            enableRetinaIcons: this._enableRetinaIcons,
+            gridSize: this._gridSize,
+            ignoreHidden: this._ignoreHidden,
+            imageExtension: this._imageExtension,
+            imagePath: this._imagePath,
+            imageSizes: this._imageSizes,
+            maxZoom: this._maxZoom,
+            minimumClusterSize: this._minimumClusterSize,
+            styles: this._styles,
+            title: this._title,
+            zIndex: this._zIndex,
+            zoomOnClick: this._zoomOnClick,
+        };
     }
     _watchForMarkerChanges() {
         this._assertInitialized();

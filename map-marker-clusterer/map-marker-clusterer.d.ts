@@ -7,7 +7,7 @@
  */
 /// <reference path="marker-clusterer-types.d.ts" />
 /// <reference types="googlemaps" />
-import { AfterContentInit, NgZone, OnDestroy, OnInit, QueryList } from '@angular/core';
+import { AfterContentInit, NgZone, OnChanges, OnDestroy, OnInit, QueryList, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
 import { MapMarker } from '../map-marker/map-marker';
@@ -16,50 +16,48 @@ import { MapMarker } from '../map-marker/map-marker';
  *
  * See https://developers.google.com/maps/documentation/javascript/marker-clustering
  */
-export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnDestroy {
+export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnChanges, OnDestroy {
     private readonly _googleMap;
     private readonly _ngZone;
-    private readonly _ariaLabelFn;
-    private readonly _averageCenter;
-    private readonly _batchSizeIE;
-    private readonly _calculator;
-    private readonly _clusterClass;
-    private readonly _enableRetinaIcons;
-    private readonly _gridSize;
-    private readonly _ignoreHidden;
-    private readonly _imageExtension;
-    private readonly _imagePath;
-    private readonly _imageSizes;
-    private readonly _maxZoom;
-    private readonly _minimumClusterSize;
-    private readonly _styles;
-    private readonly _title;
-    private readonly _zIndex;
-    private readonly _zoomOnClick;
     private readonly _currentMarkers;
     private readonly _eventManager;
     private readonly _destroy;
     /** Whether the clusterer is allowed to be initialized. */
     private readonly _canInitialize;
-    get ariaLabelFn(): AriaLabelFn;
-    set ariaLabelFn(ariaLabelFn: AriaLabelFn);
+    ariaLabelFn: AriaLabelFn;
     set averageCenter(averageCenter: boolean);
+    private _averageCenter;
     batchSize?: number;
     set batchSizeIE(batchSizeIE: number);
+    private _batchSizeIE;
     set calculator(calculator: Calculator);
+    private _calculator;
     set clusterClass(clusterClass: string);
+    private _clusterClass;
     set enableRetinaIcons(enableRetinaIcons: boolean);
+    private _enableRetinaIcons;
     set gridSize(gridSize: number);
+    private _gridSize;
     set ignoreHidden(ignoreHidden: boolean);
+    private _ignoreHidden;
     set imageExtension(imageExtension: string);
+    private _imageExtension;
     set imagePath(imagePath: string);
+    private _imagePath;
     set imageSizes(imageSizes: number[]);
+    private _imageSizes;
     set maxZoom(maxZoom: number);
+    private _maxZoom;
     set minimumClusterSize(minimumClusterSize: number);
+    private _minimumClusterSize;
     set styles(styles: ClusterIconStyle[]);
+    private _styles;
     set title(title: string);
+    private _title;
     set zIndex(zIndex: number);
+    private _zIndex;
     set zoomOnClick(zoomOnClick: boolean);
+    private _zoomOnClick;
     /**
      * See
      * googlemaps.github.io/v3-utility-library/modules/
@@ -83,6 +81,7 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnD
     constructor(_googleMap: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
     ngAfterContentInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
     fitMapToMarkers(padding: number | google.maps.Padding): void;
     getAverageCenter(): boolean;
@@ -105,23 +104,6 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnD
     getZIndex(): number;
     getZoomOnClick(): boolean;
     private _combineOptions;
-    private _watchForAriaLabelFnChanges;
-    private _watchForAverageCenterChanges;
-    private _watchForBatchSizeIEChanges;
-    private _watchForCalculatorChanges;
-    private _watchForClusterClassChanges;
-    private _watchForEnableRetinaIconsChanges;
-    private _watchForGridSizeChanges;
-    private _watchForIgnoreHiddenChanges;
-    private _watchForImageExtensionChanges;
-    private _watchForImagePathChanges;
-    private _watchForImageSizesChanges;
-    private _watchForMaxZoomChanges;
-    private _watchForMinimumClusterSizeChanges;
-    private _watchForStylesChanges;
-    private _watchForTitleChanges;
-    private _watchForZIndexChanges;
-    private _watchForZoomOnClickChanges;
     private _watchForMarkerChanges;
     private _getInternalMarkers;
     private _assertInitialized;
