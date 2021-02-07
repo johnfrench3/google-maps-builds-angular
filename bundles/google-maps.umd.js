@@ -3397,6 +3397,142 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
+    /**
+     * Angular directive that renders a Google Maps heatmap via the Google Maps JavaScript API.
+     *
+     * See: https://developers.google.com/maps/documentation/javascript/reference/visualization
+     */
+    var MapHeatmapLayer = /** @class */ (function () {
+        function MapHeatmapLayer(_googleMap, _ngZone) {
+            this._googleMap = _googleMap;
+            this._ngZone = _ngZone;
+        }
+        Object.defineProperty(MapHeatmapLayer.prototype, "data", {
+            /**
+             * Data shown on the heatmap.
+             * See: https://developers.google.com/maps/documentation/javascript/reference/visualization
+             */
+            set: function (data) {
+                this._data = data;
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(MapHeatmapLayer.prototype, "options", {
+            /**
+             * Options used to configure the heatmap. See:
+             * developers.google.com/maps/documentation/javascript/reference/visualization#HeatmapLayerOptions
+             */
+            set: function (options) {
+                this._options = options;
+            },
+            enumerable: false,
+            configurable: true
+        });
+        MapHeatmapLayer.prototype.ngOnInit = function () {
+            var _this = this;
+            var _a, _b;
+            if (this._googleMap._isBrowser) {
+                if (!((_b = (_a = window.google) === null || _a === void 0 ? void 0 : _a.maps) === null || _b === void 0 ? void 0 : _b.visualization) && (typeof ngDevMode === 'undefined' || ngDevMode)) {
+                    throw Error('Namespace `google.maps.visualization` not found, cannot construct heatmap. ' +
+                        'Please install the Google Maps JavaScript API with the "visualization" library: ' +
+                        'https://developers.google.com/maps/documentation/javascript/visualization');
+                }
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                this._ngZone.runOutsideAngular(function () {
+                    _this.heatmap = new google.maps.visualization.HeatmapLayer(_this._combineOptions());
+                });
+                this._assertInitialized();
+                this.heatmap.setMap(this._googleMap.googleMap);
+            }
+        };
+        MapHeatmapLayer.prototype.ngOnChanges = function (changes) {
+            var _c = this, _data = _c._data, heatmap = _c.heatmap;
+            if (heatmap) {
+                if (changes['options']) {
+                    heatmap.setOptions(this._combineOptions());
+                }
+                if (changes['data'] && _data !== undefined) {
+                    heatmap.setData(this._normalizeData(_data));
+                }
+            }
+        };
+        MapHeatmapLayer.prototype.ngOnDestroy = function () {
+            if (this.heatmap) {
+                this.heatmap.setMap(null);
+            }
+        };
+        /**
+         * Gets the data that is currently shown on the heatmap.
+         * See: developers.google.com/maps/documentation/javascript/reference/visualization#HeatmapLayer
+         */
+        MapHeatmapLayer.prototype.getData = function () {
+            this._assertInitialized();
+            return this.heatmap.getData();
+        };
+        /** Creates a combined options object using the passed-in options and the individual inputs. */
+        MapHeatmapLayer.prototype._combineOptions = function () {
+            var options = this._options || {};
+            return Object.assign(Object.assign({}, options), { data: this._normalizeData(this._data || options.data || []), map: this._googleMap.googleMap });
+        };
+        /**
+         * Most Google Maps APIs support both `LatLng` objects and `LatLngLiteral`. The latter is more
+         * convenient to write out, because the Google Maps API doesn't have to have been loaded in order
+         * to construct them. The `HeatmapLayer` appears to be an exception that only allows a `LatLng`
+         * object, or it throws a runtime error. Since it's more convenient and we expect that Angular
+         * users will load the API asynchronously, we allow them to pass in a `LatLngLiteral` and we
+         * convert it to a `LatLng` object before passing it off to Google Maps.
+         */
+        MapHeatmapLayer.prototype._normalizeData = function (data) {
+            var result = [];
+            data.forEach(function (item) {
+                result.push(isLatLngLiteral(item) ? new google.maps.LatLng(item.lat, item.lng) : item);
+            });
+            return result;
+        };
+        /** Asserts that the heatmap object has been initialized. */
+        MapHeatmapLayer.prototype._assertInitialized = function () {
+            if (typeof ngDevMode === 'undefined' || ngDevMode) {
+                if (!this._googleMap.googleMap) {
+                    throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                        'Please wait for the API to load before trying to interact with it.');
+                }
+                if (!this.heatmap) {
+                    throw Error('Cannot interact with a Google Map HeatmapLayer before it has been ' +
+                        'initialized. Please wait for the heatmap to load before trying to interact with it.');
+                }
+            }
+        };
+        return MapHeatmapLayer;
+    }());
+    MapHeatmapLayer.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: 'map-heatmap-layer',
+                    exportAs: 'mapHeatmapLayer',
+                },] }
+    ];
+    MapHeatmapLayer.ctorParameters = function () { return [
+        { type: GoogleMap },
+        { type: i0.NgZone }
+    ]; };
+    MapHeatmapLayer.propDecorators = {
+        data: [{ type: i0.Input }],
+        options: [{ type: i0.Input }]
+    };
+    /** Asserts that an object is a `LatLngLiteral`. */
+    function isLatLngLiteral(value) {
+        return value && typeof value.lat === 'number' && typeof value.lng === 'number';
+    }
+
+    /**
+     * @license
+     * Copyright Google LLC All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
     var COMPONENTS = [
         GoogleMap,
         MapBaseLayer,
@@ -3413,6 +3549,7 @@
         MapRectangle,
         MapTrafficLayer,
         MapTransitLayer,
+        MapHeatmapLayer,
     ];
     var GoogleMapsModule = /** @class */ (function () {
         function GoogleMapsModule() {
@@ -3491,6 +3628,7 @@
     exports.MapDirectionsRenderer = MapDirectionsRenderer;
     exports.MapDirectionsService = MapDirectionsService;
     exports.MapGroundOverlay = MapGroundOverlay;
+    exports.MapHeatmapLayer = MapHeatmapLayer;
     exports.MapInfoWindow = MapInfoWindow;
     exports.MapKmlLayer = MapKmlLayer;
     exports.MapMarker = MapMarker;

@@ -2854,6 +2854,132 @@ MapTransitLayer.decorators = [
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+/**
+ * Angular directive that renders a Google Maps heatmap via the Google Maps JavaScript API.
+ *
+ * See: https://developers.google.com/maps/documentation/javascript/reference/visualization
+ */
+class MapHeatmapLayer {
+    constructor(_googleMap, _ngZone) {
+        this._googleMap = _googleMap;
+        this._ngZone = _ngZone;
+    }
+    /**
+     * Data shown on the heatmap.
+     * See: https://developers.google.com/maps/documentation/javascript/reference/visualization
+     */
+    set data(data) {
+        this._data = data;
+    }
+    /**
+     * Options used to configure the heatmap. See:
+     * developers.google.com/maps/documentation/javascript/reference/visualization#HeatmapLayerOptions
+     */
+    set options(options) {
+        this._options = options;
+    }
+    ngOnInit() {
+        var _a, _b;
+        if (this._googleMap._isBrowser) {
+            if (!((_b = (_a = window.google) === null || _a === void 0 ? void 0 : _a.maps) === null || _b === void 0 ? void 0 : _b.visualization) && (typeof ngDevMode === 'undefined' || ngDevMode)) {
+                throw Error('Namespace `google.maps.visualization` not found, cannot construct heatmap. ' +
+                    'Please install the Google Maps JavaScript API with the "visualization" library: ' +
+                    'https://developers.google.com/maps/documentation/javascript/visualization');
+            }
+            // Create the object outside the zone so its events don't trigger change detection.
+            // We'll bring it back in inside the `MapEventManager` only for the events that the
+            // user has subscribed to.
+            this._ngZone.runOutsideAngular(() => {
+                this.heatmap = new google.maps.visualization.HeatmapLayer(this._combineOptions());
+            });
+            this._assertInitialized();
+            this.heatmap.setMap(this._googleMap.googleMap);
+        }
+    }
+    ngOnChanges(changes) {
+        const { _data, heatmap } = this;
+        if (heatmap) {
+            if (changes['options']) {
+                heatmap.setOptions(this._combineOptions());
+            }
+            if (changes['data'] && _data !== undefined) {
+                heatmap.setData(this._normalizeData(_data));
+            }
+        }
+    }
+    ngOnDestroy() {
+        if (this.heatmap) {
+            this.heatmap.setMap(null);
+        }
+    }
+    /**
+     * Gets the data that is currently shown on the heatmap.
+     * See: developers.google.com/maps/documentation/javascript/reference/visualization#HeatmapLayer
+     */
+    getData() {
+        this._assertInitialized();
+        return this.heatmap.getData();
+    }
+    /** Creates a combined options object using the passed-in options and the individual inputs. */
+    _combineOptions() {
+        const options = this._options || {};
+        return Object.assign(Object.assign({}, options), { data: this._normalizeData(this._data || options.data || []), map: this._googleMap.googleMap });
+    }
+    /**
+     * Most Google Maps APIs support both `LatLng` objects and `LatLngLiteral`. The latter is more
+     * convenient to write out, because the Google Maps API doesn't have to have been loaded in order
+     * to construct them. The `HeatmapLayer` appears to be an exception that only allows a `LatLng`
+     * object, or it throws a runtime error. Since it's more convenient and we expect that Angular
+     * users will load the API asynchronously, we allow them to pass in a `LatLngLiteral` and we
+     * convert it to a `LatLng` object before passing it off to Google Maps.
+     */
+    _normalizeData(data) {
+        const result = [];
+        data.forEach(item => {
+            result.push(isLatLngLiteral(item) ? new google.maps.LatLng(item.lat, item.lng) : item);
+        });
+        return result;
+    }
+    /** Asserts that the heatmap object has been initialized. */
+    _assertInitialized() {
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!this._googleMap.googleMap) {
+                throw Error('Cannot access Google Map information before the API has been initialized. ' +
+                    'Please wait for the API to load before trying to interact with it.');
+            }
+            if (!this.heatmap) {
+                throw Error('Cannot interact with a Google Map HeatmapLayer before it has been ' +
+                    'initialized. Please wait for the heatmap to load before trying to interact with it.');
+            }
+        }
+    }
+}
+MapHeatmapLayer.decorators = [
+    { type: Directive, args: [{
+                selector: 'map-heatmap-layer',
+                exportAs: 'mapHeatmapLayer',
+            },] }
+];
+MapHeatmapLayer.ctorParameters = () => [
+    { type: GoogleMap },
+    { type: NgZone }
+];
+MapHeatmapLayer.propDecorators = {
+    data: [{ type: Input }],
+    options: [{ type: Input }]
+};
+/** Asserts that an object is a `LatLngLiteral`. */
+function isLatLngLiteral(value) {
+    return value && typeof value.lat === 'number' && typeof value.lng === 'number';
+}
+
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 const COMPONENTS = [
     GoogleMap,
     MapBaseLayer,
@@ -2870,6 +2996,7 @@ const COMPONENTS = [
     MapRectangle,
     MapTrafficLayer,
     MapTransitLayer,
+    MapHeatmapLayer,
 ];
 class GoogleMapsModule {
 }
@@ -2935,5 +3062,5 @@ MapDirectionsService.ctorParameters = () => [
  * Generated bundle index. Do not edit.
  */
 
-export { GoogleMap, GoogleMapsModule, MapBaseLayer, MapBicyclingLayer, MapCircle, MapDirectionsRenderer, MapDirectionsService, MapGroundOverlay, MapInfoWindow, MapKmlLayer, MapMarker, MapMarkerClusterer, MapPolygon, MapPolyline, MapRectangle, MapTrafficLayer, MapTransitLayer };
+export { GoogleMap, GoogleMapsModule, MapBaseLayer, MapBicyclingLayer, MapCircle, MapDirectionsRenderer, MapDirectionsService, MapGroundOverlay, MapHeatmapLayer, MapInfoWindow, MapKmlLayer, MapMarker, MapMarkerClusterer, MapPolygon, MapPolyline, MapRectangle, MapTrafficLayer, MapTransitLayer };
 //# sourceMappingURL=google-maps.js.map
