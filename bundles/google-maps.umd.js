@@ -384,6 +384,13 @@
         return MapEventManager;
     }());
 
+    /**
+     * @license
+     * Copyright Google LLC All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
     /** default options set to the Googleplex */
     var DEFAULT_OPTIONS = {
         center: { lat: 37.421995, lng: -122.084092 },
@@ -403,14 +410,11 @@
             this._elementRef = _elementRef;
             this._ngZone = _ngZone;
             this._eventManager = new MapEventManager(this._ngZone);
-            this._options = new rxjs.BehaviorSubject(DEFAULT_OPTIONS);
-            this._center = new rxjs.BehaviorSubject(undefined);
-            this._zoom = new rxjs.BehaviorSubject(undefined);
-            this._destroy = new rxjs.Subject();
             /** Height of the map. Set this to `null` if you'd like to control the height through CSS. */
             this.height = DEFAULT_HEIGHT;
             /** Width of the map. Set this to `null` if you'd like to control the width through CSS. */
             this.width = DEFAULT_WIDTH;
+            this._options = DEFAULT_OPTIONS;
             /**
              * See
              * https://developers.google.com/maps/documentation/javascript/reference/map#Map.bounds_changed
@@ -515,29 +519,44 @@
         }
         Object.defineProperty(GoogleMap.prototype, "center", {
             set: function (center) {
-                this._center.next(center);
+                this._center = center;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(GoogleMap.prototype, "zoom", {
             set: function (zoom) {
-                this._zoom.next(zoom);
+                this._zoom = zoom;
             },
             enumerable: false,
             configurable: true
         });
         Object.defineProperty(GoogleMap.prototype, "options", {
             set: function (options) {
-                this._options.next(options || DEFAULT_OPTIONS);
+                this._options = options || DEFAULT_OPTIONS;
             },
             enumerable: false,
             configurable: true
         });
-        GoogleMap.prototype.ngOnChanges = function () {
-            this._setSize();
-            if (this.googleMap && this.mapTypeId) {
-                this.googleMap.setMapTypeId(this.mapTypeId);
+        GoogleMap.prototype.ngOnChanges = function (changes) {
+            if (changes['height'] || changes['width']) {
+                this._setSize();
+            }
+            var googleMap = this.googleMap;
+            if (googleMap) {
+                if (changes['options'] && this._options) {
+                    googleMap.setOptions(this._options);
+                }
+                if (changes['center'] && this._center) {
+                    googleMap.setCenter(this._center);
+                }
+                // Note that the zoom can be zero.
+                if (changes['zoom'] && this._zoom != null) {
+                    googleMap.setZoom(this._zoom);
+                }
+                if (changes['mapTypeId'] && this.mapTypeId) {
+                    googleMap.setMapTypeId(this.mapTypeId);
+                }
             }
         };
         GoogleMap.prototype.ngOnInit = function () {
@@ -546,20 +565,17 @@
             if (this._isBrowser) {
                 this._mapEl = this._elementRef.nativeElement.querySelector('.map-container');
                 this._setSize();
-                this._googleMapChanges = this._initializeMap(this._combineOptions());
-                this._googleMapChanges.subscribe(function (googleMap) {
-                    _this.googleMap = googleMap;
-                    _this._eventManager.setTarget(_this.googleMap);
+                // Create the object outside the zone so its events don't trigger change detection.
+                // We'll bring it back in inside the `MapEventManager` only for the events that the
+                // user has subscribed to.
+                this._ngZone.runOutsideAngular(function () {
+                    _this.googleMap = new google.maps.Map(_this._mapEl, _this._combineOptions());
                 });
-                this._watchForOptionsChanges();
-                this._watchForCenterChanges();
-                this._watchForZoomChanges();
+                this._eventManager.setTarget(this.googleMap);
             }
         };
         GoogleMap.prototype.ngOnDestroy = function () {
             this._eventManager.destroy();
-            this._destroy.next();
-            this._destroy.complete();
         };
         /**
          * See
@@ -723,54 +739,12 @@
         };
         /** Combines the center and zoom and the other map options into a single object */
         GoogleMap.prototype._combineOptions = function () {
-            var _this = this;
-            return rxjs.combineLatest([this._options, this._center, this._zoom])
-                .pipe(operators.map(function (_b) {
-                var _c = __read(_b, 3), options = _c[0], center = _c[1], zoom = _c[2];
-                var _a;
-                var combinedOptions = Object.assign(Object.assign({}, options), {
-                    // It's important that we set **some** kind of `center` and `zoom`, otherwise
-                    // Google Maps will render a blank rectangle which looks broken.
-                    center: center || options.center || DEFAULT_OPTIONS.center, zoom: (_a = zoom !== null && zoom !== void 0 ? zoom : options.zoom) !== null && _a !== void 0 ? _a : DEFAULT_OPTIONS.zoom, mapTypeId: _this.mapTypeId
-                });
-                return combinedOptions;
-            }));
-        };
-        GoogleMap.prototype._initializeMap = function (optionsChanges) {
-            var _this = this;
-            return optionsChanges.pipe(operators.take(1), operators.map(function (options) {
-                // Create the object outside the zone so its events don't trigger change detection.
-                // We'll bring it back in inside the `MapEventManager` only for the events that the
-                // user has subscribed to.
-                return _this._ngZone.runOutsideAngular(function () { return new google.maps.Map(_this._mapEl, options); });
-            }), operators.shareReplay(1));
-        };
-        GoogleMap.prototype._watchForOptionsChanges = function () {
-            rxjs.combineLatest([this._googleMapChanges, this._options])
-                .pipe(operators.takeUntil(this._destroy))
-                .subscribe(function (_b) {
-                var _c = __read(_b, 2), googleMap = _c[0], options = _c[1];
-                googleMap.setOptions(options);
-            });
-        };
-        GoogleMap.prototype._watchForCenterChanges = function () {
-            rxjs.combineLatest([this._googleMapChanges, this._center])
-                .pipe(operators.takeUntil(this._destroy))
-                .subscribe(function (_b) {
-                var _c = __read(_b, 2), googleMap = _c[0], center = _c[1];
-                if (center) {
-                    googleMap.setCenter(center);
-                }
-            });
-        };
-        GoogleMap.prototype._watchForZoomChanges = function () {
-            rxjs.combineLatest([this._googleMapChanges, this._zoom])
-                .pipe(operators.takeUntil(this._destroy))
-                .subscribe(function (_b) {
-                var _c = __read(_b, 2), googleMap = _c[0], zoom = _c[1];
-                if (zoom !== undefined) {
-                    googleMap.setZoom(zoom);
-                }
+            var _a, _b;
+            var options = this._options;
+            return Object.assign(Object.assign({}, options), {
+                // It's important that we set **some** kind of `center` and `zoom`, otherwise
+                // Google Maps will render a blank rectangle which looks broken.
+                center: this._center || options.center || DEFAULT_OPTIONS.center, zoom: (_b = (_a = this._zoom) !== null && _a !== void 0 ? _a : options.zoom) !== null && _b !== void 0 ? _b : DEFAULT_OPTIONS.zoom, mapTypeId: this.mapTypeId
             });
         };
         /** Asserts that the map has been initialized. */

@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 /// <reference types="googlemaps" />
-import { ElementRef, OnChanges, OnDestroy, OnInit, NgZone } from '@angular/core';
+import { ElementRef, OnChanges, OnDestroy, OnInit, NgZone, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 /** default options set to the Googleplex */
 export declare const DEFAULT_OPTIONS: google.maps.MapOptions;
@@ -23,11 +23,6 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
     private readonly _elementRef;
     private _ngZone;
     private _eventManager;
-    private _googleMapChanges;
-    private readonly _options;
-    private readonly _center;
-    private readonly _zoom;
-    private readonly _destroy;
     private _mapEl;
     /**
      * The underlying google.maps.Map object
@@ -47,8 +42,11 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      */
     mapTypeId: google.maps.MapTypeId | undefined;
     set center(center: google.maps.LatLngLiteral | google.maps.LatLng);
+    private _center;
     set zoom(zoom: number);
+    private _zoom;
     set options(options: google.maps.MapOptions);
+    private _options;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.bounds_changed
@@ -140,7 +138,7 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      */
     zoomChanged: Observable<void>;
     constructor(_elementRef: ElementRef, _ngZone: NgZone, platformId: Object);
-    ngOnChanges(): void;
+    ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;
     ngOnDestroy(): void;
     /**
@@ -231,10 +229,6 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
     private _setSize;
     /** Combines the center and zoom and the other map options into a single object */
     private _combineOptions;
-    private _initializeMap;
-    private _watchForOptionsChanges;
-    private _watchForCenterChanges;
-    private _watchForZoomChanges;
     /** Asserts that the map has been initialized. */
     private _assertInitialized;
 }
