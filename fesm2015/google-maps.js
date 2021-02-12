@@ -3030,10 +3030,48 @@ MapDirectionsService.ctorParameters = () => [
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+/**
+ * Angular service that wraps the Google Maps Geocoder from the Google Maps JavaScript API.
+ * See developers.google.com/maps/documentation/javascript/reference/geocoder#Geocoder
+ */
+class MapGeocoder {
+    constructor(_ngZone) {
+        this._ngZone = _ngZone;
+        this._geocoder = new google.maps.Geocoder();
+    }
+    /**
+     * See developers.google.com/maps/documentation/javascript/reference/geocoder#Geocoder.geocode
+     */
+    geocode(request) {
+        return new Observable(observer => {
+            this._geocoder.geocode(request, (results, status) => {
+                this._ngZone.run(() => {
+                    observer.next({ results, status });
+                    observer.complete();
+                });
+            });
+        });
+    }
+}
+MapGeocoder.ɵprov = ɵɵdefineInjectable({ factory: function MapGeocoder_Factory() { return new MapGeocoder(ɵɵinject(NgZone)); }, token: MapGeocoder, providedIn: "root" });
+MapGeocoder.decorators = [
+    { type: Injectable, args: [{ providedIn: 'root' },] }
+];
+MapGeocoder.ctorParameters = () => [
+    { type: NgZone }
+];
+
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { GoogleMap, GoogleMapsModule, MapBaseLayer, MapBicyclingLayer, MapCircle, MapDirectionsRenderer, MapDirectionsService, MapGroundOverlay, MapHeatmapLayer, MapInfoWindow, MapKmlLayer, MapMarker, MapMarkerClusterer, MapPolygon, MapPolyline, MapRectangle, MapTrafficLayer, MapTransitLayer };
+export { GoogleMap, GoogleMapsModule, MapBaseLayer, MapBicyclingLayer, MapCircle, MapDirectionsRenderer, MapDirectionsService, MapGeocoder, MapGroundOverlay, MapHeatmapLayer, MapInfoWindow, MapKmlLayer, MapMarker, MapMarkerClusterer, MapPolygon, MapPolyline, MapRectangle, MapTrafficLayer, MapTransitLayer };
 //# sourceMappingURL=google-maps.js.map

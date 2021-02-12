@@ -3589,6 +3589,46 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
+    /**
+     * Angular service that wraps the Google Maps Geocoder from the Google Maps JavaScript API.
+     * See developers.google.com/maps/documentation/javascript/reference/geocoder#Geocoder
+     */
+    var MapGeocoder = /** @class */ (function () {
+        function MapGeocoder(_ngZone) {
+            this._ngZone = _ngZone;
+            this._geocoder = new google.maps.Geocoder();
+        }
+        /**
+         * See developers.google.com/maps/documentation/javascript/reference/geocoder#Geocoder.geocode
+         */
+        MapGeocoder.prototype.geocode = function (request) {
+            var _this = this;
+            return new rxjs.Observable(function (observer) {
+                _this._geocoder.geocode(request, function (results, status) {
+                    _this._ngZone.run(function () {
+                        observer.next({ results: results, status: status });
+                        observer.complete();
+                    });
+                });
+            });
+        };
+        return MapGeocoder;
+    }());
+    MapGeocoder.ɵprov = i0.ɵɵdefineInjectable({ factory: function MapGeocoder_Factory() { return new MapGeocoder(i0.ɵɵinject(i0.NgZone)); }, token: MapGeocoder, providedIn: "root" });
+    MapGeocoder.decorators = [
+        { type: i0.Injectable, args: [{ providedIn: 'root' },] }
+    ];
+    MapGeocoder.ctorParameters = function () { return [
+        { type: i0.NgZone }
+    ]; };
+
+    /**
+     * @license
+     * Copyright Google LLC All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
 
     /**
      * Generated bundle index. Do not edit.
@@ -3601,6 +3641,7 @@
     exports.MapCircle = MapCircle;
     exports.MapDirectionsRenderer = MapDirectionsRenderer;
     exports.MapDirectionsService = MapDirectionsService;
+    exports.MapGeocoder = MapGeocoder;
     exports.MapGroundOverlay = MapGroundOverlay;
     exports.MapHeatmapLayer = MapHeatmapLayer;
     exports.MapInfoWindow = MapInfoWindow;
