@@ -1779,6 +1779,8 @@ MapMarker.propDecorators = {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+/** Default options for a clusterer. */
+const DEFAULT_CLUSTERER_OPTIONS = {};
 /**
  * Angular component for implementing a Google Maps Marker Clusterer.
  *
@@ -1853,6 +1855,9 @@ class MapMarkerClusterer {
     set zoomOnClick(zoomOnClick) {
         this._zoomOnClick = zoomOnClick;
     }
+    set options(options) {
+        this._options = options;
+    }
     ngOnInit() {
         if (this._canInitialize) {
             // Create the object outside the zone so its events don't trigger change detection.
@@ -1873,6 +1878,9 @@ class MapMarkerClusterer {
     ngOnChanges(changes) {
         const { markerClusterer: clusterer, ariaLabelFn, _averageCenter, _batchSizeIE, _calculator, _styles, _clusterClass, _enableRetinaIcons, _gridSize, _ignoreHidden, _imageExtension, _imagePath, _imageSizes, _maxZoom, _minimumClusterSize, _title, _zIndex, _zoomOnClick } = this;
         if (clusterer) {
+            if (changes['options']) {
+                clusterer.setOptions(this._combineOptions());
+            }
             if (changes['ariaLabelFn']) {
                 clusterer.ariaLabelFn = ariaLabelFn;
             }
@@ -2015,26 +2023,9 @@ class MapMarkerClusterer {
         return this.markerClusterer.getZoomOnClick();
     }
     _combineOptions() {
-        return {
-            ariaLabelFn: this.ariaLabelFn,
-            averageCenter: this._averageCenter,
-            batchSize: this.batchSize,
-            batchSizeIE: this._batchSizeIE,
-            calculator: this._calculator,
-            clusterClass: this._clusterClass,
-            enableRetinaIcons: this._enableRetinaIcons,
-            gridSize: this._gridSize,
-            ignoreHidden: this._ignoreHidden,
-            imageExtension: this._imageExtension,
-            imagePath: this._imagePath,
-            imageSizes: this._imageSizes,
-            maxZoom: this._maxZoom,
-            minimumClusterSize: this._minimumClusterSize,
-            styles: this._styles,
-            title: this._title,
-            zIndex: this._zIndex,
-            zoomOnClick: this._zoomOnClick,
-        };
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
+        const options = this._options || DEFAULT_CLUSTERER_OPTIONS;
+        return Object.assign(Object.assign({}, options), { ariaLabelFn: (_a = this.ariaLabelFn) !== null && _a !== void 0 ? _a : options.ariaLabelFn, averageCenter: (_b = this._averageCenter) !== null && _b !== void 0 ? _b : options.averageCenter, batchSize: (_c = this.batchSize) !== null && _c !== void 0 ? _c : options.batchSize, batchSizeIE: (_d = this._batchSizeIE) !== null && _d !== void 0 ? _d : options.batchSizeIE, calculator: (_e = this._calculator) !== null && _e !== void 0 ? _e : options.calculator, clusterClass: (_f = this._clusterClass) !== null && _f !== void 0 ? _f : options.clusterClass, enableRetinaIcons: (_g = this._enableRetinaIcons) !== null && _g !== void 0 ? _g : options.enableRetinaIcons, gridSize: (_h = this._gridSize) !== null && _h !== void 0 ? _h : options.gridSize, ignoreHidden: (_j = this._ignoreHidden) !== null && _j !== void 0 ? _j : options.ignoreHidden, imageExtension: (_k = this._imageExtension) !== null && _k !== void 0 ? _k : options.imageExtension, imagePath: (_l = this._imagePath) !== null && _l !== void 0 ? _l : options.imagePath, imageSizes: (_m = this._imageSizes) !== null && _m !== void 0 ? _m : options.imageSizes, maxZoom: (_o = this._maxZoom) !== null && _o !== void 0 ? _o : options.maxZoom, minimumClusterSize: (_p = this._minimumClusterSize) !== null && _p !== void 0 ? _p : options.minimumClusterSize, styles: (_q = this._styles) !== null && _q !== void 0 ? _q : options.styles, title: (_r = this._title) !== null && _r !== void 0 ? _r : options.title, zIndex: (_s = this._zIndex) !== null && _s !== void 0 ? _s : options.zIndex, zoomOnClick: (_t = this._zoomOnClick) !== null && _t !== void 0 ? _t : options.zoomOnClick });
     }
     _watchForMarkerChanges() {
         this._assertInitialized();
@@ -2117,6 +2108,7 @@ MapMarkerClusterer.propDecorators = {
     title: [{ type: Input }],
     zIndex: [{ type: Input }],
     zoomOnClick: [{ type: Input }],
+    options: [{ type: Input }],
     clusteringbegin: [{ type: Output }],
     clusteringend: [{ type: Output }],
     _markers: [{ type: ContentChildren, args: [MapMarker, { descendants: true },] }]

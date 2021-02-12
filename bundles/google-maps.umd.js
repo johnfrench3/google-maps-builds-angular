@@ -2191,6 +2191,8 @@
         zindexChanged: [{ type: i0.Output }]
     };
 
+    /** Default options for a clusterer. */
+    var DEFAULT_CLUSTERER_OPTIONS = {};
     /**
      * Angular component for implementing a Google Maps Marker Clusterer.
      *
@@ -2329,6 +2331,13 @@
             enumerable: false,
             configurable: true
         });
+        Object.defineProperty(MapMarkerClusterer.prototype, "options", {
+            set: function (options) {
+                this._options = options;
+            },
+            enumerable: false,
+            configurable: true
+        });
         MapMarkerClusterer.prototype.ngOnInit = function () {
             var _this = this;
             if (this._canInitialize) {
@@ -2348,8 +2357,11 @@
             }
         };
         MapMarkerClusterer.prototype.ngOnChanges = function (changes) {
-            var _a = this, clusterer = _a.markerClusterer, ariaLabelFn = _a.ariaLabelFn, _averageCenter = _a._averageCenter, _batchSizeIE = _a._batchSizeIE, _calculator = _a._calculator, _styles = _a._styles, _clusterClass = _a._clusterClass, _enableRetinaIcons = _a._enableRetinaIcons, _gridSize = _a._gridSize, _ignoreHidden = _a._ignoreHidden, _imageExtension = _a._imageExtension, _imagePath = _a._imagePath, _imageSizes = _a._imageSizes, _maxZoom = _a._maxZoom, _minimumClusterSize = _a._minimumClusterSize, _title = _a._title, _zIndex = _a._zIndex, _zoomOnClick = _a._zoomOnClick;
+            var _u = this, clusterer = _u.markerClusterer, ariaLabelFn = _u.ariaLabelFn, _averageCenter = _u._averageCenter, _batchSizeIE = _u._batchSizeIE, _calculator = _u._calculator, _styles = _u._styles, _clusterClass = _u._clusterClass, _enableRetinaIcons = _u._enableRetinaIcons, _gridSize = _u._gridSize, _ignoreHidden = _u._ignoreHidden, _imageExtension = _u._imageExtension, _imagePath = _u._imagePath, _imageSizes = _u._imageSizes, _maxZoom = _u._maxZoom, _minimumClusterSize = _u._minimumClusterSize, _title = _u._title, _zIndex = _u._zIndex, _zoomOnClick = _u._zoomOnClick;
             if (clusterer) {
+                if (changes['options']) {
+                    clusterer.setOptions(this._combineOptions());
+                }
                 if (changes['ariaLabelFn']) {
                     clusterer.ariaLabelFn = ariaLabelFn;
                 }
@@ -2492,35 +2504,18 @@
             return this.markerClusterer.getZoomOnClick();
         };
         MapMarkerClusterer.prototype._combineOptions = function () {
-            return {
-                ariaLabelFn: this.ariaLabelFn,
-                averageCenter: this._averageCenter,
-                batchSize: this.batchSize,
-                batchSizeIE: this._batchSizeIE,
-                calculator: this._calculator,
-                clusterClass: this._clusterClass,
-                enableRetinaIcons: this._enableRetinaIcons,
-                gridSize: this._gridSize,
-                ignoreHidden: this._ignoreHidden,
-                imageExtension: this._imageExtension,
-                imagePath: this._imagePath,
-                imageSizes: this._imageSizes,
-                maxZoom: this._maxZoom,
-                minimumClusterSize: this._minimumClusterSize,
-                styles: this._styles,
-                title: this._title,
-                zIndex: this._zIndex,
-                zoomOnClick: this._zoomOnClick,
-            };
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
+            var options = this._options || DEFAULT_CLUSTERER_OPTIONS;
+            return Object.assign(Object.assign({}, options), { ariaLabelFn: (_a = this.ariaLabelFn) !== null && _a !== void 0 ? _a : options.ariaLabelFn, averageCenter: (_b = this._averageCenter) !== null && _b !== void 0 ? _b : options.averageCenter, batchSize: (_c = this.batchSize) !== null && _c !== void 0 ? _c : options.batchSize, batchSizeIE: (_d = this._batchSizeIE) !== null && _d !== void 0 ? _d : options.batchSizeIE, calculator: (_e = this._calculator) !== null && _e !== void 0 ? _e : options.calculator, clusterClass: (_f = this._clusterClass) !== null && _f !== void 0 ? _f : options.clusterClass, enableRetinaIcons: (_g = this._enableRetinaIcons) !== null && _g !== void 0 ? _g : options.enableRetinaIcons, gridSize: (_h = this._gridSize) !== null && _h !== void 0 ? _h : options.gridSize, ignoreHidden: (_j = this._ignoreHidden) !== null && _j !== void 0 ? _j : options.ignoreHidden, imageExtension: (_k = this._imageExtension) !== null && _k !== void 0 ? _k : options.imageExtension, imagePath: (_l = this._imagePath) !== null && _l !== void 0 ? _l : options.imagePath, imageSizes: (_m = this._imageSizes) !== null && _m !== void 0 ? _m : options.imageSizes, maxZoom: (_o = this._maxZoom) !== null && _o !== void 0 ? _o : options.maxZoom, minimumClusterSize: (_p = this._minimumClusterSize) !== null && _p !== void 0 ? _p : options.minimumClusterSize, styles: (_q = this._styles) !== null && _q !== void 0 ? _q : options.styles, title: (_r = this._title) !== null && _r !== void 0 ? _r : options.title, zIndex: (_s = this._zIndex) !== null && _s !== void 0 ? _s : options.zIndex, zoomOnClick: (_t = this._zoomOnClick) !== null && _t !== void 0 ? _t : options.zoomOnClick });
         };
         MapMarkerClusterer.prototype._watchForMarkerChanges = function () {
-            var e_1, _a;
+            var e_1, _u;
             var _this = this;
             this._assertInitialized();
             var initialMarkers = [];
             try {
-                for (var _b = __values(this._getInternalMarkers(this._markers.toArray())), _c = _b.next(); !_c.done; _c = _b.next()) {
-                    var marker = _c.value;
+                for (var _v = __values(this._getInternalMarkers(this._markers.toArray())), _w = _v.next(); !_w.done; _w = _v.next()) {
+                    var marker = _w.value;
                     this._currentMarkers.add(marker);
                     initialMarkers.push(marker);
                 }
@@ -2528,20 +2523,20 @@
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                    if (_w && !_w.done && (_u = _v.return)) _u.call(_v);
                 }
                 finally { if (e_1) throw e_1.error; }
             }
             this.markerClusterer.addMarkers(initialMarkers);
             this._markers.changes.pipe(operators.takeUntil(this._destroy)).subscribe(function (markerComponents) {
-                var e_2, _a, e_3, _b, e_4, _c;
+                var e_2, _u, e_3, _v, e_4, _w;
                 _this._assertInitialized();
                 var newMarkers = new Set(_this._getInternalMarkers(markerComponents));
                 var markersToAdd = [];
                 var markersToRemove = [];
                 try {
-                    for (var _d = __values(Array.from(newMarkers)), _e = _d.next(); !_e.done; _e = _d.next()) {
-                        var marker = _e.value;
+                    for (var _x = __values(Array.from(newMarkers)), _y = _x.next(); !_y.done; _y = _x.next()) {
+                        var marker = _y.value;
                         if (!_this._currentMarkers.has(marker)) {
                             _this._currentMarkers.add(marker);
                             markersToAdd.push(marker);
@@ -2551,13 +2546,13 @@
                 catch (e_2_1) { e_2 = { error: e_2_1 }; }
                 finally {
                     try {
-                        if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
+                        if (_y && !_y.done && (_u = _x.return)) _u.call(_x);
                     }
                     finally { if (e_2) throw e_2.error; }
                 }
                 try {
-                    for (var _f = __values(Array.from(_this._currentMarkers)), _g = _f.next(); !_g.done; _g = _f.next()) {
-                        var marker = _g.value;
+                    for (var _z = __values(Array.from(_this._currentMarkers)), _0 = _z.next(); !_0.done; _0 = _z.next()) {
+                        var marker = _0.value;
                         if (!newMarkers.has(marker)) {
                             markersToRemove.push(marker);
                         }
@@ -2566,7 +2561,7 @@
                 catch (e_3_1) { e_3 = { error: e_3_1 }; }
                 finally {
                     try {
-                        if (_g && !_g.done && (_b = _f.return)) _b.call(_f);
+                        if (_0 && !_0.done && (_v = _z.return)) _v.call(_z);
                     }
                     finally { if (e_3) throw e_3.error; }
                 }
@@ -2582,7 +2577,7 @@
                 catch (e_4_1) { e_4 = { error: e_4_1 }; }
                 finally {
                     try {
-                        if (markersToRemove_1_1 && !markersToRemove_1_1.done && (_c = markersToRemove_1.return)) _c.call(markersToRemove_1);
+                        if (markersToRemove_1_1 && !markersToRemove_1_1.done && (_w = markersToRemove_1.return)) _w.call(markersToRemove_1);
                     }
                     finally { if (e_4) throw e_4.error; }
                 }
@@ -2638,6 +2633,7 @@
         title: [{ type: i0.Input }],
         zIndex: [{ type: i0.Input }],
         zoomOnClick: [{ type: i0.Input }],
+        options: [{ type: i0.Input }],
         clusteringbegin: [{ type: i0.Output }],
         clusteringend: [{ type: i0.Output }],
         _markers: [{ type: i0.ContentChildren, args: [MapMarker, { descendants: true },] }]

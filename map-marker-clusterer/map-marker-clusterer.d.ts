@@ -58,6 +58,8 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnC
     private _zIndex;
     set zoomOnClick(zoomOnClick: boolean);
     private _zoomOnClick;
+    set options(options: MarkerClustererOptions);
+    private _options;
     /**
      * See
      * googlemaps.github.io/v3-utility-library/modules/
