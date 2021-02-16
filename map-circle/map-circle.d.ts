@@ -120,7 +120,7 @@ export declare class MapCircle implements OnInit, OnDestroy {
     getEditable(): boolean;
     /**
      * @see
-     * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getCenter
+     * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getRadius
      */
     getRadius(): number;
     /**

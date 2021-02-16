@@ -697,7 +697,7 @@ class MapCircle {
     }
     /**
      * @see
-     * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getCenter
+     * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getRadius
      */
     getRadius() {
         this._assertInitialized();

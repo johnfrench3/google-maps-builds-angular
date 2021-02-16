@@ -1050,7 +1050,7 @@
         };
         /**
          * @see
-         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getCenter
+         * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.getRadius
          */
         MapCircle.prototype.getRadius = function () {
             this._assertInitialized();
