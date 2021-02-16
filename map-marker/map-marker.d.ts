@@ -36,7 +36,7 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
     set title(title: string);
     private _title;
     /**
-     * Title of the marker. See:
+     * Position of the marker. See:
      * developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.position
      */
     set position(position: google.maps.LatLngLiteral | google.maps.LatLng);

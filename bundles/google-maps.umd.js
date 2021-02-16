@@ -1950,7 +1950,7 @@
         });
         Object.defineProperty(MapMarker.prototype, "position", {
             /**
-             * Title of the marker. See:
+             * Position of the marker. See:
              * developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.position
              */
             set: function (position) {
