@@ -544,8 +544,8 @@
             }
             var googleMap = this.googleMap;
             if (googleMap) {
-                if (changes['options'] && this._options) {
-                    googleMap.setOptions(this._options);
+                if (changes['options']) {
+                    googleMap.setOptions(this._combineOptions());
                 }
                 if (changes['center'] && this._center) {
                     googleMap.setCenter(this._center);
@@ -740,11 +740,11 @@
         /** Combines the center and zoom and the other map options into a single object */
         GoogleMap.prototype._combineOptions = function () {
             var _a, _b;
-            var options = this._options;
+            var options = this._options || {};
             return Object.assign(Object.assign({}, options), {
                 // It's important that we set **some** kind of `center` and `zoom`, otherwise
                 // Google Maps will render a blank rectangle which looks broken.
-                center: this._center || options.center || DEFAULT_OPTIONS.center, zoom: (_b = (_a = this._zoom) !== null && _a !== void 0 ? _a : options.zoom) !== null && _b !== void 0 ? _b : DEFAULT_OPTIONS.zoom, mapTypeId: this.mapTypeId
+                center: this._center || options.center || DEFAULT_OPTIONS.center, zoom: (_b = (_a = this._zoom) !== null && _a !== void 0 ? _a : options.zoom) !== null && _b !== void 0 ? _b : DEFAULT_OPTIONS.zoom, mapTypeId: this.mapTypeId || options.mapTypeId
             });
         };
         /** Asserts that the map has been initialized. */
