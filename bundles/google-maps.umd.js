@@ -2371,7 +2371,7 @@
                 if (changes['batchSizeIE'] && _batchSizeIE !== undefined) {
                     clusterer.setBatchSizeIE(_batchSizeIE);
                 }
-                if (changes['calculator'] && _calculator) {
+                if (changes['calculator'] && !!_calculator) {
                     clusterer.setCalculator(_calculator);
                 }
                 if (changes['clusterClass'] && _clusterClass !== undefined) {
