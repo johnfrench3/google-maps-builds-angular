@@ -1,8 +1,30 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('rxjs'), require('rxjs/operators')) :
     typeof define === 'function' && define.amd ? define('@angular/google-maps', ['exports', '@angular/core', '@angular/common', 'rxjs', 'rxjs/operators'], factory) :
-    (global = global || self, factory((global.ng = global.ng || {}, global.ng.googleMaps = {}), global.ng.core, global.ng.common, global.rxjs, global.rxjs.operators));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ng = global.ng || {}, global.ng.googleMaps = {}), global.ng.core, global.ng.common, global.rxjs, global.rxjs.operators));
 }(this, (function (exports, i0, common, rxjs, operators) { 'use strict';
+
+    function _interopNamespace(e) {
+        if (e && e.__esModule) return e;
+        var n = Object.create(null);
+        if (e) {
+            Object.keys(e).forEach(function (k) {
+                if (k !== 'default') {
+                    var d = Object.getOwnPropertyDescriptor(e, k);
+                    Object.defineProperty(n, k, d.get ? d : {
+                        enumerable: true,
+                        get: function () {
+                            return e[k];
+                        }
+                    });
+                }
+            });
+        }
+        n['default'] = e;
+        return Object.freeze(n);
+    }
+
+    var i0__namespace = /*#__PURE__*/_interopNamespace(i0);
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -3570,7 +3592,7 @@
         };
         return MapDirectionsService;
     }());
-    MapDirectionsService.ɵprov = i0.ɵɵdefineInjectable({ factory: function MapDirectionsService_Factory() { return new MapDirectionsService(i0.ɵɵinject(i0.NgZone)); }, token: MapDirectionsService, providedIn: "root" });
+    MapDirectionsService.ɵprov = i0__namespace.ɵɵdefineInjectable({ factory: function MapDirectionsService_Factory() { return new MapDirectionsService(i0__namespace.ɵɵinject(i0__namespace.NgZone)); }, token: MapDirectionsService, providedIn: "root" });
     MapDirectionsService.decorators = [
         { type: i0.Injectable, args: [{ providedIn: 'root' },] }
     ];
@@ -3610,7 +3632,7 @@
         };
         return MapGeocoder;
     }());
-    MapGeocoder.ɵprov = i0.ɵɵdefineInjectable({ factory: function MapGeocoder_Factory() { return new MapGeocoder(i0.ɵɵinject(i0.NgZone)); }, token: MapGeocoder, providedIn: "root" });
+    MapGeocoder.ɵprov = i0__namespace.ɵɵdefineInjectable({ factory: function MapGeocoder_Factory() { return new MapGeocoder(i0__namespace.ɵɵinject(i0__namespace.NgZone)); }, token: MapGeocoder, providedIn: "root" });
     MapGeocoder.decorators = [
         { type: i0.Injectable, args: [{ providedIn: 'root' },] }
     ];

@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Inject, PLATFORM_ID, Input, Output, Directive, ContentChildren, NgModule, ɵɵdefineInjectable, ɵɵinject, Injectable } from '@angular/core';
+import * as i0 from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Inject, PLATFORM_ID, Input, Output, Directive, ContentChildren, NgModule, Injectable } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { switchMap, take, map, takeUntil } from 'rxjs/operators';
@@ -3007,7 +3008,7 @@ class MapDirectionsService {
         });
     }
 }
-MapDirectionsService.ɵprov = ɵɵdefineInjectable({ factory: function MapDirectionsService_Factory() { return new MapDirectionsService(ɵɵinject(NgZone)); }, token: MapDirectionsService, providedIn: "root" });
+MapDirectionsService.ɵprov = i0.ɵɵdefineInjectable({ factory: function MapDirectionsService_Factory() { return new MapDirectionsService(i0.ɵɵinject(i0.NgZone)); }, token: MapDirectionsService, providedIn: "root" });
 MapDirectionsService.decorators = [
     { type: Injectable, args: [{ providedIn: 'root' },] }
 ];
@@ -3045,7 +3046,7 @@ class MapGeocoder {
         });
     }
 }
-MapGeocoder.ɵprov = ɵɵdefineInjectable({ factory: function MapGeocoder_Factory() { return new MapGeocoder(ɵɵinject(NgZone)); }, token: MapGeocoder, providedIn: "root" });
+MapGeocoder.ɵprov = i0.ɵɵdefineInjectable({ factory: function MapGeocoder_Factory() { return new MapGeocoder(i0.ɵɵinject(i0.NgZone)); }, token: MapGeocoder, providedIn: "root" });
 MapGeocoder.decorators = [
     { type: Injectable, args: [{ providedIn: 'root' },] }
 ];
