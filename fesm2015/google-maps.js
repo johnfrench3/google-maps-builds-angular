@@ -3030,13 +3030,17 @@ MapDirectionsService.ctorParameters = () => [
 class MapGeocoder {
     constructor(_ngZone) {
         this._ngZone = _ngZone;
-        this._geocoder = new google.maps.Geocoder();
     }
     /**
      * See developers.google.com/maps/documentation/javascript/reference/geocoder#Geocoder.geocode
      */
     geocode(request) {
         return new Observable(observer => {
+            // Initialize the `Geocoder` lazily since the Google Maps API may
+            // not have been loaded when the provider is instantiated.
+            if (!this._geocoder) {
+                this._geocoder = new google.maps.Geocoder();
+            }
             this._geocoder.geocode(request, (results, status) => {
                 this._ngZone.run(() => {
                     observer.next({ results, status });

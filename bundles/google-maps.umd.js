@@ -3614,7 +3614,6 @@
     var MapGeocoder = /** @class */ (function () {
         function MapGeocoder(_ngZone) {
             this._ngZone = _ngZone;
-            this._geocoder = new google.maps.Geocoder();
         }
         /**
          * See developers.google.com/maps/documentation/javascript/reference/geocoder#Geocoder.geocode
@@ -3622,6 +3621,11 @@
         MapGeocoder.prototype.geocode = function (request) {
             var _this = this;
             return new rxjs.Observable(function (observer) {
+                // Initialize the `Geocoder` lazily since the Google Maps API may
+                // not have been loaded when the provider is instantiated.
+                if (!_this._geocoder) {
+                    _this._geocoder = new google.maps.Geocoder();
+                }
                 _this._geocoder.geocode(request, function (results, status) {
                     _this._ngZone.run(function () {
                         observer.next({ results: results, status: status });

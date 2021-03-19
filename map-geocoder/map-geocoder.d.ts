@@ -18,7 +18,7 @@ export interface MapGeocoderResponse {
  */
 export declare class MapGeocoder {
     private readonly _ngZone;
-    private readonly _geocoder;
+    private _geocoder;
     constructor(_ngZone: NgZone);
     /**
      * See developers.google.com/maps/documentation/javascript/reference/geocoder#Geocoder.geocode
