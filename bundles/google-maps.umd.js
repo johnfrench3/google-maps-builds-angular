@@ -416,7 +416,9 @@
     /** default options set to the Googleplex */
     var DEFAULT_OPTIONS = {
         center: { lat: 37.421995, lng: -122.084092 },
-        zoom: 17
+        zoom: 17,
+        // Note: the type conversion here isn't necessary for our CI, but it resolves a g3 failure.
+        mapTypeId: 'roadmap'
     };
     /** Arbitrary default height for the map element */
     var DEFAULT_HEIGHT = '500px';
@@ -766,7 +768,10 @@
             return Object.assign(Object.assign({}, options), {
                 // It's important that we set **some** kind of `center` and `zoom`, otherwise
                 // Google Maps will render a blank rectangle which looks broken.
-                center: this._center || options.center || DEFAULT_OPTIONS.center, zoom: (_b = (_a = this._zoom) !== null && _a !== void 0 ? _a : options.zoom) !== null && _b !== void 0 ? _b : DEFAULT_OPTIONS.zoom, mapTypeId: this.mapTypeId || options.mapTypeId
+                center: this._center || options.center || DEFAULT_OPTIONS.center, zoom: (_b = (_a = this._zoom) !== null && _a !== void 0 ? _a : options.zoom) !== null && _b !== void 0 ? _b : DEFAULT_OPTIONS.zoom,
+                // Passing in an undefined `mapTypeId` seems to break tile loading
+                // so make sure that we have some kind of default (see #22082).
+                mapTypeId: this.mapTypeId || options.mapTypeId || DEFAULT_OPTIONS.mapTypeId
             });
         };
         /** Asserts that the map has been initialized. */
