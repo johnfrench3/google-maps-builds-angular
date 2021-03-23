@@ -3571,7 +3571,6 @@
     var MapDirectionsService = /** @class */ (function () {
         function MapDirectionsService(_ngZone) {
             this._ngZone = _ngZone;
-            this._directionsService = new google.maps.DirectionsService();
         }
         /**
          * See
@@ -3581,6 +3580,11 @@
         MapDirectionsService.prototype.route = function (request) {
             var _this = this;
             return new rxjs.Observable(function (observer) {
+                // Initialize the `DirectionsService` lazily since the Google Maps API may
+                // not have been loaded when the provider is instantiated.
+                if (!_this._directionsService) {
+                    _this._directionsService = new google.maps.DirectionsService();
+                }
                 var callback = function (result, status) {
                     _this._ngZone.run(function () {
                         observer.next({ result: result, status: status });

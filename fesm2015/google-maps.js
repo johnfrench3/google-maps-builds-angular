@@ -2989,7 +2989,6 @@ GoogleMapsModule.decorators = [
 class MapDirectionsService {
     constructor(_ngZone) {
         this._ngZone = _ngZone;
-        this._directionsService = new google.maps.DirectionsService();
     }
     /**
      * See
@@ -2998,6 +2997,11 @@ class MapDirectionsService {
      */
     route(request) {
         return new Observable(observer => {
+            // Initialize the `DirectionsService` lazily since the Google Maps API may
+            // not have been loaded when the provider is instantiated.
+            if (!this._directionsService) {
+                this._directionsService = new google.maps.DirectionsService();
+            }
             const callback = (result, status) => {
                 this._ngZone.run(() => {
                     observer.next({ result, status });

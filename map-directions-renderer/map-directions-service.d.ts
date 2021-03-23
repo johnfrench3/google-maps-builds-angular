@@ -20,7 +20,7 @@ export interface MapDirectionsResponse {
  */
 export declare class MapDirectionsService {
     private readonly _ngZone;
-    private readonly _directionsService;
+    private _directionsService;
     constructor(_ngZone: NgZone);
     /**
      * See
