@@ -71,6 +71,8 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnC
      * googlemaps.github.io/v3-utility-library/modules/_google_markerclustererplus.html#clusteringend
      */
     clusteringend: Observable<void>;
+    /** Emits when a cluster has been clicked. */
+    clusterClick: Observable<Cluster>;
     _markers: QueryList<MapMarker>;
     /**
      * The underlying MarkerClusterer object.

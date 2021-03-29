@@ -2244,6 +2244,8 @@
              * googlemaps.github.io/v3-utility-library/modules/_google_markerclustererplus.html#clusteringend
              */
             this.clusteringend = this._eventManager.getLazyEmitter('clusteringend');
+            /** Emits when a cluster has been clicked. */
+            this.clusterClick = this._eventManager.getLazyEmitter('click');
             this._canInitialize = this._googleMap._isBrowser;
         }
         Object.defineProperty(MapMarkerClusterer.prototype, "averageCenter", {
@@ -2663,6 +2665,7 @@
         options: [{ type: i0.Input }],
         clusteringbegin: [{ type: i0.Output }],
         clusteringend: [{ type: i0.Output }],
+        clusterClick: [{ type: i0.Output }],
         _markers: [{ type: i0.ContentChildren, args: [MapMarker, { descendants: true },] }]
     };
 
