@@ -1581,6 +1581,13 @@ class MapMarker {
     set options(options) {
         this._options = options;
     }
+    /**
+     * Icon to be used for the marker.
+     * See: https://developers.google.com/maps/documentation/javascript/reference/marker#Icon
+     */
+    set icon(icon) {
+        this._icon = icon;
+    }
     ngOnInit() {
         if (this._googleMap._isBrowser) {
             // Create the object outside the zone so its events don't trigger change detection.
@@ -1595,7 +1602,7 @@ class MapMarker {
         }
     }
     ngOnChanges(changes) {
-        const { marker, _title, _position, _label, _clickable } = this;
+        const { marker, _title, _position, _label, _clickable, _icon } = this;
         if (marker) {
             if (changes['options']) {
                 marker.setOptions(this._combineOptions());
@@ -1611,6 +1618,9 @@ class MapMarker {
             }
             if (changes['clickable'] && _clickable !== undefined) {
                 marker.setClickable(_clickable);
+            }
+            if (changes['icon'] && _icon) {
+                marker.setIcon(_icon);
             }
         }
     }
@@ -1723,8 +1733,9 @@ class MapMarker {
     }
     /** Creates a combined options object using the passed-in options and the individual inputs. */
     _combineOptions() {
+        var _a;
         const options = this._options || DEFAULT_MARKER_OPTIONS;
-        return Object.assign(Object.assign({}, options), { title: this._title || options.title, position: this._position || options.position, label: this._label || options.label, clickable: this._clickable !== undefined ? this._clickable : options.clickable, map: this._googleMap.googleMap });
+        return Object.assign(Object.assign({}, options), { title: this._title || options.title, position: this._position || options.position, label: this._label || options.label, clickable: (_a = this._clickable) !== null && _a !== void 0 ? _a : options.clickable, map: this._googleMap.googleMap, icon: this._icon || options.icon });
     }
     _assertInitialized() {
         if (typeof ngDevMode === 'undefined' || ngDevMode) {
@@ -1755,6 +1766,7 @@ MapMarker.propDecorators = {
     label: [{ type: Input }],
     clickable: [{ type: Input }],
     options: [{ type: Input }],
+    icon: [{ type: Input }],
     animationChanged: [{ type: Output }],
     mapClick: [{ type: Output }],
     clickableChanged: [{ type: Output }],

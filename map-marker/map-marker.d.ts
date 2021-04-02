@@ -60,6 +60,12 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
     set options(options: google.maps.MarkerOptions);
     private _options;
     /**
+     * Icon to be used for the marker.
+     * See: https://developers.google.com/maps/documentation/javascript/reference/marker#Icon
+     */
+    set icon(icon: string | google.maps.Icon | google.maps.Symbol);
+    private _icon;
+    /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.animation_changed
      */
