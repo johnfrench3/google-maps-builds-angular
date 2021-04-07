@@ -32,17 +32,17 @@ export declare class MapKmlLayer implements OnInit, OnDestroy {
     /**
      * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.click
      */
-    kmlClick: Observable<google.maps.KmlMouseEvent>;
+    readonly kmlClick: Observable<google.maps.KmlMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/kml
      * #KmlLayer.defaultviewport_changed
      */
-    defaultviewportChanged: Observable<void>;
+    readonly defaultviewportChanged: Observable<void>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.status_changed
      */
-    statusChanged: Observable<void>;
+    readonly statusChanged: Observable<void>;
     constructor(_map: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;

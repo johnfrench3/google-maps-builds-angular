@@ -69,107 +69,107 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.animation_changed
      */
-    animationChanged: Observable<void>;
+    readonly animationChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.click
      */
-    mapClick: Observable<google.maps.MapMouseEvent>;
+    readonly mapClick: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.clickable_changed
      */
-    clickableChanged: Observable<void>;
+    readonly clickableChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.cursor_changed
      */
-    cursorChanged: Observable<void>;
+    readonly cursorChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.dblclick
      */
-    mapDblclick: Observable<google.maps.MapMouseEvent>;
+    readonly mapDblclick: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.drag
      */
-    mapDrag: Observable<google.maps.MapMouseEvent>;
+    readonly mapDrag: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.dragend
      */
-    mapDragend: Observable<google.maps.MapMouseEvent>;
+    readonly mapDragend: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.draggable_changed
      */
-    draggableChanged: Observable<void>;
+    readonly draggableChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.dragstart
      */
-    mapDragstart: Observable<google.maps.MapMouseEvent>;
+    readonly mapDragstart: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.flat_changed
      */
-    flatChanged: Observable<void>;
+    readonly flatChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.icon_changed
      */
-    iconChanged: Observable<void>;
+    readonly iconChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.mousedown
      */
-    mapMousedown: Observable<google.maps.MapMouseEvent>;
+    readonly mapMousedown: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.mouseout
      */
-    mapMouseout: Observable<google.maps.MapMouseEvent>;
+    readonly mapMouseout: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.mouseover
      */
-    mapMouseover: Observable<google.maps.MapMouseEvent>;
+    readonly mapMouseover: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.mouseup
      */
-    mapMouseup: Observable<google.maps.MapMouseEvent>;
+    readonly mapMouseup: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.position_changed
      */
-    positionChanged: Observable<void>;
+    readonly positionChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.rightclick
      */
-    mapRightclick: Observable<google.maps.MapMouseEvent>;
+    readonly mapRightclick: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.shape_changed
      */
-    shapeChanged: Observable<void>;
+    readonly shapeChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.title_changed
      */
-    titleChanged: Observable<void>;
+    readonly titleChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.visible_changed
      */
-    visibleChanged: Observable<void>;
+    readonly visibleChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.zindex_changed
      */
-    zindexChanged: Observable<void>;
+    readonly zindexChanged: Observable<void>;
     /**
      * The underlying google.maps.Marker object.
      *

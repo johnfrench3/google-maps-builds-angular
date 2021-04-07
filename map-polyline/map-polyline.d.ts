@@ -32,47 +32,47 @@ export declare class MapPolyline implements OnInit, OnDestroy {
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.click
      */
-    polylineClick: Observable<google.maps.PolyMouseEvent>;
+    readonly polylineClick: Observable<google.maps.PolyMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dblclick
      */
-    polylineDblclick: Observable<google.maps.PolyMouseEvent>;
+    readonly polylineDblclick: Observable<google.maps.PolyMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.drag
      */
-    polylineDrag: Observable<google.maps.MapMouseEvent>;
+    readonly polylineDrag: Observable<google.maps.MapMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragend
      */
-    polylineDragend: Observable<google.maps.MapMouseEvent>;
+    readonly polylineDragend: Observable<google.maps.MapMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.dragstart
      */
-    polylineDragstart: Observable<google.maps.MapMouseEvent>;
+    readonly polylineDragstart: Observable<google.maps.MapMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousedown
      */
-    polylineMousedown: Observable<google.maps.PolyMouseEvent>;
+    readonly polylineMousedown: Observable<google.maps.PolyMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mousemove
      */
-    polylineMousemove: Observable<google.maps.PolyMouseEvent>;
+    readonly polylineMousemove: Observable<google.maps.PolyMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseout
      */
-    polylineMouseout: Observable<google.maps.PolyMouseEvent>;
+    readonly polylineMouseout: Observable<google.maps.PolyMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseover
      */
-    polylineMouseover: Observable<google.maps.PolyMouseEvent>;
+    readonly polylineMouseover: Observable<google.maps.PolyMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.mouseup
      */
-    polylineMouseup: Observable<google.maps.PolyMouseEvent>;
+    readonly polylineMouseup: Observable<google.maps.PolyMouseEvent>;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/polygon#Polyline.rightclick
      */
-    polylineRightclick: Observable<google.maps.PolyMouseEvent>;
+    readonly polylineRightclick: Observable<google.maps.PolyMouseEvent>;
     constructor(_map: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;

@@ -34,67 +34,67 @@ export declare class MapCircle implements OnInit, OnDestroy {
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.center_changed
      */
-    centerChanged: Observable<void>;
+    readonly centerChanged: Observable<void>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.click
      */
-    circleClick: Observable<google.maps.MapMouseEvent>;
+    readonly circleClick: Observable<google.maps.MapMouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.dblclick
      */
-    circleDblclick: Observable<google.maps.MapMouseEvent>;
+    readonly circleDblclick: Observable<google.maps.MapMouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.drag
      */
-    circleDrag: Observable<google.maps.MapMouseEvent>;
+    readonly circleDrag: Observable<google.maps.MapMouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.dragend
      */
-    circleDragend: Observable<google.maps.MapMouseEvent>;
+    readonly circleDragend: Observable<google.maps.MapMouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.dragstart
      */
-    circleDragstart: Observable<google.maps.MapMouseEvent>;
+    readonly circleDragstart: Observable<google.maps.MapMouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mousedown
      */
-    circleMousedown: Observable<google.maps.MapMouseEvent>;
+    readonly circleMousedown: Observable<google.maps.MapMouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mousemove
      */
-    circleMousemove: Observable<google.maps.MapMouseEvent>;
+    readonly circleMousemove: Observable<google.maps.MapMouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mouseout
      */
-    circleMouseout: Observable<google.maps.MapMouseEvent>;
+    readonly circleMouseout: Observable<google.maps.MapMouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mouseover
      */
-    circleMouseover: Observable<google.maps.MapMouseEvent>;
+    readonly circleMouseover: Observable<google.maps.MapMouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.mouseup
      */
-    circleMouseup: Observable<google.maps.MapMouseEvent>;
+    readonly circleMouseup: Observable<google.maps.MapMouseEvent>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.radius_changed
      */
-    radiusChanged: Observable<void>;
+    readonly radiusChanged: Observable<void>;
     /**
      * @see
      * developers.google.com/maps/documentation/javascript/reference/polygon#Circle.rightclick
      */
-    circleRightclick: Observable<google.maps.MapMouseEvent>;
+    readonly circleRightclick: Observable<google.maps.MapMouseEvent>;
     constructor(_map: GoogleMap, _ngZone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;

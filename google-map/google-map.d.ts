@@ -51,92 +51,92 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.bounds_changed
      */
-    boundsChanged: Observable<void>;
+    readonly boundsChanged: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.center_changed
      */
-    centerChanged: Observable<void>;
+    readonly centerChanged: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.click
      */
-    mapClick: Observable<google.maps.MapMouseEvent | google.maps.IconMouseEvent>;
+    readonly mapClick: Observable<google.maps.MapMouseEvent | google.maps.IconMouseEvent>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.dblclick
      */
-    mapDblclick: Observable<google.maps.MapMouseEvent>;
+    readonly mapDblclick: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.drag
      */
-    mapDrag: Observable<void>;
+    readonly mapDrag: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.dragend
      */
-    mapDragend: Observable<void>;
+    readonly mapDragend: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.dragstart
      */
-    mapDragstart: Observable<void>;
+    readonly mapDragstart: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.heading_changed
      */
-    headingChanged: Observable<void>;
+    readonly headingChanged: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.idle
      */
-    idle: Observable<void>;
+    readonly idle: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.maptypeid_changed
      */
-    maptypeidChanged: Observable<void>;
+    readonly maptypeidChanged: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.mousemove
      */
-    mapMousemove: Observable<google.maps.MapMouseEvent>;
+    readonly mapMousemove: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.mouseout
      */
-    mapMouseout: Observable<google.maps.MapMouseEvent>;
+    readonly mapMouseout: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.mouseover
      */
-    mapMouseover: Observable<google.maps.MapMouseEvent>;
+    readonly mapMouseover: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/map#Map.projection_changed
      */
-    projectionChanged: Observable<void>;
+    readonly projectionChanged: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.rightclick
      */
-    mapRightclick: Observable<google.maps.MapMouseEvent>;
+    readonly mapRightclick: Observable<google.maps.MapMouseEvent>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.tilesloaded
      */
-    tilesloaded: Observable<void>;
+    readonly tilesloaded: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.tilt_changed
      */
-    tiltChanged: Observable<void>;
+    readonly tiltChanged: Observable<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.zoom_changed
      */
-    zoomChanged: Observable<void>;
+    readonly zoomChanged: Observable<void>;
     constructor(_elementRef: ElementRef, _ngZone: NgZone, platformId: Object);
     ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;

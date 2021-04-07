@@ -2531,8 +2531,7 @@ class MapRectangle {
         /**
          * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.boundsChanged
-         */
-        this.boundsChanged = this._eventManager.getLazyEmitter('bounds_changed');
+         */ this.boundsChanged = this._eventManager.getLazyEmitter('bounds_changed');
         /**
          * See
          * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.click

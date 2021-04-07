@@ -35,30 +35,30 @@ export declare class MapInfoWindow implements OnInit, OnDestroy {
      * See
      * developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindow.closeclick
      */
-    closeclick: Observable<void>;
+    readonly closeclick: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/info-window
      * #InfoWindow.content_changed
      */
-    contentChanged: Observable<void>;
+    readonly contentChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindow.domready
      */
-    domready: Observable<void>;
+    readonly domready: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/info-window
      * #InfoWindow.position_changed
      */
-    positionChanged: Observable<void>;
+    readonly positionChanged: Observable<void>;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/info-window
      * #InfoWindow.zindex_changed
      */
-    zindexChanged: Observable<void>;
+    readonly zindexChanged: Observable<void>;
     constructor(_googleMap: GoogleMap, _elementRef: ElementRef<HTMLElement>, _ngZone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;

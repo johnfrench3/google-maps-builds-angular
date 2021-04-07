@@ -35,7 +35,7 @@ export declare class MapDirectionsRenderer implements OnInit, OnChanges, OnDestr
      * See developers.google.com/maps/documentation/javascript/reference/directions
      * #DirectionsRenderer.directions_changed
      */
-    directionsChanged: Observable<void>;
+    readonly directionsChanged: Observable<void>;
     /** The underlying google.maps.DirectionsRenderer object. */
     directionsRenderer?: google.maps.DirectionsRenderer;
     constructor(_googleMap: GoogleMap, _ngZone: NgZone);
