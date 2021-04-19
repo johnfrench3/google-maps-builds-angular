@@ -2030,6 +2030,17 @@
             enumerable: false,
             configurable: true
         });
+        Object.defineProperty(MapMarker.prototype, "visible", {
+            /**
+             * Whether the marker is visible.
+             * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.visible
+             */
+            set: function (value) {
+                this._visible = value;
+            },
+            enumerable: false,
+            configurable: true
+        });
         MapMarker.prototype.ngOnInit = function () {
             var _this = this;
             if (this._googleMap._isBrowser) {
@@ -2045,7 +2056,7 @@
             }
         };
         MapMarker.prototype.ngOnChanges = function (changes) {
-            var _b = this, marker = _b.marker, _title = _b._title, _position = _b._position, _label = _b._label, _clickable = _b._clickable, _icon = _b._icon;
+            var _c = this, marker = _c.marker, _title = _c._title, _position = _c._position, _label = _c._label, _clickable = _c._clickable, _icon = _c._icon, _visible = _c._visible;
             if (marker) {
                 if (changes['options']) {
                     marker.setOptions(this._combineOptions());
@@ -2064,6 +2075,9 @@
                 }
                 if (changes['icon'] && _icon) {
                     marker.setIcon(_icon);
+                }
+                if (changes['visible'] && _visible !== undefined) {
+                    marker.setVisible(_visible);
                 }
             }
         };
@@ -2176,9 +2190,9 @@
         };
         /** Creates a combined options object using the passed-in options and the individual inputs. */
         MapMarker.prototype._combineOptions = function () {
-            var _a;
+            var _a, _b;
             var options = this._options || DEFAULT_MARKER_OPTIONS;
-            return Object.assign(Object.assign({}, options), { title: this._title || options.title, position: this._position || options.position, label: this._label || options.label, clickable: (_a = this._clickable) !== null && _a !== void 0 ? _a : options.clickable, map: this._googleMap.googleMap, icon: this._icon || options.icon });
+            return Object.assign(Object.assign({}, options), { title: this._title || options.title, position: this._position || options.position, label: this._label || options.label, clickable: (_a = this._clickable) !== null && _a !== void 0 ? _a : options.clickable, map: this._googleMap.googleMap, icon: this._icon || options.icon, visible: (_b = this._visible) !== null && _b !== void 0 ? _b : options.visible });
         };
         MapMarker.prototype._assertInitialized = function () {
             if (typeof ngDevMode === 'undefined' || ngDevMode) {
@@ -2211,6 +2225,7 @@
         clickable: [{ type: i0.Input }],
         options: [{ type: i0.Input }],
         icon: [{ type: i0.Input }],
+        visible: [{ type: i0.Input }],
         animationChanged: [{ type: i0.Output }],
         mapClick: [{ type: i0.Output }],
         clickableChanged: [{ type: i0.Output }],

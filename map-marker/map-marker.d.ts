@@ -66,6 +66,12 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
     set icon(icon: string | google.maps.Icon | google.maps.Symbol);
     private _icon;
     /**
+     * Whether the marker is visible.
+     * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.visible
+     */
+    set visible(value: boolean);
+    private _visible;
+    /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.animation_changed
      */

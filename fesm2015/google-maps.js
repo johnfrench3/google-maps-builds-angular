@@ -1588,6 +1588,13 @@ class MapMarker {
     set icon(icon) {
         this._icon = icon;
     }
+    /**
+     * Whether the marker is visible.
+     * See: developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions.visible
+     */
+    set visible(value) {
+        this._visible = value;
+    }
     ngOnInit() {
         if (this._googleMap._isBrowser) {
             // Create the object outside the zone so its events don't trigger change detection.
@@ -1602,7 +1609,7 @@ class MapMarker {
         }
     }
     ngOnChanges(changes) {
-        const { marker, _title, _position, _label, _clickable, _icon } = this;
+        const { marker, _title, _position, _label, _clickable, _icon, _visible } = this;
         if (marker) {
             if (changes['options']) {
                 marker.setOptions(this._combineOptions());
@@ -1621,6 +1628,9 @@ class MapMarker {
             }
             if (changes['icon'] && _icon) {
                 marker.setIcon(_icon);
+            }
+            if (changes['visible'] && _visible !== undefined) {
+                marker.setVisible(_visible);
             }
         }
     }
@@ -1733,9 +1743,9 @@ class MapMarker {
     }
     /** Creates a combined options object using the passed-in options and the individual inputs. */
     _combineOptions() {
-        var _a;
+        var _a, _b;
         const options = this._options || DEFAULT_MARKER_OPTIONS;
-        return Object.assign(Object.assign({}, options), { title: this._title || options.title, position: this._position || options.position, label: this._label || options.label, clickable: (_a = this._clickable) !== null && _a !== void 0 ? _a : options.clickable, map: this._googleMap.googleMap, icon: this._icon || options.icon });
+        return Object.assign(Object.assign({}, options), { title: this._title || options.title, position: this._position || options.position, label: this._label || options.label, clickable: (_a = this._clickable) !== null && _a !== void 0 ? _a : options.clickable, map: this._googleMap.googleMap, icon: this._icon || options.icon, visible: (_b = this._visible) !== null && _b !== void 0 ? _b : options.visible });
     }
     _assertInitialized() {
         if (typeof ngDevMode === 'undefined' || ngDevMode) {
@@ -1767,6 +1777,7 @@ MapMarker.propDecorators = {
     clickable: [{ type: Input }],
     options: [{ type: Input }],
     icon: [{ type: Input }],
+    visible: [{ type: Input }],
     animationChanged: [{ type: Output }],
     mapClick: [{ type: Output }],
     clickableChanged: [{ type: Output }],
