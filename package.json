@@ -1,6 +1,6 @@
 {
   "name": "@angular/google-maps",
-  "version": "12.1.0-next.0-sha-46c2d2616",
+  "version": "12.1.0-next.0-sha-9d8746171",
   "description": "Angular Google Maps",
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   "publishConfig": {
     "registry": "https://wombat-dressing-room.appspot.com"
   },
+  "ng-update": {},
   "main": "./bundles/google-maps.umd.js",
   "fesm2015": "./fesm2015/google-maps.js",
   "esm2015": "./esm2015/index.js",
