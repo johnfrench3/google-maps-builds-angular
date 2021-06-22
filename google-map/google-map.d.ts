@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 /// <reference types="googlemaps" />
-import { ElementRef, OnChanges, OnDestroy, OnInit, NgZone, SimpleChanges } from '@angular/core';
+import { ElementRef, OnChanges, OnDestroy, OnInit, NgZone, SimpleChanges, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 /** default options set to the Googleplex */
 export declare const DEFAULT_OPTIONS: google.maps.MapOptions;
@@ -24,6 +24,7 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
     private _ngZone;
     private _eventManager;
     private _mapEl;
+    private _existingAuthFailureCallback;
     /**
      * The underlying google.maps.Map object
      *
@@ -47,6 +48,11 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
     private _zoom;
     set options(options: google.maps.MapOptions);
     private _options;
+    /**
+     * See
+     * https://developers.google.com/maps/documentation/javascript/events#auth-errors
+     */
+    readonly authFailure: EventEmitter<void>;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.bounds_changed

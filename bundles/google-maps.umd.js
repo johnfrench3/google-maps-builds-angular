@@ -434,6 +434,7 @@
      */
     var GoogleMap = /** @class */ (function () {
         function GoogleMap(_elementRef, _ngZone, platformId) {
+            var _this = this;
             this._elementRef = _elementRef;
             this._ngZone = _ngZone;
             this._eventManager = new MapEventManager(this._ngZone);
@@ -442,6 +443,11 @@
             /** Width of the map. Set this to `null` if you'd like to control the width through CSS. */
             this.width = DEFAULT_WIDTH;
             this._options = DEFAULT_OPTIONS;
+            /**
+             * See
+             * https://developers.google.com/maps/documentation/javascript/events#auth-errors
+             */
+            this.authFailure = new i0.EventEmitter();
             /**
              * See
              * https://developers.google.com/maps/documentation/javascript/reference/map#Map.bounds_changed
@@ -542,6 +548,13 @@
                         'https://developers.google.com/maps/documentation/javascript/' +
                         'tutorial#Loading_the_Maps_API');
                 }
+                this._existingAuthFailureCallback = googleMapsWindow.gm_authFailure;
+                googleMapsWindow.gm_authFailure = function () {
+                    if (_this._existingAuthFailureCallback) {
+                        _this._existingAuthFailureCallback();
+                    }
+                    _this.authFailure.emit();
+                };
             }
         }
         Object.defineProperty(GoogleMap.prototype, "center", {
@@ -603,6 +616,10 @@
         };
         GoogleMap.prototype.ngOnDestroy = function () {
             this._eventManager.destroy();
+            if (this._isBrowser) {
+                var googleMapsWindow = window;
+                googleMapsWindow.gm_authFailure = this._existingAuthFailureCallback;
+            }
         };
         /**
          * See
@@ -807,6 +824,7 @@
         center: [{ type: i0.Input }],
         zoom: [{ type: i0.Input }],
         options: [{ type: i0.Input }],
+        authFailure: [{ type: i0.Output }],
         boundsChanged: [{ type: i0.Output }],
         centerChanged: [{ type: i0.Output }],
         mapClick: [{ type: i0.Output }],

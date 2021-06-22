@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Inject, PLATFORM_ID, Input, Output, Directive, ContentChildren, NgModule, Injectable } from '@angular/core';
+import { EventEmitter, Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, NgZone, Inject, PLATFORM_ID, Input, Output, Directive, ContentChildren, NgModule, Injectable } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { switchMap, take, map, takeUntil } from 'rxjs/operators';
@@ -104,6 +104,11 @@ class GoogleMap {
         this._options = DEFAULT_OPTIONS;
         /**
          * See
+         * https://developers.google.com/maps/documentation/javascript/events#auth-errors
+         */
+        this.authFailure = new EventEmitter();
+        /**
+         * See
          * https://developers.google.com/maps/documentation/javascript/reference/map#Map.bounds_changed
          */
         this.boundsChanged = this._eventManager.getLazyEmitter('bounds_changed');
@@ -202,6 +207,13 @@ class GoogleMap {
                     'https://developers.google.com/maps/documentation/javascript/' +
                     'tutorial#Loading_the_Maps_API');
             }
+            this._existingAuthFailureCallback = googleMapsWindow.gm_authFailure;
+            googleMapsWindow.gm_authFailure = () => {
+                if (this._existingAuthFailureCallback) {
+                    this._existingAuthFailureCallback();
+                }
+                this.authFailure.emit();
+            };
         }
     }
     set center(center) {
@@ -250,6 +262,10 @@ class GoogleMap {
     }
     ngOnDestroy() {
         this._eventManager.destroy();
+        if (this._isBrowser) {
+            const googleMapsWindow = window;
+            googleMapsWindow.gm_authFailure = this._existingAuthFailureCallback;
+        }
     }
     /**
      * See
@@ -436,6 +452,7 @@ GoogleMap.propDecorators = {
     center: [{ type: Input }],
     zoom: [{ type: Input }],
     options: [{ type: Input }],
+    authFailure: [{ type: Output }],
     boundsChanged: [{ type: Output }],
     centerChanged: [{ type: Output }],
     mapClick: [{ type: Output }],
