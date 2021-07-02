@@ -2422,6 +2422,12 @@
         MapMarkerClusterer.prototype.ngOnInit = function () {
             var _this = this;
             if (this._canInitialize) {
+                var clustererWindow = window;
+                if (!clustererWindow.MarkerClusterer && (typeof ngDevMode === 'undefined' || ngDevMode)) {
+                    throw Error('MarkerClusterer class not found, cannot construct a marker cluster. ' +
+                        'Please install the MarkerClustererPlus library: ' +
+                        'https://github.com/googlemaps/js-markerclustererplus');
+                }
                 // Create the object outside the zone so its events don't trigger change detection.
                 // We'll bring it back in inside the `MapEventManager` only for the events that the
                 // user has subscribed to.
