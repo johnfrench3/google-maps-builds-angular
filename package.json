@@ -18,7 +18,7 @@
   "homepage": "https://github.com/angular/components/tree/master/src/google-maps#readme",
   "dependencies": {
     "@types/googlemaps": "^3.43.1",
-    "tslib": "^2.2.0"
+    "tslib": "^2.3.0"
   },
   "peerDependencies": {
     "@angular/core": "^13.0.0-0 || ^14.0.0-0",
