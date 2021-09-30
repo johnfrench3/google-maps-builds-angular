@@ -705,7 +705,7 @@
          */
         GoogleMap.prototype.getProjection = function () {
             this._assertInitialized();
-            return this.googleMap.getProjection();
+            return this.googleMap.getProjection() || null;
         };
         /**
          * See
@@ -1606,7 +1606,7 @@
          */
         MapInfoWindow.prototype.getContent = function () {
             this._assertInitialized();
-            return this.infoWindow.getContent();
+            return this.infoWindow.getContent() || null;
         };
         /**
          * See
@@ -1615,7 +1615,7 @@
          */
         MapInfoWindow.prototype.getPosition = function () {
             this._assertInitialized();
-            return this.infoWindow.getPosition();
+            return this.infoWindow.getPosition() || null;
         };
         /**
          * See
@@ -3656,13 +3656,12 @@
                 if (!_this._directionsService) {
                     _this._directionsService = new google.maps.DirectionsService();
                 }
-                var callback = function (result, status) {
+                _this._directionsService.route(request, function (result, status) {
                     _this._ngZone.run(function () {
-                        observer.next({ result: result, status: status });
+                        observer.next({ result: result || undefined, status: status });
                         observer.complete();
                     });
-                };
-                _this._directionsService.route(request, callback);
+                });
             });
         };
         return MapDirectionsService;
@@ -3703,7 +3702,7 @@
                 }
                 _this._geocoder.geocode(request, function (results, status) {
                     _this._ngZone.run(function () {
-                        observer.next({ results: results, status: status });
+                        observer.next({ results: results || [], status: status });
                         observer.complete();
                     });
                 });

@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="googlemaps" />
+/// <reference types="google.maps" />
 import { NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
@@ -56,7 +56,7 @@ export declare class MapGroundOverlay implements OnInit, OnDestroy {
      * developers.google.com/maps/documentation/javascript/reference/image-overlay
      * #GroundOverlay.getBounds
      */
-    getBounds(): google.maps.LatLngBounds;
+    getBounds(): google.maps.LatLngBounds | null;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/image-overlay

@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="googlemaps" />
+/// <reference types="google.maps" />
 import { NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
@@ -46,12 +46,12 @@ export declare class MapDirectionsRenderer implements OnInit, OnChanges, OnDestr
      * See developers.google.com/maps/documentation/javascript/reference/directions
      * #DirectionsRenderer.getDirections
      */
-    getDirections(): google.maps.DirectionsResult;
+    getDirections(): google.maps.DirectionsResult | null;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/directions
      * #DirectionsRenderer.getPanel
      */
-    getPanel(): Node;
+    getPanel(): Node | null;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/directions
      * #DirectionsRenderer.getRouteIndex

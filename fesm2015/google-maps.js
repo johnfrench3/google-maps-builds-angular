@@ -345,7 +345,7 @@ class GoogleMap {
      */
     getProjection() {
         this._assertInitialized();
-        return this.googleMap.getProjection();
+        return this.googleMap.getProjection() || null;
     }
     /**
      * See
@@ -1189,7 +1189,7 @@ class MapInfoWindow {
      */
     getContent() {
         this._assertInitialized();
-        return this.infoWindow.getContent();
+        return this.infoWindow.getContent() || null;
     }
     /**
      * See
@@ -1198,7 +1198,7 @@ class MapInfoWindow {
      */
     getPosition() {
         this._assertInitialized();
-        return this.infoWindow.getPosition();
+        return this.infoWindow.getPosition() || null;
     }
     /**
      * See
@@ -3055,13 +3055,12 @@ class MapDirectionsService {
             if (!this._directionsService) {
                 this._directionsService = new google.maps.DirectionsService();
             }
-            const callback = (result, status) => {
+            this._directionsService.route(request, (result, status) => {
                 this._ngZone.run(() => {
-                    observer.next({ result, status });
+                    observer.next({ result: result || undefined, status });
                     observer.complete();
                 });
-            };
-            this._directionsService.route(request, callback);
+            });
         });
     }
 }
@@ -3100,7 +3099,7 @@ class MapGeocoder {
             }
             this._geocoder.geocode(request, (results, status) => {
                 this._ngZone.run(() => {
-                    observer.next({ results, status });
+                    observer.next({ results: results || [], status });
                     observer.complete();
                 });
             });

@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="googlemaps" />
+/// <reference types="google.maps" />
 import { NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 export interface MapGeocoderResponse {

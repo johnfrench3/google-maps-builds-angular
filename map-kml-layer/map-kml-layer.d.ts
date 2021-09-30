@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="googlemaps" />
+/// <reference types="google.maps" />
 import { NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
@@ -50,11 +50,11 @@ export declare class MapKmlLayer implements OnInit, OnDestroy {
      * See
      * developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getDefaultViewport
      */
-    getDefaultViewport(): google.maps.LatLngBounds;
+    getDefaultViewport(): google.maps.LatLngBounds | null;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getMetadata
      */
-    getMetadata(): google.maps.KmlLayerMetadata;
+    getMetadata(): google.maps.KmlLayerMetadata | null;
     /**
      * See developers.google.com/maps/documentation/javascript/reference/kml#KmlLayer.getStatus
      */

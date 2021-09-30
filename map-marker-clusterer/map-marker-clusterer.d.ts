@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 /// <reference path="marker-clusterer-types.d.ts" />
-/// <reference types="googlemaps" />
+/// <reference types="google.maps" />
 import { AfterContentInit, NgZone, OnChanges, OnDestroy, OnInit, QueryList, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';

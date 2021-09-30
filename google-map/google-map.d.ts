@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="googlemaps" />
+/// <reference types="google.maps" />
 import { ElementRef, OnChanges, OnDestroy, OnInit, NgZone, SimpleChanges, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 /** default options set to the Googleplex */
@@ -176,22 +176,22 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.getCenter
      */
-    getCenter(): google.maps.LatLng;
+    getCenter(): google.maps.LatLng | undefined;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.getClickableIcons
      */
-    getClickableIcons(): boolean;
+    getClickableIcons(): boolean | undefined;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.getHeading
      */
-    getHeading(): number;
+    getHeading(): number | undefined;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.getMapTypeId
      */
-    getMapTypeId(): google.maps.MapTypeId | string;
+    getMapTypeId(): google.maps.MapTypeId | string | undefined;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.getProjection
@@ -206,12 +206,12 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.getTilt
      */
-    getTilt(): number;
+    getTilt(): number | undefined;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.getZoom
      */
-    getZoom(): number;
+    getZoom(): number | undefined;
     /**
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.controls

@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="googlemaps" />
+/// <reference types="google.maps" />
 import { OnDestroy, OnInit, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
@@ -95,7 +95,7 @@ export declare class MapRectangle implements OnInit, OnDestroy {
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.getBounds
      */
-    getBounds(): google.maps.LatLngBounds;
+    getBounds(): google.maps.LatLngBounds | null;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/polygon#Rectangle.getDraggable

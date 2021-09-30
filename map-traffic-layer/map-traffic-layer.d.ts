@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="googlemaps" />
+/// <reference types="google.maps" />
 import { NgZone, OnDestroy, OnInit } from '@angular/core';
 import { GoogleMap } from '../google-map/google-map';
 /**
