@@ -27,10 +27,24 @@
   },
   "sideEffects": false,
   "ng-update": {},
-  "main": "./bundles/google-maps.umd.js",
-  "fesm2015": "./fesm2015/google-maps.js",
-  "esm2015": "./esm2015/index.js",
+  "fesm2020": "./fesm2020/google-maps.mjs",
+  "fesm2015": "./fesm2015/google-maps.mjs",
+  "esm2020": "./esm2020/index.mjs",
   "typings": "./index.d.ts",
-  "module": "./fesm2015/google-maps.js",
-  "es2015": "./fesm2015/google-maps.js"
+  "module": "./fesm2015/google-maps.mjs",
+  "es2020": "./fesm2020/google-maps.mjs",
+  "type": "module",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2020": "./esm2020/index.mjs",
+      "es2020": "./fesm2020/google-maps.mjs",
+      "es2015": "./fesm2015/google-maps.mjs",
+      "node": "./fesm2015/google-maps.mjs",
+      "default": "./fesm2020/google-maps.mjs"
+    }
+  }
 }

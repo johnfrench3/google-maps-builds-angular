@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -5,9 +6,9 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="google.maps" />
 import { ElementRef, OnChanges, OnDestroy, OnInit, NgZone, SimpleChanges, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
+import * as i0 from "@angular/core";
 /** default options set to the Googleplex */
 export declare const DEFAULT_OPTIONS: google.maps.MapOptions;
 /** Arbitrary default height for the map element */
@@ -237,4 +238,6 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
     private _combineOptions;
     /** Asserts that the map has been initialized. */
     private _assertInitialized;
+    static ɵfac: i0.ɵɵFactoryDeclaration<GoogleMap, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<GoogleMap, "google-map", ["googleMap"], { "height": "height"; "width": "width"; "mapTypeId": "mapTypeId"; "center": "center"; "zoom": "zoom"; "options": "options"; }, { "authFailure": "authFailure"; "boundsChanged": "boundsChanged"; "centerChanged": "centerChanged"; "mapClick": "mapClick"; "mapDblclick": "mapDblclick"; "mapDrag": "mapDrag"; "mapDragend": "mapDragend"; "mapDragstart": "mapDragstart"; "headingChanged": "headingChanged"; "idle": "idle"; "maptypeidChanged": "maptypeidChanged"; "mapMousemove": "mapMousemove"; "mapMouseout": "mapMouseout"; "mapMouseover": "mapMouseover"; "projectionChanged": "projectionChanged"; "mapRightclick": "mapRightclick"; "tilesloaded": "tilesloaded"; "tiltChanged": "tiltChanged"; "zoomChanged": "zoomChanged"; }, never, ["*"]>;
 }

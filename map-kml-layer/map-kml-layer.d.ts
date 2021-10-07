@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -5,10 +6,10 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="google.maps" />
 import { NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
+import * as i0 from "@angular/core";
 /**
  * Angular component that renders a Google Maps KML Layer via the Google Maps JavaScript API.
  *
@@ -71,4 +72,6 @@ export declare class MapKmlLayer implements OnInit, OnDestroy {
     private _watchForOptionsChanges;
     private _watchForUrlChanges;
     private _assertInitialized;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MapKmlLayer, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapKmlLayer, "map-kml-layer", ["mapKmlLayer"], { "options": "options"; "url": "url"; }, { "kmlClick": "kmlClick"; "defaultviewportChanged": "defaultviewportChanged"; "statusChanged": "statusChanged"; }, never>;
 }

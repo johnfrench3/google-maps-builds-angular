@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -5,9 +6,9 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="google.maps" />
 import { NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
+import * as i0 from "@angular/core";
 export interface MapDirectionsResponse {
     status: google.maps.DirectionsStatus;
     result?: google.maps.DirectionsResult;
@@ -28,4 +29,6 @@ export declare class MapDirectionsService {
      * #DirectionsService.route
      */
     route(request: google.maps.DirectionsRequest): Observable<MapDirectionsResponse>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MapDirectionsService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<MapDirectionsService>;
 }

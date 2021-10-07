@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -5,11 +6,11 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="google.maps" />
 import { OnDestroy, OnInit, NgZone, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
 import { MapAnchorPoint } from '../map-anchor-point';
+import * as i0 from "@angular/core";
 /**
  * Default options for the Google Maps marker component. Displays a marker
  * at the Googleplex.
@@ -251,4 +252,6 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
     /** Creates a combined options object using the passed-in options and the individual inputs. */
     private _combineOptions;
     private _assertInitialized;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MapMarker, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapMarker, "map-marker", ["mapMarker"], { "title": "title"; "position": "position"; "label": "label"; "clickable": "clickable"; "options": "options"; "icon": "icon"; "visible": "visible"; }, { "animationChanged": "animationChanged"; "mapClick": "mapClick"; "clickableChanged": "clickableChanged"; "cursorChanged": "cursorChanged"; "mapDblclick": "mapDblclick"; "mapDrag": "mapDrag"; "mapDragend": "mapDragend"; "draggableChanged": "draggableChanged"; "mapDragstart": "mapDragstart"; "flatChanged": "flatChanged"; "iconChanged": "iconChanged"; "mapMousedown": "mapMousedown"; "mapMouseout": "mapMouseout"; "mapMouseover": "mapMouseover"; "mapMouseup": "mapMouseup"; "positionChanged": "positionChanged"; "mapRightclick": "mapRightclick"; "shapeChanged": "shapeChanged"; "titleChanged": "titleChanged"; "visibleChanged": "visibleChanged"; "zindexChanged": "zindexChanged"; }, never>;
 }

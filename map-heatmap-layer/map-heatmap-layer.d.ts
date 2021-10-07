@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -5,9 +6,9 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="google.maps" />
 import { OnDestroy, OnInit, NgZone, OnChanges, SimpleChanges } from '@angular/core';
 import { GoogleMap } from '../google-map/google-map';
+import * as i0 from "@angular/core";
 /** Possible data that can be shown on a heatmap layer. */
 export declare type HeatmapData = google.maps.MVCArray<google.maps.LatLng | google.maps.visualization.WeightedLocation | google.maps.LatLngLiteral> | (google.maps.LatLng | google.maps.visualization.WeightedLocation | google.maps.LatLngLiteral)[];
 /**
@@ -58,4 +59,6 @@ export declare class MapHeatmapLayer implements OnInit, OnChanges, OnDestroy {
     private _normalizeData;
     /** Asserts that the heatmap object has been initialized. */
     private _assertInitialized;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MapHeatmapLayer, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapHeatmapLayer, "map-heatmap-layer", ["mapHeatmapLayer"], { "data": "data"; "options": "options"; }, {}, never>;
 }

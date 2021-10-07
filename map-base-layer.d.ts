@@ -7,6 +7,7 @@
  */
 import { NgZone, OnDestroy, OnInit } from '@angular/core';
 import { GoogleMap } from './google-map/google-map';
+import * as i0 from "@angular/core";
 export declare class MapBaseLayer implements OnInit, OnDestroy {
     protected readonly _map: GoogleMap;
     protected readonly _ngZone: NgZone;
@@ -17,4 +18,6 @@ export declare class MapBaseLayer implements OnInit, OnDestroy {
     protected _initializeObject(): void;
     protected _setMap(): void;
     protected _unsetMap(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MapBaseLayer, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapBaseLayer, "map-base-layer", ["mapBaseLayer"], {}, {}, never>;
 }

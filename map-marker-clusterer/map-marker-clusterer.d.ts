@@ -1,3 +1,5 @@
+/// <reference path="marker-clusterer-types.d.ts" />
+/// <reference types="google.maps" />
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -5,12 +7,11 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference path="marker-clusterer-types.d.ts" />
-/// <reference types="google.maps" />
 import { AfterContentInit, NgZone, OnChanges, OnDestroy, OnInit, QueryList, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
 import { MapMarker } from '../map-marker/map-marker';
+import * as i0 from "@angular/core";
 /**
  * Angular component for implementing a Google Maps Marker Clusterer.
  *
@@ -111,4 +112,6 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnC
     private _watchForMarkerChanges;
     private _getInternalMarkers;
     private _assertInitialized;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MapMarkerClusterer, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MapMarkerClusterer, "map-marker-clusterer", ["mapMarkerClusterer"], { "ariaLabelFn": "ariaLabelFn"; "averageCenter": "averageCenter"; "batchSize": "batchSize"; "batchSizeIE": "batchSizeIE"; "calculator": "calculator"; "clusterClass": "clusterClass"; "enableRetinaIcons": "enableRetinaIcons"; "gridSize": "gridSize"; "ignoreHidden": "ignoreHidden"; "imageExtension": "imageExtension"; "imagePath": "imagePath"; "imageSizes": "imageSizes"; "maxZoom": "maxZoom"; "minimumClusterSize": "minimumClusterSize"; "styles": "styles"; "title": "title"; "zIndex": "zIndex"; "zoomOnClick": "zoomOnClick"; "options": "options"; }, { "clusteringbegin": "clusteringbegin"; "clusteringend": "clusteringend"; "clusterClick": "clusterClick"; }, ["_markers"], ["*"]>;
 }

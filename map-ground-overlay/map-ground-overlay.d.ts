@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -5,10 +6,10 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="google.maps" />
 import { NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
+import * as i0 from "@angular/core";
 /**
  * Angular component that renders a Google Maps Ground Overlay via the Google Maps JavaScript API.
  *
@@ -72,4 +73,6 @@ export declare class MapGroundOverlay implements OnInit, OnDestroy {
     private _watchForOpacityChanges;
     private _watchForUrlChanges;
     private _assertInitialized;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MapGroundOverlay, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapGroundOverlay, "map-ground-overlay", ["mapGroundOverlay"], { "url": "url"; "bounds": "bounds"; "clickable": "clickable"; "opacity": "opacity"; }, { "mapClick": "mapClick"; "mapDblclick": "mapDblclick"; }, never>;
 }

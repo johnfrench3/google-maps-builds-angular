@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -5,10 +6,10 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="google.maps" />
 import { NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
+import * as i0 from "@angular/core";
 /**
  * Angular component that renders a Google Maps Directions Renderer via the Google Maps
  * JavaScript API.
@@ -59,4 +60,6 @@ export declare class MapDirectionsRenderer implements OnInit, OnChanges, OnDestr
     getRouteIndex(): number;
     private _combineOptions;
     private _assertInitialized;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MapDirectionsRenderer, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapDirectionsRenderer, "map-directions-renderer", ["mapDirectionsRenderer"], { "directions": "directions"; "options": "options"; }, { "directionsChanged": "directionsChanged"; }, never>;
 }

@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -5,11 +6,11 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/// <reference types="google.maps" />
 import { ElementRef, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GoogleMap } from '../google-map/google-map';
 import { MapAnchorPoint } from '../map-anchor-point';
+import * as i0 from "@angular/core";
 /**
  * Angular component that renders a Google Maps info window via the Google Maps JavaScript API.
  *
@@ -91,4 +92,6 @@ export declare class MapInfoWindow implements OnInit, OnDestroy {
     private _watchForOptionsChanges;
     private _watchForPositionChanges;
     private _assertInitialized;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MapInfoWindow, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapInfoWindow, "map-info-window", ["mapInfoWindow"], { "options": "options"; "position": "position"; }, { "closeclick": "closeclick"; "contentChanged": "contentChanged"; "domready": "domready"; "positionChanged": "positionChanged"; "zindexChanged": "zindexChanged"; }, never>;
 }
