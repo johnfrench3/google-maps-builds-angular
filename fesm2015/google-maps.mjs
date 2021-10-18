@@ -75,7 +75,7 @@ const DEFAULT_OPTIONS = {
     center: { lat: 37.421995, lng: -122.084092 },
     zoom: 17,
     // Note: the type conversion here isn't necessary for our CI, but it resolves a g3 failure.
-    mapTypeId: 'roadmap'
+    mapTypeId: 'roadmap',
 };
 /** Arbitrary default height for the map element */
 const DEFAULT_HEIGHT = '500px';
@@ -115,8 +115,7 @@ class GoogleMap {
          * See
          * https://developers.google.com/maps/documentation/javascript/reference/map#Map.click
          */
-        this.mapClick = this._eventManager
-            .getLazyEmitter('click');
+        this.mapClick = this._eventManager.getLazyEmitter('click');
         /**
          * See
          * https://developers.google.com/maps/documentation/javascript/reference/map#Map.dblclick
@@ -401,8 +400,8 @@ class GoogleMap {
         if (this._mapEl) {
             const styles = this._mapEl.style;
             styles.height =
-                this.height === null ? '' : (coerceCssPixelValue(this.height) || DEFAULT_HEIGHT);
-            styles.width = this.width === null ? '' : (coerceCssPixelValue(this.width) || DEFAULT_WIDTH);
+                this.height === null ? '' : coerceCssPixelValue(this.height) || DEFAULT_HEIGHT;
+            styles.width = this.width === null ? '' : coerceCssPixelValue(this.width) || DEFAULT_WIDTH;
         }
     }
     /** Combines the center and zoom and the other map options into a single object */
@@ -666,7 +665,9 @@ class MapCircle {
     }
     ngOnInit() {
         if (this._map._isBrowser) {
-            this._combineOptions().pipe(take(1)).subscribe(options => {
+            this._combineOptions()
+                .pipe(take(1))
+                .subscribe(options => {
                 // Create the object outside the zone so its events don't trigger change detection.
                 // We'll bring it back in inside the `MapEventManager` only for the events that the
                 // user has subscribed to.
@@ -739,8 +740,7 @@ class MapCircle {
         return this.circle.getVisible();
     }
     _combineOptions() {
-        return combineLatest([this._options, this._center, this._radius])
-            .pipe(map(([options, center, radius]) => {
+        return combineLatest([this._options, this._center, this._radius]).pipe(map(([options, center, radius]) => {
             const combinedOptions = Object.assign(Object.assign({}, options), { center: center || options.center, radius: radius !== undefined ? radius : options.radius });
             return combinedOptions;
         }));
@@ -1322,11 +1322,13 @@ class MapKmlLayer {
     }
     ngOnInit() {
         if (this._map._isBrowser) {
-            this._combineOptions().pipe(take(1)).subscribe(options => {
+            this._combineOptions()
+                .pipe(take(1))
+                .subscribe(options => {
                 // Create the object outside the zone so its events don't trigger change detection.
                 // We'll bring it back in inside the `MapEventManager` only for the events that the
                 // user has subscribed to.
-                this._ngZone.runOutsideAngular(() => this.kmlLayer = new google.maps.KmlLayer(options));
+                this._ngZone.runOutsideAngular(() => (this.kmlLayer = new google.maps.KmlLayer(options)));
                 this._assertInitialized();
                 this.kmlLayer.setMap(this._map.googleMap);
                 this._eventManager.setTarget(this.kmlLayer);
@@ -1944,7 +1946,7 @@ class MapMarkerClusterer {
         }
     }
     ngOnChanges(changes) {
-        const { markerClusterer: clusterer, ariaLabelFn, _averageCenter, _batchSizeIE, _calculator, _styles, _clusterClass, _enableRetinaIcons, _gridSize, _ignoreHidden, _imageExtension, _imagePath, _imageSizes, _maxZoom, _minimumClusterSize, _title, _zIndex, _zoomOnClick } = this;
+        const { markerClusterer: clusterer, ariaLabelFn, _averageCenter, _batchSizeIE, _calculator, _styles, _clusterClass, _enableRetinaIcons, _gridSize, _ignoreHidden, _imageExtension, _imagePath, _imageSizes, _maxZoom, _minimumClusterSize, _title, _zIndex, _zoomOnClick, } = this;
         if (clusterer) {
             if (changes['options']) {
                 clusterer.setOptions(this._combineOptions());
@@ -2103,7 +2105,9 @@ class MapMarkerClusterer {
             initialMarkers.push(marker);
         }
         this.markerClusterer.addMarkers(initialMarkers);
-        this._markers.changes.pipe(takeUntil(this._destroy)).subscribe((markerComponents) => {
+        this._markers.changes
+            .pipe(takeUntil(this._destroy))
+            .subscribe((markerComponents) => {
             this._assertInitialized();
             const newMarkers = new Set(this._getInternalMarkers(markerComponents));
             const markersToAdd = [];
@@ -2128,7 +2132,8 @@ class MapMarkerClusterer {
         });
     }
     _getInternalMarkers(markers) {
-        return markers.filter(markerComponent => !!markerComponent.marker)
+        return markers
+            .filter(markerComponent => !!markerComponent.marker)
             .map(markerComponent => markerComponent.marker);
     }
     _assertInitialized() {
@@ -2271,7 +2276,9 @@ class MapPolygon {
     }
     ngOnInit() {
         if (this._map._isBrowser) {
-            this._combineOptions().pipe(take(1)).subscribe(options => {
+            this._combineOptions()
+                .pipe(take(1))
+                .subscribe(options => {
                 // Create the object outside the zone so its events don't trigger change detection.
                 // We'll bring it back in inside the `MapEventManager` only for the events that the
                 // user has subscribed to.
@@ -2466,11 +2473,13 @@ class MapPolyline {
     }
     ngOnInit() {
         if (this._map._isBrowser) {
-            this._combineOptions().pipe(take(1)).subscribe(options => {
+            this._combineOptions()
+                .pipe(take(1))
+                .subscribe(options => {
                 // Create the object outside the zone so its events don't trigger change detection.
                 // We'll bring it back in inside the `MapEventManager` only for the events that the
                 // user has subscribed to.
-                this._ngZone.runOutsideAngular(() => this.polyline = new google.maps.Polyline(options));
+                this._ngZone.runOutsideAngular(() => (this.polyline = new google.maps.Polyline(options)));
                 this._assertInitialized();
                 this.polyline.setMap(this._map.googleMap);
                 this._eventManager.setTarget(this.polyline);
@@ -2667,7 +2676,9 @@ class MapRectangle {
     }
     ngOnInit() {
         if (this._map._isBrowser) {
-            this._combineOptions().pipe(take(1)).subscribe(options => {
+            this._combineOptions()
+                .pipe(take(1))
+                .subscribe(options => {
                 // Create the object outside the zone so its events don't trigger change detection.
                 // We'll bring it back in inside the `MapEventManager` only for the events that the
                 // user has subscribed to.
@@ -2814,7 +2825,9 @@ class MapTrafficLayer {
     }
     ngOnInit() {
         if (this._map._isBrowser) {
-            this._combineOptions().pipe(take(1)).subscribe(options => {
+            this._combineOptions()
+                .pipe(take(1))
+                .subscribe(options => {
                 // Create the object outside the zone so its events don't trigger change detection.
                 this._ngZone.runOutsideAngular(() => {
                     this.trafficLayer = new google.maps.TrafficLayer(options);
@@ -2839,7 +2852,9 @@ class MapTrafficLayer {
         }));
     }
     _watchForAutoRefreshChanges() {
-        this._combineOptions().pipe(takeUntil(this._destroyed)).subscribe(options => {
+        this._combineOptions()
+            .pipe(takeUntil(this._destroyed))
+            .subscribe(options => {
             this._assertInitialized();
             this.trafficLayer.setOptions(options);
         });
