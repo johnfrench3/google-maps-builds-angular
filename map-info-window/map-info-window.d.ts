@@ -87,7 +87,7 @@ export declare class MapInfoWindow implements OnInit, OnDestroy {
      * Opens the MapInfoWindow using the provided anchor. If the anchor is not set,
      * then the position property of the options input is used instead.
      */
-    open(anchor?: MapAnchorPoint): void;
+    open(anchor?: MapAnchorPoint, shouldFocus?: boolean): void;
     private _combineOptions;
     private _watchForOptionsChanges;
     private _watchForPositionChanges;
