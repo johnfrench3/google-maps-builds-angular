@@ -43,8 +43,8 @@ const COMPONENTS = [
 ];
 export class GoogleMapsModule {
 }
-GoogleMapsModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.4", ngImport: i0, type: GoogleMapsModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
-GoogleMapsModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "14.0.0-next.4", ngImport: i0, type: GoogleMapsModule, declarations: [GoogleMap,
+GoogleMapsModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.5", ngImport: i0, type: GoogleMapsModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
+GoogleMapsModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "14.0.0-next.5", ngImport: i0, type: GoogleMapsModule, declarations: [GoogleMap,
         MapBaseLayer,
         MapBicyclingLayer,
         MapCircle,
@@ -75,8 +75,8 @@ GoogleMapsModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", versio
         MapTrafficLayer,
         MapTransitLayer,
         MapHeatmapLayer] });
-GoogleMapsModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "14.0.0-next.4", ngImport: i0, type: GoogleMapsModule });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.4", ngImport: i0, type: GoogleMapsModule, decorators: [{
+GoogleMapsModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "14.0.0-next.5", ngImport: i0, type: GoogleMapsModule });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.5", ngImport: i0, type: GoogleMapsModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: COMPONENTS,
