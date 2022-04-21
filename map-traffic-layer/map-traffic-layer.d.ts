@@ -36,5 +36,5 @@ export declare class MapTrafficLayer implements OnInit, OnDestroy {
     private _watchForAutoRefreshChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapTrafficLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapTrafficLayer, "map-traffic-layer", ["mapTrafficLayer"], { "autoRefresh": "autoRefresh"; }, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapTrafficLayer, "map-traffic-layer", ["mapTrafficLayer"], { "autoRefresh": "autoRefresh"; }, {}, never, never, false>;
 }

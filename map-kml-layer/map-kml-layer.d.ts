@@ -73,5 +73,5 @@ export declare class MapKmlLayer implements OnInit, OnDestroy {
     private _watchForUrlChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapKmlLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapKmlLayer, "map-kml-layer", ["mapKmlLayer"], { "options": "options"; "url": "url"; }, { "kmlClick": "kmlClick"; "defaultviewportChanged": "defaultviewportChanged"; "statusChanged": "statusChanged"; }, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapKmlLayer, "map-kml-layer", ["mapKmlLayer"], { "options": "options"; "url": "url"; }, { "kmlClick": "kmlClick"; "defaultviewportChanged": "defaultviewportChanged"; "statusChanged": "statusChanged"; }, never, never, false>;
 }

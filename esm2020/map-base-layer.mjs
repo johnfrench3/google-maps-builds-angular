@@ -39,9 +39,9 @@ export class MapBaseLayer {
     _setMap() { }
     _unsetMap() { }
 }
-MapBaseLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.13", ngImport: i0, type: MapBaseLayer, deps: [{ token: i1.GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapBaseLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "14.0.0-next.13", type: MapBaseLayer, selector: "map-base-layer", exportAs: ["mapBaseLayer"], ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.13", ngImport: i0, type: MapBaseLayer, decorators: [{
+MapBaseLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.14", ngImport: i0, type: MapBaseLayer, deps: [{ token: i1.GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapBaseLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "14.0.0-next.14", type: MapBaseLayer, selector: "map-base-layer", exportAs: ["mapBaseLayer"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.14", ngImport: i0, type: MapBaseLayer, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-base-layer',

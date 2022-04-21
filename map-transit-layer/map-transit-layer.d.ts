@@ -18,5 +18,5 @@ export declare class MapTransitLayer extends MapBaseLayer {
     protected _unsetMap(): void;
     private _assertLayerInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapTransitLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapTransitLayer, "map-transit-layer", ["mapTransitLayer"], {}, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapTransitLayer, "map-transit-layer", ["mapTransitLayer"], {}, {}, never, never, false>;
 }

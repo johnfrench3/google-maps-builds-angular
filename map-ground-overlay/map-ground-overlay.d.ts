@@ -74,5 +74,5 @@ export declare class MapGroundOverlay implements OnInit, OnDestroy {
     private _watchForUrlChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapGroundOverlay, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapGroundOverlay, "map-ground-overlay", ["mapGroundOverlay"], { "url": "url"; "bounds": "bounds"; "clickable": "clickable"; "opacity": "opacity"; }, { "mapClick": "mapClick"; "mapDblclick": "mapDblclick"; }, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapGroundOverlay, "map-ground-overlay", ["mapGroundOverlay"], { "url": "url"; "bounds": "bounds"; "clickable": "clickable"; "opacity": "opacity"; }, { "mapClick": "mapClick"; "mapDblclick": "mapDblclick"; }, never, never, false>;
 }

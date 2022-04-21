@@ -18,5 +18,5 @@ export declare class MapBicyclingLayer extends MapBaseLayer {
     protected _unsetMap(): void;
     private _assertLayerInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapBicyclingLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapBicyclingLayer, "map-bicycling-layer", ["mapBicyclingLayer"], {}, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapBicyclingLayer, "map-bicycling-layer", ["mapBicyclingLayer"], {}, {}, never, never, false>;
 }

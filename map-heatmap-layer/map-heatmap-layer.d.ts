@@ -60,5 +60,5 @@ export declare class MapHeatmapLayer implements OnInit, OnChanges, OnDestroy {
     /** Asserts that the heatmap object has been initialized. */
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapHeatmapLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapHeatmapLayer, "map-heatmap-layer", ["mapHeatmapLayer"], { "data": "data"; "options": "options"; }, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapHeatmapLayer, "map-heatmap-layer", ["mapHeatmapLayer"], { "data": "data"; "options": "options"; }, {}, never, never, false>;
 }

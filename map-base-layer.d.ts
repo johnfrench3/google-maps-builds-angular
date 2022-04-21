@@ -19,5 +19,5 @@ export declare class MapBaseLayer implements OnInit, OnDestroy {
     protected _setMap(): void;
     protected _unsetMap(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapBaseLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapBaseLayer, "map-base-layer", ["mapBaseLayer"], {}, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapBaseLayer, "map-base-layer", ["mapBaseLayer"], {}, {}, never, never, false>;
 }

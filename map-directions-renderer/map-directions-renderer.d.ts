@@ -61,5 +61,5 @@ export declare class MapDirectionsRenderer implements OnInit, OnChanges, OnDestr
     private _combineOptions;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapDirectionsRenderer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapDirectionsRenderer, "map-directions-renderer", ["mapDirectionsRenderer"], { "directions": "directions"; "options": "options"; }, { "directionsChanged": "directionsChanged"; }, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapDirectionsRenderer, "map-directions-renderer", ["mapDirectionsRenderer"], { "directions": "directions"; "options": "options"; }, { "directionsChanged": "directionsChanged"; }, never, never, false>;
 }
