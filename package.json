@@ -30,7 +30,7 @@
   "fesm2020": "./fesm2020/google-maps.mjs",
   "fesm2015": "./fesm2015/google-maps.mjs",
   "esm2020": "./esm2020/google-maps_public_index.mjs",
-  "typings": "./google-maps_public_index.d.ts",
+  "typings": "./index.d.ts",
   "module": "./fesm2015/google-maps.mjs",
   "es2020": "./fesm2020/google-maps.mjs",
   "type": "module",
@@ -39,7 +39,7 @@
       "default": "./package.json"
     },
     ".": {
-      "types": "./google-maps_public_index.d.ts",
+      "types": "./index.d.ts",
       "esm2020": "./esm2020/google-maps_public_index.mjs",
       "es2020": "./fesm2020/google-maps.mjs",
       "es2015": "./fesm2015/google-maps.mjs",

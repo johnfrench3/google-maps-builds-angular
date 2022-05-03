@@ -1967,7 +1967,7 @@ class MapMarkerClusterer {
             // We'll bring it back in inside the `MapEventManager` only for the events that the
             // user has subscribed to.
             this._ngZone.runOutsideAngular(() => {
-                this.markerClusterer = new MarkerClusterer(this._googleMap.googleMap, [], this._combineOptions());
+                this.markerClusterer = new clustererWindow.MarkerClusterer(this._googleMap.googleMap, [], this._combineOptions());
             });
             this._assertInitialized();
             this._eventManager.setTarget(this.markerClusterer);
