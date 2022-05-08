@@ -1957,8 +1957,8 @@ class MapMarkerClusterer {
     }
     ngOnInit() {
         if (this._canInitialize) {
-            const clustererWindow = window;
-            if (!clustererWindow.MarkerClusterer && (typeof ngDevMode === 'undefined' || ngDevMode)) {
+            if (typeof MarkerClusterer !== 'function' &&
+                (typeof ngDevMode === 'undefined' || ngDevMode)) {
                 throw Error('MarkerClusterer class not found, cannot construct a marker cluster. ' +
                     'Please install the MarkerClustererPlus library: ' +
                     'https://github.com/googlemaps/js-markerclustererplus');
@@ -1967,7 +1967,7 @@ class MapMarkerClusterer {
             // We'll bring it back in inside the `MapEventManager` only for the events that the
             // user has subscribed to.
             this._ngZone.runOutsideAngular(() => {
-                this.markerClusterer = new clustererWindow.MarkerClusterer(this._googleMap.googleMap, [], this._combineOptions());
+                this.markerClusterer = new MarkerClusterer(this._googleMap.googleMap, [], this._combineOptions());
             });
             this._assertInitialized();
             this._eventManager.setTarget(this.markerClusterer);
