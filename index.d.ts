@@ -322,7 +322,7 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
     /** Asserts that the map has been initialized. */
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<GoogleMap, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<GoogleMap, "google-map", ["googleMap"], { "height": "height"; "width": "width"; "mapTypeId": "mapTypeId"; "center": "center"; "zoom": "zoom"; "options": "options"; }, { "mapInitialized": "mapInitialized"; "authFailure": "authFailure"; "boundsChanged": "boundsChanged"; "centerChanged": "centerChanged"; "mapClick": "mapClick"; "mapDblclick": "mapDblclick"; "mapDrag": "mapDrag"; "mapDragend": "mapDragend"; "mapDragstart": "mapDragstart"; "headingChanged": "headingChanged"; "idle": "idle"; "maptypeidChanged": "maptypeidChanged"; "mapMousemove": "mapMousemove"; "mapMouseout": "mapMouseout"; "mapMouseover": "mapMouseover"; "projectionChanged": "projectionChanged"; "mapRightclick": "mapRightclick"; "tilesloaded": "tilesloaded"; "tiltChanged": "tiltChanged"; "zoomChanged": "zoomChanged"; }, never, ["*"], false>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<GoogleMap, "google-map", ["googleMap"], { "height": "height"; "width": "width"; "mapTypeId": "mapTypeId"; "center": "center"; "zoom": "zoom"; "options": "options"; }, { "mapInitialized": "mapInitialized"; "authFailure": "authFailure"; "boundsChanged": "boundsChanged"; "centerChanged": "centerChanged"; "mapClick": "mapClick"; "mapDblclick": "mapDblclick"; "mapDrag": "mapDrag"; "mapDragend": "mapDragend"; "mapDragstart": "mapDragstart"; "headingChanged": "headingChanged"; "idle": "idle"; "maptypeidChanged": "maptypeidChanged"; "mapMousemove": "mapMousemove"; "mapMouseout": "mapMouseout"; "mapMouseover": "mapMouseover"; "projectionChanged": "projectionChanged"; "mapRightclick": "mapRightclick"; "tilesloaded": "tilesloaded"; "tiltChanged": "tiltChanged"; "zoomChanged": "zoomChanged"; }, never, ["*"], false, never>;
 }
 
 export declare class GoogleMapsModule {
@@ -452,7 +452,7 @@ export declare class MapBaseLayer implements OnInit, OnDestroy {
     protected _setMap(): void;
     protected _unsetMap(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapBaseLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapBaseLayer, "map-base-layer", ["mapBaseLayer"], {}, {}, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapBaseLayer, "map-base-layer", ["mapBaseLayer"], {}, {}, never, never, false, never>;
 }
 
 /**
@@ -472,7 +472,7 @@ export declare class MapBicyclingLayer extends MapBaseLayer {
     protected _unsetMap(): void;
     private _assertLayerInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapBicyclingLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapBicyclingLayer, "map-bicycling-layer", ["mapBicyclingLayer"], {}, {}, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapBicyclingLayer, "map-bicycling-layer", ["mapBicyclingLayer"], {}, {}, never, never, false, never>;
 }
 
 /**
@@ -600,7 +600,7 @@ export declare class MapCircle implements OnInit, OnDestroy {
     private _watchForRadiusChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapCircle, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapCircle, "map-circle", ["mapCircle"], { "options": "options"; "center": "center"; "radius": "radius"; }, { "centerChanged": "centerChanged"; "circleClick": "circleClick"; "circleDblclick": "circleDblclick"; "circleDrag": "circleDrag"; "circleDragend": "circleDragend"; "circleDragstart": "circleDragstart"; "circleMousedown": "circleMousedown"; "circleMousemove": "circleMousemove"; "circleMouseout": "circleMouseout"; "circleMouseover": "circleMouseover"; "circleMouseup": "circleMouseup"; "radiusChanged": "radiusChanged"; "circleRightclick": "circleRightclick"; }, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapCircle, "map-circle", ["mapCircle"], { "options": "options"; "center": "center"; "radius": "radius"; }, { "centerChanged": "centerChanged"; "circleClick": "circleClick"; "circleDblclick": "circleDblclick"; "circleDrag": "circleDrag"; "circleDragend": "circleDragend"; "circleDragstart": "circleDragstart"; "circleMousedown": "circleMousedown"; "circleMousemove": "circleMousemove"; "circleMouseout": "circleMouseout"; "circleMouseover": "circleMouseover"; "circleMouseup": "circleMouseup"; "radiusChanged": "radiusChanged"; "circleRightclick": "circleRightclick"; }, never, never, false, never>;
 }
 
 /**
@@ -654,7 +654,7 @@ export declare class MapDirectionsRenderer implements OnInit, OnChanges, OnDestr
     private _combineOptions;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapDirectionsRenderer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapDirectionsRenderer, "map-directions-renderer", ["mapDirectionsRenderer"], { "directions": "directions"; "options": "options"; }, { "directionsChanged": "directionsChanged"; }, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapDirectionsRenderer, "map-directions-renderer", ["mapDirectionsRenderer"], { "directions": "directions"; "options": "options"; }, { "directionsChanged": "directionsChanged"; }, never, never, false, never>;
 }
 
 export declare interface MapDirectionsResponse {
@@ -789,7 +789,7 @@ export declare class MapGroundOverlay implements OnInit, OnDestroy {
     private _watchForUrlChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapGroundOverlay, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapGroundOverlay, "map-ground-overlay", ["mapGroundOverlay"], { "url": "url"; "bounds": "bounds"; "clickable": "clickable"; "opacity": "opacity"; }, { "mapClick": "mapClick"; "mapDblclick": "mapDblclick"; }, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapGroundOverlay, "map-ground-overlay", ["mapGroundOverlay"], { "url": "url"; "bounds": "bounds"; "clickable": "clickable"; "opacity": "opacity"; }, { "mapClick": "mapClick"; "mapDblclick": "mapDblclick"; }, never, never, false, never>;
 }
 
 /**
@@ -841,7 +841,7 @@ export declare class MapHeatmapLayer implements OnInit, OnChanges, OnDestroy {
     /** Asserts that the heatmap object has been initialized. */
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapHeatmapLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapHeatmapLayer, "map-heatmap-layer", ["mapHeatmapLayer"], { "data": "data"; "options": "options"; }, {}, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapHeatmapLayer, "map-heatmap-layer", ["mapHeatmapLayer"], { "data": "data"; "options": "options"; }, {}, never, never, false, never>;
 }
 
 /**
@@ -926,7 +926,7 @@ export declare class MapInfoWindow implements OnInit, OnDestroy {
     private _watchForPositionChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapInfoWindow, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapInfoWindow, "map-info-window", ["mapInfoWindow"], { "options": "options"; "position": "position"; }, { "closeclick": "closeclick"; "contentChanged": "contentChanged"; "domready": "domready"; "positionChanged": "positionChanged"; "zindexChanged": "zindexChanged"; }, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapInfoWindow, "map-info-window", ["mapInfoWindow"], { "options": "options"; "position": "position"; }, { "closeclick": "closeclick"; "contentChanged": "contentChanged"; "domready": "domready"; "positionChanged": "positionChanged"; "zindexChanged": "zindexChanged"; }, never, never, false, never>;
 }
 
 /**
@@ -992,7 +992,7 @@ export declare class MapKmlLayer implements OnInit, OnDestroy {
     private _watchForUrlChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapKmlLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapKmlLayer, "map-kml-layer", ["mapKmlLayer"], { "options": "options"; "url": "url"; }, { "kmlClick": "kmlClick"; "defaultviewportChanged": "defaultviewportChanged"; "statusChanged": "statusChanged"; }, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapKmlLayer, "map-kml-layer", ["mapKmlLayer"], { "options": "options"; "url": "url"; }, { "kmlClick": "kmlClick"; "defaultviewportChanged": "defaultviewportChanged"; "statusChanged": "statusChanged"; }, never, never, false, never>;
 }
 
 /**
@@ -1227,7 +1227,7 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
     private _combineOptions;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapMarker, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapMarker, "map-marker", ["mapMarker"], { "title": "title"; "position": "position"; "label": "label"; "clickable": "clickable"; "options": "options"; "icon": "icon"; "visible": "visible"; }, { "animationChanged": "animationChanged"; "mapClick": "mapClick"; "clickableChanged": "clickableChanged"; "cursorChanged": "cursorChanged"; "mapDblclick": "mapDblclick"; "mapDrag": "mapDrag"; "mapDragend": "mapDragend"; "draggableChanged": "draggableChanged"; "mapDragstart": "mapDragstart"; "flatChanged": "flatChanged"; "iconChanged": "iconChanged"; "mapMousedown": "mapMousedown"; "mapMouseout": "mapMouseout"; "mapMouseover": "mapMouseover"; "mapMouseup": "mapMouseup"; "positionChanged": "positionChanged"; "mapRightclick": "mapRightclick"; "shapeChanged": "shapeChanged"; "titleChanged": "titleChanged"; "visibleChanged": "visibleChanged"; "zindexChanged": "zindexChanged"; }, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapMarker, "map-marker", ["mapMarker"], { "title": "title"; "position": "position"; "label": "label"; "clickable": "clickable"; "options": "options"; "icon": "icon"; "visible": "visible"; }, { "animationChanged": "animationChanged"; "mapClick": "mapClick"; "clickableChanged": "clickableChanged"; "cursorChanged": "cursorChanged"; "mapDblclick": "mapDblclick"; "mapDrag": "mapDrag"; "mapDragend": "mapDragend"; "draggableChanged": "draggableChanged"; "mapDragstart": "mapDragstart"; "flatChanged": "flatChanged"; "iconChanged": "iconChanged"; "mapMousedown": "mapMousedown"; "mapMouseout": "mapMouseout"; "mapMouseover": "mapMouseover"; "mapMouseup": "mapMouseup"; "positionChanged": "positionChanged"; "mapRightclick": "mapRightclick"; "shapeChanged": "shapeChanged"; "titleChanged": "titleChanged"; "visibleChanged": "visibleChanged"; "zindexChanged": "zindexChanged"; }, never, never, false, never>;
 }
 
 /**
@@ -1331,7 +1331,7 @@ export declare class MapMarkerClusterer implements OnInit, AfterContentInit, OnC
     private _getInternalMarkers;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapMarkerClusterer, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MapMarkerClusterer, "map-marker-clusterer", ["mapMarkerClusterer"], { "ariaLabelFn": "ariaLabelFn"; "averageCenter": "averageCenter"; "batchSize": "batchSize"; "batchSizeIE": "batchSizeIE"; "calculator": "calculator"; "clusterClass": "clusterClass"; "enableRetinaIcons": "enableRetinaIcons"; "gridSize": "gridSize"; "ignoreHidden": "ignoreHidden"; "imageExtension": "imageExtension"; "imagePath": "imagePath"; "imageSizes": "imageSizes"; "maxZoom": "maxZoom"; "minimumClusterSize": "minimumClusterSize"; "styles": "styles"; "title": "title"; "zIndex": "zIndex"; "zoomOnClick": "zoomOnClick"; "options": "options"; }, { "clusteringbegin": "clusteringbegin"; "clusteringend": "clusteringend"; "clusterClick": "clusterClick"; }, ["_markers"], ["*"], false>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MapMarkerClusterer, "map-marker-clusterer", ["mapMarkerClusterer"], { "ariaLabelFn": "ariaLabelFn"; "averageCenter": "averageCenter"; "batchSize": "batchSize"; "batchSizeIE": "batchSizeIE"; "calculator": "calculator"; "clusterClass": "clusterClass"; "enableRetinaIcons": "enableRetinaIcons"; "gridSize": "gridSize"; "ignoreHidden": "ignoreHidden"; "imageExtension": "imageExtension"; "imagePath": "imagePath"; "imageSizes": "imageSizes"; "maxZoom": "maxZoom"; "minimumClusterSize": "minimumClusterSize"; "styles": "styles"; "title": "title"; "zIndex": "zIndex"; "zoomOnClick": "zoomOnClick"; "options": "options"; }, { "clusteringbegin": "clusteringbegin"; "clusteringend": "clusteringend"; "clusterClick": "clusterClick"; }, ["_markers"], ["*"], false, never>;
 }
 
 /**
@@ -1427,7 +1427,7 @@ export declare class MapPolygon implements OnInit, OnDestroy {
     private _watchForPathChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapPolygon, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapPolygon, "map-polygon", ["mapPolygon"], { "options": "options"; "paths": "paths"; }, { "polygonClick": "polygonClick"; "polygonDblclick": "polygonDblclick"; "polygonDrag": "polygonDrag"; "polygonDragend": "polygonDragend"; "polygonDragstart": "polygonDragstart"; "polygonMousedown": "polygonMousedown"; "polygonMousemove": "polygonMousemove"; "polygonMouseout": "polygonMouseout"; "polygonMouseover": "polygonMouseover"; "polygonMouseup": "polygonMouseup"; "polygonRightclick": "polygonRightclick"; }, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapPolygon, "map-polygon", ["mapPolygon"], { "options": "options"; "paths": "paths"; }, { "polygonClick": "polygonClick"; "polygonDblclick": "polygonDblclick"; "polygonDrag": "polygonDrag"; "polygonDragend": "polygonDragend"; "polygonDragstart": "polygonDragstart"; "polygonMousedown": "polygonMousedown"; "polygonMousemove": "polygonMousemove"; "polygonMouseout": "polygonMouseout"; "polygonMouseover": "polygonMouseover"; "polygonMouseup": "polygonMouseup"; "polygonRightclick": "polygonRightclick"; }, never, never, false, never>;
 }
 
 /**
@@ -1519,7 +1519,7 @@ export declare class MapPolyline implements OnInit, OnDestroy {
     private _watchForPathChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapPolyline, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapPolyline, "map-polyline", ["mapPolyline"], { "options": "options"; "path": "path"; }, { "polylineClick": "polylineClick"; "polylineDblclick": "polylineDblclick"; "polylineDrag": "polylineDrag"; "polylineDragend": "polylineDragend"; "polylineDragstart": "polylineDragstart"; "polylineMousedown": "polylineMousedown"; "polylineMousemove": "polylineMousemove"; "polylineMouseout": "polylineMouseout"; "polylineMouseover": "polylineMouseover"; "polylineMouseup": "polylineMouseup"; "polylineRightclick": "polylineRightclick"; }, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapPolyline, "map-polyline", ["mapPolyline"], { "options": "options"; "path": "path"; }, { "polylineClick": "polylineClick"; "polylineDblclick": "polylineDblclick"; "polylineDrag": "polylineDrag"; "polylineDragend": "polylineDragend"; "polylineDragstart": "polylineDragstart"; "polylineMousedown": "polylineMousedown"; "polylineMousemove": "polylineMousemove"; "polylineMouseout": "polylineMouseout"; "polylineMouseover": "polylineMouseover"; "polylineMouseup": "polylineMouseup"; "polylineRightclick": "polylineRightclick"; }, never, never, false, never>;
 }
 
 /**
@@ -1629,7 +1629,7 @@ export declare class MapRectangle implements OnInit, OnDestroy {
     private _watchForBoundsChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapRectangle, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapRectangle, "map-rectangle", ["mapRectangle"], { "options": "options"; "bounds": "bounds"; }, { "boundsChanged": "boundsChanged"; "rectangleClick": "rectangleClick"; "rectangleDblclick": "rectangleDblclick"; "rectangleDrag": "rectangleDrag"; "rectangleDragend": "rectangleDragend"; "rectangleDragstart": "rectangleDragstart"; "rectangleMousedown": "rectangleMousedown"; "rectangleMousemove": "rectangleMousemove"; "rectangleMouseout": "rectangleMouseout"; "rectangleMouseover": "rectangleMouseover"; "rectangleMouseup": "rectangleMouseup"; "rectangleRightclick": "rectangleRightclick"; }, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapRectangle, "map-rectangle", ["mapRectangle"], { "options": "options"; "bounds": "bounds"; }, { "boundsChanged": "boundsChanged"; "rectangleClick": "rectangleClick"; "rectangleDblclick": "rectangleDblclick"; "rectangleDrag": "rectangleDrag"; "rectangleDragend": "rectangleDragend"; "rectangleDragstart": "rectangleDragstart"; "rectangleMousedown": "rectangleMousedown"; "rectangleMousemove": "rectangleMousemove"; "rectangleMouseout": "rectangleMouseout"; "rectangleMouseover": "rectangleMouseover"; "rectangleMouseup": "rectangleMouseup"; "rectangleRightclick": "rectangleRightclick"; }, never, never, false, never>;
 }
 
 /**
@@ -1659,7 +1659,7 @@ export declare class MapTrafficLayer implements OnInit, OnDestroy {
     private _watchForAutoRefreshChanges;
     private _assertInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapTrafficLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapTrafficLayer, "map-traffic-layer", ["mapTrafficLayer"], { "autoRefresh": "autoRefresh"; }, {}, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapTrafficLayer, "map-traffic-layer", ["mapTrafficLayer"], { "autoRefresh": "autoRefresh"; }, {}, never, never, false, never>;
 }
 
 /**
@@ -1679,7 +1679,7 @@ export declare class MapTransitLayer extends MapBaseLayer {
     protected _unsetMap(): void;
     private _assertLayerInitialized;
     static ɵfac: i0.ɵɵFactoryDeclaration<MapTransitLayer, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<MapTransitLayer, "map-transit-layer", ["mapTransitLayer"], {}, {}, never, never, false>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MapTransitLayer, "map-transit-layer", ["mapTransitLayer"], {}, {}, never, never, false, never>;
 }
 
 
