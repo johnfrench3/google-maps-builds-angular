@@ -701,7 +701,7 @@ export declare class MapEventManager {
 }
 
 declare type MapEventManagerTarget = {
-    addListener: (name: string, callback: (...args: any[]) => void) => google.maps.MapsEventListener;
+    addListener: (name: string, callback: (...args: any[]) => void) => google.maps.MapsEventListener | undefined;
 } | undefined;
 
 /**

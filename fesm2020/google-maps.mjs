@@ -39,6 +39,12 @@ class MapEventManager {
                 const listener = target.addListener(name, (event) => {
                     this._ngZone.run(() => observer.next(event));
                 });
+                // If there's an error when initializing the Maps API (e.g. a wrong API key), it will
+                // return a dummy object that returns `undefined` from `addListener` (see #26514).
+                if (!listener) {
+                    observer.complete();
+                    return undefined;
+                }
                 this._listeners.push(listener);
                 return () => listener.remove();
             });
