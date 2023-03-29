@@ -315,7 +315,7 @@ export declare class GoogleMap implements OnChanges, OnInit, OnDestroy {
      * See
      * https://developers.google.com/maps/documentation/javascript/reference/map#Map.overlayMapTypes
      */
-    get overlayMapTypes(): google.maps.MVCArray<google.maps.MapType>;
+    get overlayMapTypes(): google.maps.MVCArray<google.maps.MapType | null>;
     private _setSize;
     /** Combines the center and zoom and the other map options into a single object */
     private _combineOptions;
@@ -1190,7 +1190,7 @@ export declare class MapMarker implements OnInit, OnChanges, OnDestroy, MapAncho
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.getLabel
      */
-    getLabel(): google.maps.MarkerLabel | null;
+    getLabel(): google.maps.MarkerLabel | string | null;
     /**
      * See
      * developers.google.com/maps/documentation/javascript/reference/marker#Marker.getOpacity
