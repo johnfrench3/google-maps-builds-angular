@@ -36,10 +36,10 @@ class MapBicyclingLayer extends MapBaseLayer {
         }
     }
 }
-MapBicyclingLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapBicyclingLayer, deps: null, target: i0.ɵɵFactoryTarget.Directive });
-MapBicyclingLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapBicyclingLayer, selector: "map-bicycling-layer", exportAs: ["mapBicyclingLayer"], usesInheritance: true, ngImport: i0 });
+MapBicyclingLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapBicyclingLayer, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+MapBicyclingLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapBicyclingLayer, selector: "map-bicycling-layer", exportAs: ["mapBicyclingLayer"], usesInheritance: true, ngImport: i0 });
 export { MapBicyclingLayer };
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapBicyclingLayer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapBicyclingLayer, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-bicycling-layer',

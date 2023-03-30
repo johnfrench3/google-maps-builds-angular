@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { EventEmitter, PLATFORM_ID, Component, ChangeDetectionStrategy, ViewEncapsulation, Inject, Input, Output, Directive, ContentChildren, NgModule, Injectable } from '@angular/core';
+import { inject, NgZone, EventEmitter, PLATFORM_ID, Component, ChangeDetectionStrategy, ViewEncapsulation, Inject, Input, Output, Directive, ContentChildren, NgModule, Injectable } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { switchMap, take, map, takeUntil } from 'rxjs/operators';
@@ -105,7 +105,7 @@ class GoogleMap {
     constructor(_elementRef, _ngZone, platformId) {
         this._elementRef = _elementRef;
         this._ngZone = _ngZone;
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         /** Height of the map. Set this to `null` if you'd like to control the height through CSS. */
         this.height = DEFAULT_HEIGHT;
         /** Width of the map. Set this to `null` if you'd like to control the width through CSS. */
@@ -435,9 +435,9 @@ class GoogleMap {
         }
     }
 }
-GoogleMap.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: GoogleMap, deps: [{ token: i0.ElementRef }, { token: i0.NgZone }, { token: PLATFORM_ID }], target: i0.ɵɵFactoryTarget.Component });
-GoogleMap.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "16.0.0-next.2", type: GoogleMap, selector: "google-map", inputs: { height: "height", width: "width", mapTypeId: "mapTypeId", center: "center", zoom: "zoom", options: "options" }, outputs: { mapInitialized: "mapInitialized", authFailure: "authFailure", boundsChanged: "boundsChanged", centerChanged: "centerChanged", mapClick: "mapClick", mapDblclick: "mapDblclick", mapDrag: "mapDrag", mapDragend: "mapDragend", mapDragstart: "mapDragstart", headingChanged: "headingChanged", idle: "idle", maptypeidChanged: "maptypeidChanged", mapMousemove: "mapMousemove", mapMouseout: "mapMouseout", mapMouseover: "mapMouseover", projectionChanged: "projectionChanged", mapRightclick: "mapRightclick", tilesloaded: "tilesloaded", tiltChanged: "tiltChanged", zoomChanged: "zoomChanged" }, exportAs: ["googleMap"], usesOnChanges: true, ngImport: i0, template: '<div class="map-container"></div><ng-content></ng-content>', isInline: true, changeDetection: i0.ChangeDetectionStrategy.OnPush, encapsulation: i0.ViewEncapsulation.None });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: GoogleMap, decorators: [{
+GoogleMap.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: GoogleMap, deps: [{ token: i0.ElementRef }, { token: i0.NgZone }, { token: PLATFORM_ID }], target: i0.ɵɵFactoryTarget.Component });
+GoogleMap.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "16.0.0-next.5", type: GoogleMap, selector: "google-map", inputs: { height: "height", width: "width", mapTypeId: "mapTypeId", center: "center", zoom: "zoom", options: "options" }, outputs: { mapInitialized: "mapInitialized", authFailure: "authFailure", boundsChanged: "boundsChanged", centerChanged: "centerChanged", mapClick: "mapClick", mapDblclick: "mapDblclick", mapDrag: "mapDrag", mapDragend: "mapDragend", mapDragstart: "mapDragstart", headingChanged: "headingChanged", idle: "idle", maptypeidChanged: "maptypeidChanged", mapMousemove: "mapMousemove", mapMouseout: "mapMouseout", mapMouseover: "mapMouseover", projectionChanged: "projectionChanged", mapRightclick: "mapRightclick", tilesloaded: "tilesloaded", tiltChanged: "tiltChanged", zoomChanged: "zoomChanged" }, exportAs: ["googleMap"], usesOnChanges: true, ngImport: i0, template: '<div class="map-container"></div><ng-content></ng-content>', isInline: true, changeDetection: i0.ChangeDetectionStrategy.OnPush, encapsulation: i0.ViewEncapsulation.None });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: GoogleMap, decorators: [{
             type: Component,
             args: [{
                     selector: 'google-map',
@@ -539,9 +539,9 @@ class MapBaseLayer {
     _setMap() { }
     _unsetMap() { }
 }
-MapBaseLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapBaseLayer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapBaseLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapBaseLayer, selector: "map-base-layer", exportAs: ["mapBaseLayer"], ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapBaseLayer, decorators: [{
+MapBaseLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapBaseLayer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapBaseLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapBaseLayer, selector: "map-base-layer", exportAs: ["mapBaseLayer"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapBaseLayer, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-base-layer',
@@ -575,9 +575,9 @@ class MapBicyclingLayer extends MapBaseLayer {
         }
     }
 }
-MapBicyclingLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapBicyclingLayer, deps: null, target: i0.ɵɵFactoryTarget.Directive });
-MapBicyclingLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapBicyclingLayer, selector: "map-bicycling-layer", exportAs: ["mapBicyclingLayer"], usesInheritance: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapBicyclingLayer, decorators: [{
+MapBicyclingLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapBicyclingLayer, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+MapBicyclingLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapBicyclingLayer, selector: "map-bicycling-layer", exportAs: ["mapBicyclingLayer"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapBicyclingLayer, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-bicycling-layer',
@@ -603,7 +603,7 @@ class MapCircle {
     constructor(_map, _ngZone) {
         this._map = _map;
         this._ngZone = _ngZone;
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         this._options = new BehaviorSubject({});
         this._center = new BehaviorSubject(undefined);
         this._radius = new BehaviorSubject(undefined);
@@ -795,9 +795,9 @@ class MapCircle {
         }
     }
 }
-MapCircle.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapCircle, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapCircle.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapCircle, selector: "map-circle", inputs: { options: "options", center: "center", radius: "radius" }, outputs: { centerChanged: "centerChanged", circleClick: "circleClick", circleDblclick: "circleDblclick", circleDrag: "circleDrag", circleDragend: "circleDragend", circleDragstart: "circleDragstart", circleMousedown: "circleMousedown", circleMousemove: "circleMousemove", circleMouseout: "circleMouseout", circleMouseover: "circleMouseover", circleMouseup: "circleMouseup", radiusChanged: "radiusChanged", circleRightclick: "circleRightclick" }, exportAs: ["mapCircle"], ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapCircle, decorators: [{
+MapCircle.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapCircle, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapCircle.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapCircle, selector: "map-circle", inputs: { options: "options", center: "center", radius: "radius" }, outputs: { centerChanged: "centerChanged", circleClick: "circleClick", circleDblclick: "circleDblclick", circleDrag: "circleDrag", circleDragend: "circleDragend", circleDragstart: "circleDragstart", circleMousedown: "circleMousedown", circleMousemove: "circleMousemove", circleMouseout: "circleMouseout", circleMouseover: "circleMouseover", circleMouseup: "circleMouseup", radiusChanged: "radiusChanged", circleRightclick: "circleRightclick" }, exportAs: ["mapCircle"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapCircle, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-circle',
@@ -862,7 +862,7 @@ class MapDirectionsRenderer {
     constructor(_googleMap, _ngZone) {
         this._googleMap = _googleMap;
         this._ngZone = _ngZone;
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         /**
          * See developers.google.com/maps/documentation/javascript/reference/directions
          * #DirectionsRenderer.directions_changed
@@ -944,9 +944,9 @@ class MapDirectionsRenderer {
         }
     }
 }
-MapDirectionsRenderer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapDirectionsRenderer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapDirectionsRenderer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapDirectionsRenderer, selector: "map-directions-renderer", inputs: { directions: "directions", options: "options" }, outputs: { directionsChanged: "directionsChanged" }, exportAs: ["mapDirectionsRenderer"], usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapDirectionsRenderer, decorators: [{
+MapDirectionsRenderer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapDirectionsRenderer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapDirectionsRenderer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapDirectionsRenderer, selector: "map-directions-renderer", inputs: { directions: "directions", options: "options" }, outputs: { directionsChanged: "directionsChanged" }, exportAs: ["mapDirectionsRenderer"], usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapDirectionsRenderer, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-directions-renderer',
@@ -985,7 +985,7 @@ class MapGroundOverlay {
     constructor(_map, _ngZone) {
         this._map = _map;
         this._ngZone = _ngZone;
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         this._opacity = new BehaviorSubject(1);
         this._url = new BehaviorSubject('');
         this._bounds = new BehaviorSubject(undefined);
@@ -1099,9 +1099,9 @@ class MapGroundOverlay {
         }
     }
 }
-MapGroundOverlay.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapGroundOverlay, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapGroundOverlay.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapGroundOverlay, selector: "map-ground-overlay", inputs: { url: "url", bounds: "bounds", clickable: "clickable", opacity: "opacity" }, outputs: { mapClick: "mapClick", mapDblclick: "mapDblclick" }, exportAs: ["mapGroundOverlay"], ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapGroundOverlay, decorators: [{
+MapGroundOverlay.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapGroundOverlay, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapGroundOverlay.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapGroundOverlay, selector: "map-ground-overlay", inputs: { url: "url", bounds: "bounds", clickable: "clickable", opacity: "opacity" }, outputs: { mapClick: "mapClick", mapDblclick: "mapDblclick" }, exportAs: ["mapGroundOverlay"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapGroundOverlay, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-ground-overlay',
@@ -1138,7 +1138,7 @@ class MapInfoWindow {
         this._googleMap = _googleMap;
         this._elementRef = _elementRef;
         this._ngZone = _ngZone;
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         this._options = new BehaviorSubject({});
         this._position = new BehaviorSubject(undefined);
         this._destroy = new Subject();
@@ -1288,9 +1288,9 @@ class MapInfoWindow {
         }
     }
 }
-MapInfoWindow.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapInfoWindow, deps: [{ token: GoogleMap }, { token: i0.ElementRef }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapInfoWindow.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapInfoWindow, selector: "map-info-window", inputs: { options: "options", position: "position" }, outputs: { closeclick: "closeclick", contentChanged: "contentChanged", domready: "domready", positionChanged: "positionChanged", zindexChanged: "zindexChanged" }, host: { styleAttribute: "display: none" }, exportAs: ["mapInfoWindow"], ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapInfoWindow, decorators: [{
+MapInfoWindow.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapInfoWindow, deps: [{ token: GoogleMap }, { token: i0.ElementRef }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapInfoWindow.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapInfoWindow, selector: "map-info-window", inputs: { options: "options", position: "position" }, outputs: { closeclick: "closeclick", contentChanged: "contentChanged", domready: "domready", positionChanged: "positionChanged", zindexChanged: "zindexChanged" }, host: { styleAttribute: "display: none" }, exportAs: ["mapInfoWindow"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapInfoWindow, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-info-window',
@@ -1329,7 +1329,7 @@ class MapKmlLayer {
     constructor(_map, _ngZone) {
         this._map = _map;
         this._ngZone = _ngZone;
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         this._options = new BehaviorSubject({});
         this._url = new BehaviorSubject('');
         this._destroyed = new Subject();
@@ -1447,9 +1447,9 @@ class MapKmlLayer {
         }
     }
 }
-MapKmlLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapKmlLayer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapKmlLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapKmlLayer, selector: "map-kml-layer", inputs: { options: "options", url: "url" }, outputs: { kmlClick: "kmlClick", defaultviewportChanged: "defaultviewportChanged", statusChanged: "statusChanged" }, exportAs: ["mapKmlLayer"], ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapKmlLayer, decorators: [{
+MapKmlLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapKmlLayer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapKmlLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapKmlLayer, selector: "map-kml-layer", inputs: { options: "options", url: "url" }, outputs: { kmlClick: "kmlClick", defaultviewportChanged: "defaultviewportChanged", statusChanged: "statusChanged" }, exportAs: ["mapKmlLayer"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapKmlLayer, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-kml-layer',
@@ -1533,7 +1533,7 @@ class MapMarker {
     constructor(_googleMap, _ngZone) {
         this._googleMap = _googleMap;
         this._ngZone = _ngZone;
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         /**
          * See
          * developers.google.com/maps/documentation/javascript/reference/marker#Marker.animation_changed
@@ -1813,9 +1813,9 @@ class MapMarker {
         }
     }
 }
-MapMarker.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapMarker, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapMarker.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapMarker, selector: "map-marker", inputs: { title: "title", position: "position", label: "label", clickable: "clickable", options: "options", icon: "icon", visible: "visible" }, outputs: { animationChanged: "animationChanged", mapClick: "mapClick", clickableChanged: "clickableChanged", cursorChanged: "cursorChanged", mapDblclick: "mapDblclick", mapDrag: "mapDrag", mapDragend: "mapDragend", draggableChanged: "draggableChanged", mapDragstart: "mapDragstart", flatChanged: "flatChanged", iconChanged: "iconChanged", mapMousedown: "mapMousedown", mapMouseout: "mapMouseout", mapMouseover: "mapMouseover", mapMouseup: "mapMouseup", positionChanged: "positionChanged", mapRightclick: "mapRightclick", shapeChanged: "shapeChanged", titleChanged: "titleChanged", visibleChanged: "visibleChanged", zindexChanged: "zindexChanged" }, exportAs: ["mapMarker"], usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapMarker, decorators: [{
+MapMarker.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapMarker, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapMarker.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapMarker, selector: "map-marker", inputs: { title: "title", position: "position", label: "label", clickable: "clickable", options: "options", icon: "icon", visible: "visible" }, outputs: { animationChanged: "animationChanged", mapClick: "mapClick", clickableChanged: "clickableChanged", cursorChanged: "cursorChanged", mapDblclick: "mapDblclick", mapDrag: "mapDrag", mapDragend: "mapDragend", draggableChanged: "draggableChanged", mapDragstart: "mapDragstart", flatChanged: "flatChanged", iconChanged: "iconChanged", mapMousedown: "mapMousedown", mapMouseout: "mapMouseout", mapMouseover: "mapMouseover", mapMouseup: "mapMouseup", positionChanged: "positionChanged", mapRightclick: "mapRightclick", shapeChanged: "shapeChanged", titleChanged: "titleChanged", visibleChanged: "visibleChanged", zindexChanged: "zindexChanged" }, exportAs: ["mapMarker"], usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapMarker, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-marker',
@@ -1943,7 +1943,7 @@ class MapMarkerClusterer {
         this._googleMap = _googleMap;
         this._ngZone = _ngZone;
         this._currentMarkers = new Set();
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         this._destroy = new Subject();
         this.ariaLabelFn = () => '';
         /**
@@ -2207,9 +2207,9 @@ class MapMarkerClusterer {
         }
     }
 }
-MapMarkerClusterer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapMarkerClusterer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Component });
-MapMarkerClusterer.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapMarkerClusterer, selector: "map-marker-clusterer", inputs: { ariaLabelFn: "ariaLabelFn", averageCenter: "averageCenter", batchSize: "batchSize", batchSizeIE: "batchSizeIE", calculator: "calculator", clusterClass: "clusterClass", enableRetinaIcons: "enableRetinaIcons", gridSize: "gridSize", ignoreHidden: "ignoreHidden", imageExtension: "imageExtension", imagePath: "imagePath", imageSizes: "imageSizes", maxZoom: "maxZoom", minimumClusterSize: "minimumClusterSize", styles: "styles", title: "title", zIndex: "zIndex", zoomOnClick: "zoomOnClick", options: "options" }, outputs: { clusteringbegin: "clusteringbegin", clusteringend: "clusteringend", clusterClick: "clusterClick" }, queries: [{ propertyName: "_markers", predicate: MapMarker, descendants: true }], exportAs: ["mapMarkerClusterer"], usesOnChanges: true, ngImport: i0, template: '<ng-content></ng-content>', isInline: true, changeDetection: i0.ChangeDetectionStrategy.OnPush, encapsulation: i0.ViewEncapsulation.None });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapMarkerClusterer, decorators: [{
+MapMarkerClusterer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapMarkerClusterer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Component });
+MapMarkerClusterer.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapMarkerClusterer, selector: "map-marker-clusterer", inputs: { ariaLabelFn: "ariaLabelFn", averageCenter: "averageCenter", batchSize: "batchSize", batchSizeIE: "batchSizeIE", calculator: "calculator", clusterClass: "clusterClass", enableRetinaIcons: "enableRetinaIcons", gridSize: "gridSize", ignoreHidden: "ignoreHidden", imageExtension: "imageExtension", imagePath: "imagePath", imageSizes: "imageSizes", maxZoom: "maxZoom", minimumClusterSize: "minimumClusterSize", styles: "styles", title: "title", zIndex: "zIndex", zoomOnClick: "zoomOnClick", options: "options" }, outputs: { clusteringbegin: "clusteringbegin", clusteringend: "clusteringend", clusterClick: "clusterClick" }, queries: [{ propertyName: "_markers", predicate: MapMarker, descendants: true }], exportAs: ["mapMarkerClusterer"], usesOnChanges: true, ngImport: i0, template: '<ng-content></ng-content>', isInline: true, changeDetection: i0.ChangeDetectionStrategy.OnPush, encapsulation: i0.ViewEncapsulation.None });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapMarkerClusterer, decorators: [{
             type: Component,
             args: [{
                     selector: 'map-marker-clusterer',
@@ -2283,7 +2283,7 @@ class MapPolygon {
     constructor(_map, _ngZone) {
         this._map = _map;
         this._ngZone = _ngZone;
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         this._options = new BehaviorSubject({});
         this._paths = new BehaviorSubject(undefined);
         this._destroyed = new Subject();
@@ -2431,9 +2431,9 @@ class MapPolygon {
         }
     }
 }
-MapPolygon.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapPolygon, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapPolygon.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapPolygon, selector: "map-polygon", inputs: { options: "options", paths: "paths" }, outputs: { polygonClick: "polygonClick", polygonDblclick: "polygonDblclick", polygonDrag: "polygonDrag", polygonDragend: "polygonDragend", polygonDragstart: "polygonDragstart", polygonMousedown: "polygonMousedown", polygonMousemove: "polygonMousemove", polygonMouseout: "polygonMouseout", polygonMouseover: "polygonMouseover", polygonMouseup: "polygonMouseup", polygonRightclick: "polygonRightclick" }, exportAs: ["mapPolygon"], ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapPolygon, decorators: [{
+MapPolygon.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapPolygon, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapPolygon.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapPolygon, selector: "map-polygon", inputs: { options: "options", paths: "paths" }, outputs: { polygonClick: "polygonClick", polygonDblclick: "polygonDblclick", polygonDrag: "polygonDrag", polygonDragend: "polygonDragend", polygonDragstart: "polygonDragstart", polygonMousedown: "polygonMousedown", polygonMousemove: "polygonMousemove", polygonMouseout: "polygonMouseout", polygonMouseover: "polygonMouseover", polygonMouseup: "polygonMouseup", polygonRightclick: "polygonRightclick" }, exportAs: ["mapPolygon"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapPolygon, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-polygon',
@@ -2483,7 +2483,7 @@ class MapPolyline {
     constructor(_map, _ngZone) {
         this._map = _map;
         this._ngZone = _ngZone;
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         this._options = new BehaviorSubject({});
         this._path = new BehaviorSubject(undefined);
         this._destroyed = new Subject();
@@ -2622,9 +2622,9 @@ class MapPolyline {
         }
     }
 }
-MapPolyline.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapPolyline, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapPolyline.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapPolyline, selector: "map-polyline", inputs: { options: "options", path: "path" }, outputs: { polylineClick: "polylineClick", polylineDblclick: "polylineDblclick", polylineDrag: "polylineDrag", polylineDragend: "polylineDragend", polylineDragstart: "polylineDragstart", polylineMousedown: "polylineMousedown", polylineMousemove: "polylineMousemove", polylineMouseout: "polylineMouseout", polylineMouseover: "polylineMouseover", polylineMouseup: "polylineMouseup", polylineRightclick: "polylineRightclick" }, exportAs: ["mapPolyline"], ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapPolyline, decorators: [{
+MapPolyline.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapPolyline, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapPolyline.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapPolyline, selector: "map-polyline", inputs: { options: "options", path: "path" }, outputs: { polylineClick: "polylineClick", polylineDblclick: "polylineDblclick", polylineDrag: "polylineDrag", polylineDragend: "polylineDragend", polylineDragstart: "polylineDragstart", polylineMousedown: "polylineMousedown", polylineMousemove: "polylineMousemove", polylineMouseout: "polylineMouseout", polylineMouseover: "polylineMouseover", polylineMouseup: "polylineMouseup", polylineRightclick: "polylineRightclick" }, exportAs: ["mapPolyline"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapPolyline, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-polyline',
@@ -2674,7 +2674,7 @@ class MapRectangle {
     constructor(_map, _ngZone) {
         this._map = _map;
         this._ngZone = _ngZone;
-        this._eventManager = new MapEventManager(this._ngZone);
+        this._eventManager = new MapEventManager(inject(NgZone));
         this._options = new BehaviorSubject({});
         this._bounds = new BehaviorSubject(undefined);
         this._destroyed = new Subject();
@@ -2833,9 +2833,9 @@ class MapRectangle {
         }
     }
 }
-MapRectangle.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapRectangle, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapRectangle.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapRectangle, selector: "map-rectangle", inputs: { options: "options", bounds: "bounds" }, outputs: { boundsChanged: "boundsChanged", rectangleClick: "rectangleClick", rectangleDblclick: "rectangleDblclick", rectangleDrag: "rectangleDrag", rectangleDragend: "rectangleDragend", rectangleDragstart: "rectangleDragstart", rectangleMousedown: "rectangleMousedown", rectangleMousemove: "rectangleMousemove", rectangleMouseout: "rectangleMouseout", rectangleMouseover: "rectangleMouseover", rectangleMouseup: "rectangleMouseup", rectangleRightclick: "rectangleRightclick" }, exportAs: ["mapRectangle"], ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapRectangle, decorators: [{
+MapRectangle.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapRectangle, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapRectangle.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapRectangle, selector: "map-rectangle", inputs: { options: "options", bounds: "bounds" }, outputs: { boundsChanged: "boundsChanged", rectangleClick: "rectangleClick", rectangleDblclick: "rectangleDblclick", rectangleDrag: "rectangleDrag", rectangleDragend: "rectangleDragend", rectangleDragstart: "rectangleDragstart", rectangleMousedown: "rectangleMousedown", rectangleMousemove: "rectangleMousemove", rectangleMouseout: "rectangleMouseout", rectangleMouseover: "rectangleMouseover", rectangleMouseup: "rectangleMouseup", rectangleRightclick: "rectangleRightclick" }, exportAs: ["mapRectangle"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapRectangle, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-rectangle',
@@ -2937,9 +2937,9 @@ class MapTrafficLayer {
         }
     }
 }
-MapTrafficLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapTrafficLayer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapTrafficLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapTrafficLayer, selector: "map-traffic-layer", inputs: { autoRefresh: "autoRefresh" }, exportAs: ["mapTrafficLayer"], ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapTrafficLayer, decorators: [{
+MapTrafficLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapTrafficLayer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapTrafficLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapTrafficLayer, selector: "map-traffic-layer", inputs: { autoRefresh: "autoRefresh" }, exportAs: ["mapTrafficLayer"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapTrafficLayer, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-traffic-layer',
@@ -2975,9 +2975,9 @@ class MapTransitLayer extends MapBaseLayer {
         }
     }
 }
-MapTransitLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapTransitLayer, deps: null, target: i0.ɵɵFactoryTarget.Directive });
-MapTransitLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapTransitLayer, selector: "map-transit-layer", exportAs: ["mapTransitLayer"], usesInheritance: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapTransitLayer, decorators: [{
+MapTransitLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapTransitLayer, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+MapTransitLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapTransitLayer, selector: "map-transit-layer", exportAs: ["mapTransitLayer"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapTransitLayer, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-transit-layer',
@@ -3089,9 +3089,9 @@ class MapHeatmapLayer {
         }
     }
 }
-MapHeatmapLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapHeatmapLayer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
-MapHeatmapLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2", type: MapHeatmapLayer, selector: "map-heatmap-layer", inputs: { data: "data", options: "options" }, exportAs: ["mapHeatmapLayer"], usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapHeatmapLayer, decorators: [{
+MapHeatmapLayer.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapHeatmapLayer, deps: [{ token: GoogleMap }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Directive });
+MapHeatmapLayer.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.5", type: MapHeatmapLayer, selector: "map-heatmap-layer", inputs: { data: "data", options: "options" }, exportAs: ["mapHeatmapLayer"], usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapHeatmapLayer, decorators: [{
             type: Directive,
             args: [{
                     selector: 'map-heatmap-layer',
@@ -3134,8 +3134,8 @@ const COMPONENTS = [
 ];
 class GoogleMapsModule {
 }
-GoogleMapsModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: GoogleMapsModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
-GoogleMapsModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "16.0.0-next.2", ngImport: i0, type: GoogleMapsModule, declarations: [GoogleMap,
+GoogleMapsModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: GoogleMapsModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
+GoogleMapsModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "16.0.0-next.5", ngImport: i0, type: GoogleMapsModule, declarations: [GoogleMap,
         MapBaseLayer,
         MapBicyclingLayer,
         MapCircle,
@@ -3166,8 +3166,8 @@ GoogleMapsModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", versio
         MapTrafficLayer,
         MapTransitLayer,
         MapHeatmapLayer] });
-GoogleMapsModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: GoogleMapsModule });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: GoogleMapsModule, decorators: [{
+GoogleMapsModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: GoogleMapsModule });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: GoogleMapsModule, decorators: [{
             type: NgModule,
             args: [{
                     declarations: COMPONENTS,
@@ -3207,9 +3207,9 @@ class MapDirectionsService {
         });
     }
 }
-MapDirectionsService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapDirectionsService, deps: [{ token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Injectable });
-MapDirectionsService.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapDirectionsService, providedIn: 'root' });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapDirectionsService, decorators: [{
+MapDirectionsService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapDirectionsService, deps: [{ token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Injectable });
+MapDirectionsService.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapDirectionsService, providedIn: 'root' });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapDirectionsService, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'root' }]
         }], ctorParameters: function () { return [{ type: i0.NgZone }]; } });
@@ -3242,9 +3242,9 @@ class MapGeocoder {
         });
     }
 }
-MapGeocoder.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapGeocoder, deps: [{ token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Injectable });
-MapGeocoder.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapGeocoder, providedIn: 'root' });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2", ngImport: i0, type: MapGeocoder, decorators: [{
+MapGeocoder.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapGeocoder, deps: [{ token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Injectable });
+MapGeocoder.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapGeocoder, providedIn: 'root' });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.5", ngImport: i0, type: MapGeocoder, decorators: [{
             type: Injectable,
             args: [{ providedIn: 'root' }]
         }], ctorParameters: function () { return [{ type: i0.NgZone }]; } });
